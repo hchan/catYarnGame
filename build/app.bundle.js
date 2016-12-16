@@ -20,12 +20,10 @@ var Board = (function () {
             var rowSeparator = "";
             for (var j = 0; j < this.cols; j++) {
                 rowLine += this.cells[j][i].state + " ";
-                rowSeparator += "**";
+                rowSeparator += "--";
             }
             console.log(rowLine);
             console.log(rowSeparator);
-            var x = 5 / 0;
-            throw x;
         }
     };
     return Board;
@@ -57,4 +55,4 @@ board.printBoard();
 
 },{"./Board":1}]},{},[1,2,3]);
 
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=app.bundle.js.map

@@ -31,10 +31,12 @@ export class Board {
             var rowSeparator: string = "";
             for (var j = 0; j < this.cols; j++) {
                 rowLine += this.cells[j][i].state + " ";
-                rowSeparator += "--";
+                rowSeparator += "**";
             }
             console.log(rowLine);
             console.log(rowSeparator);
+            var x = 5 / 0;
+          throw x;
         }
     }
 }
