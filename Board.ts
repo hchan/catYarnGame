@@ -35,8 +35,6 @@ export class Board {
             }
             console.log(rowLine);
             console.log(rowSeparator);
-            var x = 5 / 0;
-          throw x;
         }
     }
 }

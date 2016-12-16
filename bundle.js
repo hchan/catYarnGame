@@ -24,15 +24,22 @@ var Board = (function () {
             }
             console.log(rowLine);
             console.log(rowSeparator);
-            var x = 5 / 0;
-            throw x;
         }
     };
     return Board;
 }());
 exports.Board = Board;
 
-},{"./Cell":2}],2:[function(require,module,exports){
+},{"./Cell":3}],2:[function(require,module,exports){
+"use strict";
+var CanvasBoard = (function () {
+    function CanvasBoard() {
+    }
+    return CanvasBoard;
+}());
+exports.CanvasBoard = CanvasBoard;
+
+},{}],3:[function(require,module,exports){
 "use strict";
 var Cell = (function () {
     function Cell() {
@@ -47,14 +54,62 @@ var CellState;
     CellState[CellState["TWO"] = 2] = "TWO";
 })(CellState = exports.CellState || (exports.CellState = {}));
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
+"use strict";
+var ControlPanel = (function () {
+    function ControlPanel() {
+    }
+    return ControlPanel;
+}());
+exports.ControlPanel = ControlPanel;
+
+},{}],5:[function(require,module,exports){
 "use strict";
 var Board_1 = require("./Board");
-var COLS = 5;
-var ROWS = 5;
-var board = new Board_1.Board(COLS, ROWS);
-board.printBoard();
+var Game = (function () {
+    function Game() {
+        var width = Math.max($(document).width(), $(window).width());
+        var height = Math.max($(document).height(), $(window).height());
+        $("html").width(width);
+        $("html").height(height);
+        $("head").css({ margin: 0, padding: 0 });
+        $("body").css({ margin: 0, padding: 0, position: "fixed", display: "table" });
+        this.createCanvas(width, height);
+        this.createControlPanel(width, height);
+        var rows = 5;
+        var cols = 5;
+        var board = new Board_1.Board(cols, rows);
+        board.printBoard();
+    }
+    Game.prototype.createCanvas = function (width, height) {
+        var canvas = $("<canvas id='canvasBoard' ></canvas>");
+        canvas.prop('width', height);
+        canvas.prop('height', height);
+        canvas.css({ display: 'table-cell' });
+        $("body").append(canvas);
+    };
+    Game.prototype.createControlPanel = function (width, height) {
+        var controlPanel = $("<span id='controlPanel'/>");
+        controlPanel.html("Controls");
+        controlPanel.css({
+            "vertical-align": "top",
+            width: width - height,
+            display: "table-cell",
+            "background-color": "red"
+        });
+        $("body").append(controlPanel);
+    };
+    return Game;
+}());
+exports.Game = Game;
 
-},{"./Board":1}]},{},[1,2,3]);
+},{"./Board":1}],6:[function(require,module,exports){
+"use strict";
+var Game_1 = require("./Game");
+$().ready(function () {
+    var game = new Game_1.Game();
+});
+
+},{"./Game":5}]},{},[1,2,3,4,5,6]);
 
 //# sourceMappingURL=bundle.js.map

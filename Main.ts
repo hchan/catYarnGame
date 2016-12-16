@@ -1,8 +1,5 @@
-import {Cell, CellState} from './Cell'
-import {Board} from './Board'
+import {Game} from './Game'
 
-const COLS : number = 5;
-const ROWS : number = 5;
-
-let board = new Board(COLS, ROWS);
-board.printBoard();
+$().ready(function() {
+  var game : Game = new Game();
+});

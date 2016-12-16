@@ -12,6 +12,7 @@ const b = require('gulp-browserify-typescript');
 var files = glob.sync('*.ts');
 var outputFile = 'bundle.js';
 var outputPath = ".";
+var webserver = require('gulp-webserver');
 
 gulp.task("default", function () {
 
@@ -36,4 +37,13 @@ gulp.task('watch', done => {
     outputPath : outputPath,
     outputFile : outputFile
   }).on('end', done);
+});
+
+gulp.task('webserver', function() {
+  gulp.src('./')
+    .pipe(webserver({
+      livereload: true,
+      directoryListing: true,
+      open: true
+    }));
 });
