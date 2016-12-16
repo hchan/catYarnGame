@@ -4,6 +4,10 @@
     "flow": "flow"
   },
   "devDependencies": {
-    "flow-bin": "^0.37.0"
+    "browserify": "^13.1.1",
+    "flow-bin": "^0.37.0",
+    "tsify": "^2.0.3",
+    "typescript": "^2.1.4",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

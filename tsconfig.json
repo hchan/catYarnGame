@@ -2,6 +2,8 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
+	"outFile": "catYarnPuzzle.js",
+	"sourceMap": true,
         "moduleResolution": "node",
         "isolatedModules": false,
         "jsx": "react",
@@ -20,8 +22,13 @@
         "typings/browser",
         "typings/browser.d.ts"
     ],
+    "filesGlob": [
+        "**/*.ts",
+        "**/*.tsx",
+        "!node_modules/**"
+    ],
     "compileOnSave": true,
-    "buildOnSave": false,
+    "buildOnSave": true,
     "atom": {
         "rewriteTsconfig": false
     }
