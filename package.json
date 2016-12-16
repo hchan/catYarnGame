@@ -1,0 +1,9 @@
+{
+  "name": "get_started",
+  "scripts": {
+    "flow": "flow"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.37.0"
+  }
+}
