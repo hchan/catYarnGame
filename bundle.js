@@ -6,11 +6,11 @@ var Board = (function () {
         this.cols = cols;
         this.rows = rows;
         this.cells = [];
-        for (var i = 0; i < rows; i++) {
-            this.cells[i] = [];
-            for (var j = 0; j < cols; j++) {
-                this.cells[i][j] = new Cell_1.Cell();
-                this.cells[i][j].state = Cell_1.CellState.ZERO;
+        for (var y = 0; y < rows; y++) {
+            this.cells[y] = [];
+            for (var x = 0; x < cols; x++) {
+                this.cells[y][x] = new Cell_1.Cell(y, x);
+                this.cells[y][x].state = Cell_1.CellState.ZERO;
             }
         }
     }
@@ -32,18 +32,68 @@ exports.Board = Board;
 
 },{"./Cell":3}],2:[function(require,module,exports){
 "use strict";
+var Board_1 = require("./Board");
 var CanvasBoard = (function () {
-    function CanvasBoard() {
+    function CanvasBoard(width, height) {
+        this.width = width;
+        this.height = height;
+        if (height > width) {
+            this.cellLength = width / CanvasBoard.COLS;
+        }
+        else {
+            this.cellLength = height / CanvasBoard.COLS;
+        }
+        this.cellLength = Math.floor(this.cellLength);
+        var jQuerySelector = $("<canvas id='canvasBoard' ></canvas>");
+        jQuerySelector.prop('width', height);
+        jQuerySelector.prop('height', height);
+        jQuerySelector.css({ display: 'table-cell' });
+        this.jQuerySelector = jQuerySelector;
+        this.canvas = this.jQuerySelector.get(0);
+        this.ctx = this.canvas.getContext("2d");
+        var canvasBoard = this;
+        this.canvas.addEventListener("click", function (e) {
+            var x = Math.floor(e.clientX / canvasBoard.cellLength);
+            var y = Math.floor(e.clientY / canvasBoard.cellLength);
+            console.log(x + "," + y);
+        });
+        this.board = new Board_1.Board(CanvasBoard.COLS, CanvasBoard.ROWS);
+        this.draw();
     }
+    CanvasBoard.prototype.draw = function () {
+        for (var y = 0; y < CanvasBoard.ROWS; y++) {
+            for (var x = 0; x < CanvasBoard.COLS; x++) {
+                this.ctx.beginPath();
+                this.ctx.rect(x * this.cellLength, y * this.cellLength, this.cellLength, this.cellLength);
+                var cell = this.board.cells[x][y];
+                console.log(cell.toString());
+                console.log(x + "-" + y);
+                if (x % 2 == 1) {
+                    this.ctx.fillStyle = "green";
+                }
+                else {
+                    this.ctx.fillStyle = "blue";
+                }
+                this.ctx.fill();
+            }
+        }
+    };
     return CanvasBoard;
 }());
+CanvasBoard.COLS = 5;
+CanvasBoard.ROWS = 5;
 exports.CanvasBoard = CanvasBoard;
 
-},{}],3:[function(require,module,exports){
+},{"./Board":1}],3:[function(require,module,exports){
 "use strict";
 var Cell = (function () {
-    function Cell() {
+    function Cell(col, row) {
+        this.col = col;
+        this.row = row;
     }
+    Cell.prototype.toString = function () {
+        return this.col + "," + this.row;
+    };
     return Cell;
 }());
 exports.Cell = Cell;
@@ -57,38 +107,7 @@ var CellState;
 },{}],4:[function(require,module,exports){
 "use strict";
 var ControlPanel = (function () {
-    function ControlPanel() {
-    }
-    return ControlPanel;
-}());
-exports.ControlPanel = ControlPanel;
-
-},{}],5:[function(require,module,exports){
-"use strict";
-var Board_1 = require("./Board");
-var Game = (function () {
-    function Game() {
-        var width = Math.max($(document).width(), $(window).width());
-        var height = Math.max($(document).height(), $(window).height());
-        $("html").width(width);
-        $("html").height(height);
-        $("head").css({ margin: 0, padding: 0 });
-        $("body").css({ margin: 0, padding: 0, position: "fixed", display: "table" });
-        this.createCanvas(width, height);
-        this.createControlPanel(width, height);
-        var rows = 5;
-        var cols = 5;
-        var board = new Board_1.Board(cols, rows);
-        board.printBoard();
-    }
-    Game.prototype.createCanvas = function (width, height) {
-        var canvas = $("<canvas id='canvasBoard' ></canvas>");
-        canvas.prop('width', height);
-        canvas.prop('height', height);
-        canvas.css({ display: 'table-cell' });
-        $("body").append(canvas);
-    };
-    Game.prototype.createControlPanel = function (width, height) {
+    function ControlPanel(width, height) {
         var controlPanel = $("<span id='controlPanel'/>");
         controlPanel.html("Controls");
         controlPanel.css({
@@ -97,13 +116,34 @@ var Game = (function () {
             display: "table-cell",
             "background-color": "red"
         });
-        $("body").append(controlPanel);
-    };
+        this.jQuerySelector = controlPanel;
+    }
+    return ControlPanel;
+}());
+exports.ControlPanel = ControlPanel;
+
+},{}],5:[function(require,module,exports){
+"use strict";
+var CanvasBoard_1 = require("./CanvasBoard");
+var ControlPanel_1 = require("./ControlPanel");
+var Game = (function () {
+    function Game() {
+        var width = Math.max($(document).width(), $(window).width());
+        var height = Math.max($(document).height(), $(window).height());
+        $("html").width(width);
+        $("html").height(height);
+        $("head").css({ margin: 0, padding: 0 });
+        $("body").css({ margin: 0, padding: 0, position: "fixed", display: "table" });
+        this.canvasBoard = new CanvasBoard_1.CanvasBoard(width, height);
+        $("body").append(this.canvasBoard.jQuerySelector);
+        this.controlPanel = new ControlPanel_1.ControlPanel(width, height);
+        $("body").append(this.controlPanel.jQuerySelector);
+    }
     return Game;
 }());
 exports.Game = Game;
 
-},{"./Board":1}],6:[function(require,module,exports){
+},{"./CanvasBoard":2,"./ControlPanel":4}],6:[function(require,module,exports){
 "use strict";
 var Game_1 = require("./Game");
 $().ready(function () {

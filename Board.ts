@@ -14,11 +14,11 @@ export class Board {
         // http://stackoverflow.com/questions/30144580/typescript-multidimensional-array-initialization
         this.cells = [];
 
-        for (var i = 0; i < rows; i++) {
-            this.cells[i] = [];
-            for (var j = 0; j < cols; j++) {
-                this.cells[i][j] = new Cell();
-                this.cells[i][j].state = CellState.ZERO;
+        for (var y = 0; y < rows; y++) {
+            this.cells[y] = [];
+            for (var x = 0; x < cols; x++) {
+                this.cells[y][x] = new Cell(y,x);
+                this.cells[y][x].state = CellState.ZERO;
             }
         }
 
