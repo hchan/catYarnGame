@@ -15,8 +15,8 @@ export class Cell {
         return this.col + "," + this.row;
     }
 
-    static getImageName(): string {
-        return Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
+    getImageName(): string {
+        return Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX; 
     }
 
     nextState() {
