@@ -55,28 +55,44 @@ var CanvasBoard = (function () {
         this.canvas.addEventListener("click", function (e) {
             var x = Math.floor(e.clientX / canvasBoard.cellLength);
             var y = Math.floor(e.clientY / canvasBoard.cellLength);
-            console.log(x + "," + y);
+            canvasBoard.doModify(x, y);
         });
         this.board = new Board_1.Board(CanvasBoard.COLS, CanvasBoard.ROWS);
         this.draw();
     }
+    CanvasBoard.prototype.doModify = function (x, y) {
+        console.log("You just clicked: " + x + "," + y);
+        this.board.cells[x][y].nextState();
+        this.draw();
+    };
     CanvasBoard.prototype.draw = function () {
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
             for (var x = 0; x < CanvasBoard.COLS; x++) {
-                this.ctx.beginPath();
-                this.ctx.rect(x * this.cellLength, y * this.cellLength, this.cellLength, this.cellLength);
-                var cell = this.board.cells[x][y];
-                console.log(cell.toString());
-                console.log(x + "-" + y);
-                if (x % 2 == 1) {
-                    this.ctx.fillStyle = "green";
-                }
-                else {
-                    this.ctx.fillStyle = "blue";
-                }
-                this.ctx.fill();
+                this.drawCellImage(x, y);
             }
         }
+    };
+    CanvasBoard.prototype.drawCellRect = function (x, y) {
+        this.ctx.beginPath();
+        this.ctx.rect(x * this.cellLength, y * this.cellLength, this.cellLength, this.cellLength);
+        if (x % 2 == 1) {
+            this.ctx.fillStyle = "green";
+        }
+        else {
+            this.ctx.fillStyle = "blue";
+        }
+        this.ctx.fill();
+    };
+    CanvasBoard.prototype.drawCellImage = function (x, y) {
+        var cell = this.board.cells[x][y];
+        var imageName = cell.getImageName();
+        var img = new Image();
+        img.src = imageName;
+        var ctx = this.ctx;
+        var cellLength = this.cellLength;
+        img.onload = function () {
+            ctx.drawImage(img, x * cellLength, y * cellLength, cellLength, cellLength);
+        };
     };
     return CanvasBoard;
 }());
@@ -93,6 +109,15 @@ var Cell = (function () {
     }
     Cell.prototype.toString = function () {
         return this.col + "," + this.row;
+    };
+    Cell.prototype.getImageName = function () {
+        return "cat" + this.state + ".jpg";
+    };
+    Cell.prototype.nextState = function () {
+        this.state++;
+        if (this.state > CellState.TWO) {
+            this.state = CellState.ZERO;
+        }
     };
     return Cell;
 }());
