@@ -1,4 +1,8 @@
+
 export class Cell {
+    static IMAGENAME_PREFIX : string = "cat";
+    static IMAGENAME_SUFFIX : string = ".jpg";
+
     state: CellState
     col: number;
     row: number;
@@ -11,14 +15,14 @@ export class Cell {
         return this.col + "," + this.row;
     }
 
-    getImageName(): string {
-        return "cat" + this.state + ".jpg";
+    static getImageName(): string {
+        return Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
     }
 
     nextState() {
         this.state++;
         if (this.state > CellState.TWO) {
-          this.state = CellState.ZERO;
+            this.state = CellState.ZERO;
         }
     }
 }

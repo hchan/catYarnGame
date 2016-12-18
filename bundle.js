@@ -33,6 +33,7 @@ exports.Board = Board;
 },{"./Cell":3}],2:[function(require,module,exports){
 "use strict";
 var Board_1 = require("./Board");
+var Cell_1 = require("./Cell");
 var CanvasBoard = (function () {
     function CanvasBoard(width, height) {
         this.width = width;
@@ -63,6 +64,7 @@ var CanvasBoard = (function () {
     CanvasBoard.prototype.doModify = function (x, y) {
         console.log("You just clicked: " + x + "," + y);
         this.board.cells[x][y].nextState();
+        console.log(Cell_1.Cell.imgDict);
         this.draw();
     };
     CanvasBoard.prototype.draw = function () {
@@ -100,7 +102,7 @@ CanvasBoard.COLS = 5;
 CanvasBoard.ROWS = 5;
 exports.CanvasBoard = CanvasBoard;
 
-},{"./Board":1}],3:[function(require,module,exports){
+},{"./Board":1,"./Cell":3}],3:[function(require,module,exports){
 "use strict";
 var Cell = (function () {
     function Cell(col, row) {
@@ -111,7 +113,7 @@ var Cell = (function () {
         return this.col + "," + this.row;
     };
     Cell.prototype.getImageName = function () {
-        return "cat" + this.state + ".jpg";
+        return Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
     };
     Cell.prototype.nextState = function () {
         this.state++;
@@ -121,6 +123,9 @@ var Cell = (function () {
     };
     return Cell;
 }());
+Cell.IMAGENAME_PREFIX = "cat";
+Cell.IMAGENAME_SUFFIX = ".jpg";
+Cell.imgDict = {};
 exports.Cell = Cell;
 var CellState;
 (function (CellState) {
@@ -151,6 +156,7 @@ exports.ControlPanel = ControlPanel;
 "use strict";
 var CanvasBoard_1 = require("./CanvasBoard");
 var ControlPanel_1 = require("./ControlPanel");
+var Cell_1 = require("./Cell");
 var Game = (function () {
     function Game() {
         var width = Math.max($(document).width(), $(window).width());
@@ -163,12 +169,20 @@ var Game = (function () {
         $("body").append(this.canvasBoard.jQuerySelector);
         this.controlPanel = new ControlPanel_1.ControlPanel(width, height);
         $("body").append(this.controlPanel.jQuerySelector);
+        this.preloadImages();
     }
+    Game.prototype.preloadImages = function () {
+        for (var key in Cell_1.CellState) {
+            if ($.isNumeric(key)) {
+                Cell_1.Cell.imgDict[key] = "cat" + key;
+            }
+        }
+    };
     return Game;
 }());
 exports.Game = Game;
 
-},{"./CanvasBoard":2,"./ControlPanel":4}],6:[function(require,module,exports){
+},{"./CanvasBoard":2,"./Cell":3,"./ControlPanel":4}],6:[function(require,module,exports){
 "use strict";
 var Game_1 = require("./Game");
 $().ready(function () {
