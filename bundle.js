@@ -64,6 +64,18 @@ var CanvasBoard = (function () {
     CanvasBoard.prototype.doModify = function (x, y) {
         console.log("You just clicked: " + x + "," + y);
         this.board.cells[x][y].nextState();
+        if (y != 0) {
+            this.board.cells[x][y - 1].nextState();
+        }
+        if (x != this.board.cols - 1) {
+            this.board.cells[x + 1][y].nextState();
+        }
+        if (y != this.board.rows - 1) {
+            this.board.cells[x][y + 1].nextState();
+        }
+        if (x != 0) {
+            this.board.cells[x - 1][y].nextState();
+        }
         this.draw();
     };
     CanvasBoard.prototype.draw = function () {

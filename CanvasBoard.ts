@@ -44,7 +44,24 @@ export class CanvasBoard {
 
     doModify(x: number, y: number) {
         console.log("You just clicked: " + x + "," + y); // TODO STOP HERE
+        // click Cell
         this.board.cells[x][y].nextState();
+        // North
+        if (y != 0) {
+          this.board.cells[x][y-1].nextState();
+        }
+        // East
+        if (x != this.board.cols-1) {
+          this.board.cells[x+1][y].nextState();
+        }
+        // South
+        if (y != this.board.rows-1) {
+          this.board.cells[x][y+1].nextState();
+        }
+        // West
+        if (x != 0) {
+          this.board.cells[x-1][y].nextState();
+        }
         this.draw();
     }
 
