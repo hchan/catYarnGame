@@ -22,8 +22,10 @@ export class Game {
     width: number;
     height: number;
 
+    static instance : Game;
     constructor() {
         this.init();
+        Game.instance = this;
     }
 
     init() {
@@ -82,12 +84,35 @@ export class Game {
     }
 
     addControlPanel() {
-      // temporary render target
-      var temp = document.createElement("div");
+
         // render
-      ReactDOM.render(<ControlPanel/>, temp);
-      let controlPanel = temp.firstChild;
-      document.getElementsByTagName("body")[0].appendChild(controlPanel);
+
+      let text = "Hello World";
+      this.renderControlPanel(text);
+
+
+    }
+
+    renderControlPanel (text : string) {
+      // temporary render target
+      let temp = document.createElement("div");
+      let width = this.width - this.height;
+      let height = this.height;
+      let controlPanelStyle = {"width" : width, "height" : height};
+      var controlPanelComponent =
+        <ControlPanel
+          style= {controlPanelStyle}
+          text = {text}
+        /> ;
+        ReactDOM.render(controlPanelComponent, temp);
+        let controlPanel = temp.firstChild;
+
+        let controlPanelElement : HTMLElement = document.getElementById("controlPanel");
+        if (controlPanelElement != null) {
+          controlPanelElement.parentNode.removeChild(controlPanelElement);
+          console.log("REMOVED")
+        }
+        document.getElementsByTagName("body")[0].appendChild(controlPanel);
     }
 
     storeImageAndLoadNext(imageLocationIndex) {

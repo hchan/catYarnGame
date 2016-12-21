@@ -77,6 +77,7 @@ var CanvasBoard = (function () {
             this.board.cells[x - 1][y].nextState();
         }
         this.draw();
+        Game_1.Game.instance.renderControlPanel("Bye");
     };
     CanvasBoard.prototype.draw = function () {
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
@@ -151,10 +152,10 @@ var React = require("react");
 var ControlPanel = (function (_super) {
     __extends(ControlPanel, _super);
     function ControlPanel() {
-        return _super.apply(this, arguments) || this;
+        return _super.call(this) || this;
     }
     ControlPanel.prototype.render = function () {
-        return React.createElement("span", { id: "controlPanel", style: { width: 20, height: 10 } }, "X");
+        return React.createElement("span", { id: "controlPanel", style: this.props.style }, this.props.text);
     };
     return ControlPanel;
 }(React.Component));
@@ -170,6 +171,7 @@ var ReactDOM = require("react-dom");
 var Game = (function () {
     function Game() {
         this.init();
+        Game.instance = this;
     }
     Game.prototype.init = function () {
         this.width = Math.max($(document).width(), $(window).width());
@@ -217,9 +219,22 @@ var Game = (function () {
         this.addControlPanel();
     };
     Game.prototype.addControlPanel = function () {
+        var text = "Hello World";
+        this.renderControlPanel(text);
+    };
+    Game.prototype.renderControlPanel = function (text) {
         var temp = document.createElement("div");
-        ReactDOM.render(React.createElement(ControlPanel_1.ControlPanel, null), temp);
+        var width = this.width - this.height;
+        var height = this.height;
+        var controlPanelStyle = { "width": width, "height": height };
+        var controlPanelComponent = React.createElement(ControlPanel_1.ControlPanel, { style: controlPanelStyle, text: text });
+        ReactDOM.render(controlPanelComponent, temp);
         var controlPanel = temp.firstChild;
+        var controlPanelElement = document.getElementById("controlPanel");
+        if (controlPanelElement != null) {
+            controlPanelElement.parentNode.removeChild(controlPanelElement);
+            console.log("REMOVED");
+        }
         document.getElementsByTagName("body")[0].appendChild(controlPanel);
     };
     Game.prototype.storeImageAndLoadNext = function (imageLocationIndex) {

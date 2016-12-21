@@ -1,7 +1,11 @@
 /// <reference path="node_modules/@types/jquery/index.d.ts"/>
+/// <reference path="typings/modules/react/index.d.ts"/>
+/// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Board} from './Board';
 import {Cell, CellState} from './Cell';
 import {Game} from './Game';
+import * as React from "react"
+import * as ReactDOM from 'react-dom';
 
 export class CanvasBoard {
     jQuerySelector: JQuery;
@@ -63,6 +67,8 @@ export class CanvasBoard {
           this.board.cells[x-1][y].nextState();
         }
         this.draw();
+        Game.instance.renderControlPanel("Bye")
+
     }
 
     draw() {
