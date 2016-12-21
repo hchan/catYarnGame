@@ -1,14 +1,19 @@
 
 /// <reference path="node_modules/@types/jquery/index.d.ts"/>
+/// <reference path="typings/modules/react/index.d.ts"/>
+/// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {CanvasBoard} from './CanvasBoard'
 import {ControlPanel} from './ControlPanel'
 import {Cell, CellState} from './Cell'
 import {Board} from './Board'
 import {ImageHelper} from './ImageHelper'
+import * as React from "react"
+import * as ReactDOM from 'react-dom';
+
 
 export class Game {
     canvasBoard: CanvasBoard
-    controlPanel: ControlPanel
+    //controlPanel: ControlPanel
     static IMAGE_LOCATIONS: string[] = [];
     static IMAGE_DICT: { [key: string]: HTMLImageElement } = {};
     static PLEASEWAITTEXT: string = "Please Wait";
@@ -73,8 +78,16 @@ export class Game {
         // assume with > height for now
         this.canvasBoard = new CanvasBoard(this.width, this.height);
         $("body").append(this.canvasBoard.jQuerySelector);
-        this.controlPanel = new ControlPanel(this.width, this.height);
-        $("body").append(this.controlPanel.jQuerySelector);
+        this.addControlPanel();
+    }
+
+    addControlPanel() {
+      // temporary render target
+      var temp = document.createElement("div");
+        // render
+      ReactDOM.render(<ControlPanel/>, temp);
+      let controlPanel = temp.firstChild;
+      document.getElementsByTagName("body")[0].appendChild(controlPanel);
     }
 
     storeImageAndLoadNext(imageLocationIndex) {

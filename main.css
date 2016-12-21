@@ -17,3 +17,9 @@ body {
 	font-size: 14pt;
 	text-align: center;
 }
+
+#controlPanel {
+  vertical-align: top;
+  display: table-cell;
+  background-color : red;
+}
