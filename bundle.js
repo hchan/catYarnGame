@@ -77,7 +77,7 @@ var CanvasBoard = (function () {
             this.board.cells[x - 1][y].nextState();
         }
         this.draw();
-        Game_1.Game.instance.renderControlPanel("Bye");
+        Game_1.Game.instance.renderControlPanel({ text: "Good Bye" });
     };
     CanvasBoard.prototype.draw = function () {
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
@@ -220,20 +220,20 @@ var Game = (function () {
     };
     Game.prototype.addControlPanel = function () {
         var text = "Hello World";
-        this.renderControlPanel(text);
+        var props = { text: "text" };
+        this.renderControlPanel(props);
     };
-    Game.prototype.renderControlPanel = function (text) {
+    Game.prototype.renderControlPanel = function (props) {
         var temp = document.createElement("div");
         var width = this.width - this.height;
         var height = this.height;
-        var controlPanelStyle = { "width": width, "height": height };
-        var controlPanelComponent = React.createElement(ControlPanel_1.ControlPanel, { style: controlPanelStyle, text: text });
+        props.style = { "width": width, "height": height };
+        var controlPanelComponent = React.createElement(ControlPanel_1.ControlPanel, { style: props.style, text: props.text });
         ReactDOM.render(controlPanelComponent, temp);
         var controlPanel = temp.firstChild;
         var controlPanelElement = document.getElementById("controlPanel");
         if (controlPanelElement != null) {
             controlPanelElement.parentNode.removeChild(controlPanelElement);
-            console.log("REMOVED");
         }
         document.getElementsByTagName("body")[0].appendChild(controlPanel);
     };

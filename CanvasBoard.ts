@@ -67,7 +67,7 @@ export class CanvasBoard {
           this.board.cells[x-1][y].nextState();
         }
         this.draw();
-        Game.instance.renderControlPanel("Bye")
+        Game.instance.renderControlPanel({text:"Good Bye"});
 
     }
 

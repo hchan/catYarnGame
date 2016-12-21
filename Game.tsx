@@ -3,7 +3,7 @@
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {CanvasBoard} from './CanvasBoard'
-import {ControlPanel} from './ControlPanel'
+import {ControlPanel, Props} from './ControlPanel'
 import {Cell, CellState} from './Cell'
 import {Board} from './Board'
 import {ImageHelper} from './ImageHelper'
@@ -84,25 +84,22 @@ export class Game {
     }
 
     addControlPanel() {
-
-        // render
-
       let text = "Hello World";
-      this.renderControlPanel(text);
-
-
+      let props : Props = {text:"text"};
+      this.renderControlPanel(props);
     }
 
-    renderControlPanel (text : string) {
+
+    renderControlPanel (props : Props) {
       // temporary render target
       let temp = document.createElement("div");
       let width = this.width - this.height;
       let height = this.height;
-      let controlPanelStyle = {"width" : width, "height" : height};
+      props.style = {"width" : width, "height" : height};
       var controlPanelComponent =
         <ControlPanel
-          style= {controlPanelStyle}
-          text = {text}
+          style= {props.style}
+          text = {props.text}
         /> ;
         ReactDOM.render(controlPanelComponent, temp);
         let controlPanel = temp.firstChild;
@@ -110,7 +107,6 @@ export class Game {
         let controlPanelElement : HTMLElement = document.getElementById("controlPanel");
         if (controlPanelElement != null) {
           controlPanelElement.parentNode.removeChild(controlPanelElement);
-          console.log("REMOVED")
         }
         document.getElementsByTagName("body")[0].appendChild(controlPanel);
     }

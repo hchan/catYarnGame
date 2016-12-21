@@ -4,8 +4,8 @@
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
-interface Props {
-  style: stylePropType;
+export interface Props {
+  style?: stylePropType;
   text : string;
 }
 
