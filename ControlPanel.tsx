@@ -6,7 +6,7 @@ import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 export interface Props {
   style?: stylePropType;
-  body : React.Component<any, any>;
+  body : JSX.Element;
 }
 
 
@@ -15,9 +15,11 @@ export class ControlPanel extends React.Component<Props, {}> {
     super();
   }
 
+  refs : {}
+
   static initialBody =
   <span className="content">
-    <span className="title">Cat Yarn Puzzle</span>
+    <span className="title">Cat Yarn Game</span>
     <br/><br/>
     <span className="description">The goal of this game is
     to give every cat on each tile exactly <span style={{"fontWeight":"bold"}}>2</span> yarn balls.
