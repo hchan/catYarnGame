@@ -1,9 +1,8 @@
 body {
 	margin: 0;
 	padding: 0;
-	overflow: hidden;
   position: fixed;
-  display: table;
+  display: block;
 	font-family: "Trebuchet MS", "Helvetica", "Arial", "Verdana",
 		"sans-serif";
 	height: 100%;
@@ -20,12 +19,24 @@ body {
 	text-align: center;
 }
 
+
 #controlPanel {
+	font-size: 2.5vw;
+	overflow: scroll !important;
+	word-wrap: break-word;
+	display: table-cell;
   vertical-align: top;
-  display: table-cell;
   background-color : beige;
   padding : 8px;
   border: 3px solid blue;
+  min-width: 5px;
+  overflow: scroll;
+}
+
+@media screen and (min-width: 600px) {
+    #controlPanel {
+        font-size: 14px;
+    }
 }
 
 #canvasBoard:hover {

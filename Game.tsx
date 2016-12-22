@@ -10,7 +10,10 @@ import {ImageHelper} from './ImageHelper'
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
-
+export enum Orientation {
+  LANDSCAPE,
+  PORTRAIT
+}
 export class Game {
     canvasBoard: CanvasBoard
     //controlPanel: ControlPanel
@@ -21,22 +24,57 @@ export class Game {
     static ANIMATELOADINGINTERVALID: number;
     width: number;
     height: number;
+    orientation : Orientation;
 
     static instance : Game;
     constructor() {
-        this.init();
         Game.instance = this;
+        this.init();
     }
 
     init() {
-        this.width = Math.max($(document).width(), $(window).width())
-        this.height = Math.max($(document).height(), $(window).height())
+        this.assignWidthAndHeight();
         $("html").width(this.width);
         $("html").height(this.height);
-  
+        if (this.width > this.height) {
+          this.orientation = Orientation.LANDSCAPE;
+          $("body").css({"display": "table"})
+        } else {
+          this.orientation = Orientation.PORTRAIT;
+          $("body").css({"display": "inline"})
+        }
+
         this.initLoading();
         this.animateLoading();
         this.preloadImages();
+    }
+
+    assignWidthAndHeight() {
+       // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
+
+       if (typeof window.innerWidth != 'undefined')
+       {
+            this.width = window.innerWidth,
+            this.height = window.innerHeight
+       }
+
+      // IE6 in standards compliant mode (i.e. with a valid doctype as the first line in the document)
+
+       else if (typeof document.documentElement != 'undefined'
+           && typeof document.documentElement.clientWidth !=
+           'undefined' && document.documentElement.clientWidth != 0)
+       {
+             this.width = document.documentElement.clientWidth,
+             this.height = document.documentElement.clientHeight
+       }
+
+       // older versions of IE
+
+       else
+       {
+             this.width = document.getElementsByTagName('body')[0].clientWidth,
+             this.height = document.getElementsByTagName('body')[0].clientHeight
+       }
     }
 
     initLoading() {
@@ -74,9 +112,8 @@ export class Game {
     doAfterPreloadImages() {
         self.clearInterval(Game.ANIMATELOADINGINTERVALID);
         $("body").html("");
-        // assume with > height for now
-        this.canvasBoard = new CanvasBoard(this.width, this.height);
-        $("body").append(this.canvasBoard.jQuerySelector);
+        this.canvasBoard = new CanvasBoard();
+        $("body").append(this.canvasBoard.canvas);
         this.addControlPanel();
     }
 
@@ -89,8 +126,16 @@ export class Game {
     renderControlPanel (props : Props) {
       // temporary render target
       let temp = document.createElement("div");
-      let width = this.width - this.height;
-      let height = this.height;
+      let width: number = this.width - this.canvasBoard.width;
+      let height: number = this.height - this.canvasBoard.height;
+
+      if (width == 0) {
+        width = this.width;
+      }
+      if (height == 0) {
+        height = this.height;
+      }
+
       props.style = {"width" : width, "height" : height};
       var controlPanelComponent =
         <ControlPanel

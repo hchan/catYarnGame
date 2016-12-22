@@ -35,19 +35,21 @@ exports.Board = Board;
 var Board_1 = require("./Board");
 var Game_1 = require("./Game");
 var CanvasBoard = (function () {
-    function CanvasBoard(width, height) {
-        this.width = width;
-        this.height = height;
-        if (height > width) {
-            this.cellLength = width / CanvasBoard.COLS;
+    function CanvasBoard() {
+        var jQuerySelector = $("<canvas id='canvasBoard' ></canvas>");
+        if (Game_1.Game.instance.orientation == Game_1.Orientation.LANDSCAPE) {
+            this.width = Game_1.Game.instance.height;
+            this.height = Game_1.Game.instance.height;
+            this.cellLength = this.height / CanvasBoard.COLS;
         }
         else {
-            this.cellLength = height / CanvasBoard.COLS;
+            this.width = Game_1.Game.instance.width;
+            this.height = Game_1.Game.instance.width;
+            this.cellLength = this.height / CanvasBoard.COLS;
         }
+        jQuerySelector.prop('width', this.width);
+        jQuerySelector.prop('height', this.height);
         this.cellLength = Math.floor(this.cellLength);
-        var jQuerySelector = $("<canvas id='canvasBoard' ></canvas>");
-        jQuerySelector.prop('width', height);
-        jQuerySelector.prop('height', height);
         jQuerySelector.css({ display: 'table-cell' });
         this.jQuerySelector = jQuerySelector;
         this.canvas = this.jQuerySelector.get(0);
@@ -158,13 +160,13 @@ var ControlPanel = (function (_super) {
     };
     return ControlPanel;
 }(React.Component));
-ControlPanel.initialBody = React.createElement("div", { className: "content" },
+ControlPanel.initialBody = React.createElement("span", { className: "content" },
     React.createElement("span", { className: "title" }, "Cat Yarn Puzzle"),
     React.createElement("br", null),
     React.createElement("br", null),
     React.createElement("span", { className: "description" },
         "The goal of this game is" + " " + "to give every cat on each tile exactly ",
-        React.createElement("span", { style: { "font-weight": "bold" } }, "2"),
+        React.createElement("span", { style: { "fontWeight": "bold" } }, "2"),
         " yarn balls." + " " + "Clicking on a tile will drop a yarn on that tile in addition to" + " " + "its orthogonally adjacent  (up,right,down,left) tiles where applicable." + " " + "If a tile already contains 2 yarn balls, the cat on that tile will make a mess of" + " " + "the yarn and henceforth be left with no yarn balls.",
         React.createElement("br", null),
         React.createElement("br", null),
@@ -178,19 +180,47 @@ var ControlPanel_1 = require("./ControlPanel");
 var ImageHelper_1 = require("./ImageHelper");
 var React = require("react");
 var ReactDOM = require("react-dom");
+var Orientation;
+(function (Orientation) {
+    Orientation[Orientation["LANDSCAPE"] = 0] = "LANDSCAPE";
+    Orientation[Orientation["PORTRAIT"] = 1] = "PORTRAIT";
+})(Orientation = exports.Orientation || (exports.Orientation = {}));
 var Game = (function () {
     function Game() {
-        this.init();
         Game.instance = this;
+        this.init();
     }
     Game.prototype.init = function () {
-        this.width = Math.max($(document).width(), $(window).width());
-        this.height = Math.max($(document).height(), $(window).height());
+        this.assignWidthAndHeight();
         $("html").width(this.width);
         $("html").height(this.height);
+        if (this.width > this.height) {
+            this.orientation = Orientation.LANDSCAPE;
+            $("body").css({ "display": "table" });
+        }
+        else {
+            this.orientation = Orientation.PORTRAIT;
+            $("body").css({ "display": "inline" });
+        }
         this.initLoading();
         this.animateLoading();
         this.preloadImages();
+    };
+    Game.prototype.assignWidthAndHeight = function () {
+        if (typeof window.innerWidth != 'undefined') {
+            this.width = window.innerWidth,
+                this.height = window.innerHeight;
+        }
+        else if (typeof document.documentElement != 'undefined'
+            && typeof document.documentElement.clientWidth !=
+                'undefined' && document.documentElement.clientWidth != 0) {
+            this.width = document.documentElement.clientWidth,
+                this.height = document.documentElement.clientHeight;
+        }
+        else {
+            this.width = document.getElementsByTagName('body')[0].clientWidth,
+                this.height = document.getElementsByTagName('body')[0].clientHeight;
+        }
     };
     Game.prototype.initLoading = function () {
         $("body").html("<div id='loading'><div id='pleaseWait'>"
@@ -222,8 +252,8 @@ var Game = (function () {
     Game.prototype.doAfterPreloadImages = function () {
         self.clearInterval(Game.ANIMATELOADINGINTERVALID);
         $("body").html("");
-        this.canvasBoard = new CanvasBoard_1.CanvasBoard(this.width, this.height);
-        $("body").append(this.canvasBoard.jQuerySelector);
+        this.canvasBoard = new CanvasBoard_1.CanvasBoard();
+        $("body").append(this.canvasBoard.canvas);
         this.addControlPanel();
     };
     Game.prototype.addControlPanel = function () {
@@ -232,8 +262,14 @@ var Game = (function () {
     };
     Game.prototype.renderControlPanel = function (props) {
         var temp = document.createElement("div");
-        var width = this.width - this.height;
-        var height = this.height;
+        var width = this.width - this.canvasBoard.width;
+        var height = this.height - this.canvasBoard.height;
+        if (width == 0) {
+            width = this.width;
+        }
+        if (height == 0) {
+            height = this.height;
+        }
         props.style = { "width": width, "height": height };
         var controlPanelComponent = React.createElement(ControlPanel_1.ControlPanel, { style: props.style, body: props.body });
         ReactDOM.render(controlPanelComponent, temp);
