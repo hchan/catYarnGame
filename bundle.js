@@ -77,7 +77,6 @@ var CanvasBoard = (function () {
             this.board.cells[x - 1][y].nextState();
         }
         this.draw();
-        Game_1.Game.instance.renderControlPanel({ text: "Good Bye" });
     };
     CanvasBoard.prototype.draw = function () {
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
@@ -155,10 +154,21 @@ var ControlPanel = (function (_super) {
         return _super.call(this) || this;
     }
     ControlPanel.prototype.render = function () {
-        return React.createElement("span", { id: "controlPanel", style: this.props.style }, this.props.text);
+        return React.createElement("span", { id: "controlPanel", style: this.props.style }, this.props.body);
     };
     return ControlPanel;
 }(React.Component));
+ControlPanel.initialBody = React.createElement("div", { className: "content" },
+    React.createElement("span", { className: "title" }, "Cat Yarn Puzzle"),
+    React.createElement("br", null),
+    React.createElement("br", null),
+    React.createElement("span", { className: "description" },
+        "The goal of this game is" + " " + "to give every cat on each tile exactly ",
+        React.createElement("span", { style: { "font-weight": "bold" } }, "2"),
+        " yarn balls." + " " + "Clicking on a tile will drop a yarn on that tile in addition to" + " " + "its orthogonally adjacent  (up,right,down,left) tiles where applicable." + " " + "If a tile already contains 2 yarn balls, the cat on that tile will make a mess of" + " " + "the yarn and henceforth be left with no yarn balls.",
+        React.createElement("br", null),
+        React.createElement("br", null),
+        "Good luck!"));
 exports.ControlPanel = ControlPanel;
 
 },{"react":185}],5:[function(require,module,exports){
@@ -178,8 +188,6 @@ var Game = (function () {
         this.height = Math.max($(document).height(), $(window).height());
         $("html").width(this.width);
         $("html").height(this.height);
-        $("head").css({ margin: 0, padding: 0 });
-        $("body").css({ margin: 0, padding: 0, position: "fixed", display: "table" });
         this.initLoading();
         this.animateLoading();
         this.preloadImages();
@@ -219,8 +227,7 @@ var Game = (function () {
         this.addControlPanel();
     };
     Game.prototype.addControlPanel = function () {
-        var text = "Hello World";
-        var props = { text: "text" };
+        var props = { body: ControlPanel_1.ControlPanel.initialBody };
         this.renderControlPanel(props);
     };
     Game.prototype.renderControlPanel = function (props) {
@@ -228,7 +235,7 @@ var Game = (function () {
         var width = this.width - this.height;
         var height = this.height;
         props.style = { "width": width, "height": height };
-        var controlPanelComponent = React.createElement(ControlPanel_1.ControlPanel, { style: props.style, text: props.text });
+        var controlPanelComponent = React.createElement(ControlPanel_1.ControlPanel, { style: props.style, body: props.body });
         ReactDOM.render(controlPanelComponent, temp);
         var controlPanel = temp.firstChild;
         var controlPanelElement = document.getElementById("controlPanel");
@@ -20740,6 +20747,6 @@ arguments[4][159][0].apply(exports,arguments)
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":162}]},{},[1,2,3,6,7]);
+},{"./lib/React":162}]},{},[1,3,6,7]);
 
 //# sourceMappingURL=bundle.js.map

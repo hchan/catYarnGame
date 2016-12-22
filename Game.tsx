@@ -33,10 +33,7 @@ export class Game {
         this.height = Math.max($(document).height(), $(window).height())
         $("html").width(this.width);
         $("html").height(this.height);
-        $("head").css({ margin: 0, padding: 0 });
-        $("body").css(
-            { margin: 0, padding: 0, position: "fixed", display: "table" }
-        );
+  
         this.initLoading();
         this.animateLoading();
         this.preloadImages();
@@ -84,8 +81,7 @@ export class Game {
     }
 
     addControlPanel() {
-      let text = "Hello World";
-      let props : Props = {text:"text"};
+      let props : Props = {body:ControlPanel.initialBody};
       this.renderControlPanel(props);
     }
 
@@ -99,7 +95,7 @@ export class Game {
       var controlPanelComponent =
         <ControlPanel
           style= {props.style}
-          text = {props.text}
+          body = {props.body}
         /> ;
         ReactDOM.render(controlPanelComponent, temp);
         let controlPanel = temp.firstChild;
