@@ -18,4 +18,8 @@ handlers:
 
  - url: /img/(.*)
    static_files: img/\1
-   upload: img/(.*)  
+   upload: img/(.*)
+
+ - url: /favicon.ico
+   static_files: favicon.ico
+   upload: favicon.ico
