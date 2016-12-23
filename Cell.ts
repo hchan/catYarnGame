@@ -1,4 +1,4 @@
-
+import {ImageHelper} from './ImageHelper';
 export class Cell {
     static IMAGENAME_PREFIX : string = "cat";
     static IMAGENAME_SUFFIX : string = ".jpg";
@@ -16,7 +16,7 @@ export class Cell {
     }
 
     getImageName(): string {
-        return Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX; 
+        return ImageHelper.DIR + "/" + Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
     }
 
     nextState() {

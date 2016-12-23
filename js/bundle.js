@@ -113,6 +113,7 @@ exports.CanvasBoard = CanvasBoard;
 
 },{"./Board":1,"./Game":5}],3:[function(require,module,exports){
 "use strict";
+var ImageHelper_1 = require("./ImageHelper");
 var Cell = (function () {
     function Cell(col, row) {
         this.col = col;
@@ -122,7 +123,7 @@ var Cell = (function () {
         return this.col + "," + this.row;
     };
     Cell.prototype.getImageName = function () {
-        return Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
+        return ImageHelper_1.ImageHelper.DIR + "/" + Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
     };
     Cell.prototype.nextState = function () {
         this.state++;
@@ -142,7 +143,7 @@ var CellState;
     CellState[CellState["TWO"] = 2] = "TWO";
 })(CellState = exports.CellState || (exports.CellState = {}));
 
-},{}],4:[function(require,module,exports){
+},{"./ImageHelper":6}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -311,12 +312,13 @@ var ImageHelper = (function () {
     function ImageHelper() {
     }
     ImageHelper.prototype.populate = function () {
-        Game_1.Game.IMAGE_LOCATIONS.push("cat0.jpg");
-        Game_1.Game.IMAGE_LOCATIONS.push("cat1.jpg");
-        Game_1.Game.IMAGE_LOCATIONS.push("cat2.jpg");
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat0.jpg");
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat1.jpg");
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat2.jpg");
     };
     return ImageHelper;
 }());
+ImageHelper.DIR = "img";
 exports.ImageHelper = ImageHelper;
 
 },{"./Game":5}],7:[function(require,module,exports){
