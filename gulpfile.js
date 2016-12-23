@@ -10,8 +10,9 @@ var glob = require('glob');
 const b = require('gulp-browserify-typescript');
 var files = glob.sync('*.ts');
 var outputFile = 'bundle.js';
-var outputPath = ".";
+var outputPath = "js";
 var webserver = require('gulp-webserver');
+var exec = require('child_process').exec;
 
 gulp.task("default", function () {
 
@@ -46,3 +47,11 @@ gulp.task('webserver', function() {
       open: true
     }));
 });
+
+gulp.task('deploy', function (cb) {
+  exec("echo Y | deployGloud.bat", function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+})
