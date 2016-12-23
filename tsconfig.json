@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
-	"outFile": "catYarnPuzzle.js",
+	"outFile": "doesNotExistUseGulpWatchInstead.js",
 	"sourceMap": true,
         "moduleResolution": "node",
         "isolatedModules": false,
