@@ -15,6 +15,7 @@ export class ControlPanel extends React.Component<Props, {}> {
     super();
   }
 
+  // need this like to help with transpile
   refs : {}
 
   static initialBody =

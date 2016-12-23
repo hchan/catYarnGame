@@ -1,6 +1,5 @@
 /**
-  To test from the command line
-  ts-node Main.ts
+  To add more typings: C:\>typings install
   otherwise run gulp and then load index.html
 */
 var gulp = require("gulp");
