@@ -71,10 +71,28 @@ export class CanvasBoard {
         if (x != 0) {
           this.board.cells[x-1][y].nextState();
         }
+
         this.draw();
+        if (this.isPuzzleSolved()) {
+          this.renderYouWin();
+        }
+    }
 
-        //Game.instance.renderControlPanel({body:<div>Farewell</div>});
+    isPuzzleSolved() : boolean {
+      var retval : boolean = true;
+      for (var y = 0; y < CanvasBoard.ROWS; y++) {
+          for (var x = 0; x < CanvasBoard.COLS; x++) {
+              if ((this.board.cells[x][y].state == CellState.ZERO) ||
+                (this.board.cells[x][y].state == CellState.ONE)) {
+                      return false;
+                }
+          }
+        }
+        return retval;
+    }
 
+    renderYouWin() {
+      Game.instance.renderControlPanel({body:<div>You Win!</div>});
     }
 
     draw() {

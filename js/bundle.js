@@ -33,7 +33,9 @@ exports.Board = Board;
 },{"./Cell":3}],2:[function(require,module,exports){
 "use strict";
 var Board_1 = require("./Board");
+var Cell_1 = require("./Cell");
 var Game_1 = require("./Game");
+var React = require("react");
 var CanvasBoard = (function () {
     function CanvasBoard() {
         var jQuerySelector = $("<canvas id='canvasBoard' ></canvas>");
@@ -79,6 +81,24 @@ var CanvasBoard = (function () {
             this.board.cells[x - 1][y].nextState();
         }
         this.draw();
+        if (this.isPuzzleSolved()) {
+            this.renderYouWin();
+        }
+    };
+    CanvasBoard.prototype.isPuzzleSolved = function () {
+        var retval = true;
+        for (var y = 0; y < CanvasBoard.ROWS; y++) {
+            for (var x = 0; x < CanvasBoard.COLS; x++) {
+                if ((this.board.cells[x][y].state == Cell_1.CellState.ZERO) ||
+                    (this.board.cells[x][y].state == Cell_1.CellState.ONE)) {
+                    return false;
+                }
+            }
+        }
+        return retval;
+    };
+    CanvasBoard.prototype.renderYouWin = function () {
+        Game_1.Game.instance.renderControlPanel({ body: React.createElement("div", null, "You Win!") });
     };
     CanvasBoard.prototype.draw = function () {
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
@@ -111,7 +131,7 @@ CanvasBoard.COLS = 5;
 CanvasBoard.ROWS = 5;
 exports.CanvasBoard = CanvasBoard;
 
-},{"./Board":1,"./Game":5}],3:[function(require,module,exports){
+},{"./Board":1,"./Cell":3,"./Game":5,"react":184}],3:[function(require,module,exports){
 "use strict";
 var ImageHelper_1 = require("./ImageHelper");
 var Cell = (function () {
