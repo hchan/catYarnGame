@@ -15,7 +15,7 @@ export class GameLevel {
       <span>
         10000
         00001
-        00000
+        01200
         02000
         00010
       </span>);

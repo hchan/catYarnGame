@@ -5,18 +5,31 @@ var Board = (function () {
     function Board(cols, rows, boardAsString) {
         this.cols = cols;
         this.rows = rows;
-        this.cells = [];
+        this.createCells();
+        this.initCells(boardAsString);
+    }
+    Board.prototype.initCells = function (boardAsString) {
         var boardAsStringIndex = 0;
-        for (var y = 0; y < rows; y++) {
-            this.cells[y] = [];
-            for (var x = 0; x < cols; x++) {
-                this.cells[y][x] = new Cell_1.Cell(y, x);
+        for (var y = 0; y < this.rows; y++) {
+            for (var x = 0; x < this.cols; x++) {
+                var cell = this.cells[x][y];
                 var state = parseInt(boardAsString.substring(boardAsStringIndex, boardAsStringIndex + 1));
                 boardAsStringIndex++;
+                cell.state = state;
+            }
+        }
+    };
+    Board.prototype.createCells = function () {
+        this.cells = [];
+        for (var y = 0; y < this.rows; y++) {
+            this.cells[y] = [];
+            for (var x = 0; x < this.cols; x++) {
+                this.cells[y][x] = new Cell_1.Cell(y, x);
+                var state = Cell_1.CellState.ZERO;
                 this.cells[y][x].state = state;
             }
         }
-    }
+    };
     Board.prototype.printBoard = function () {
         for (var i = 0; i < this.rows; i++) {
             var rowLine = "";
@@ -339,7 +352,7 @@ var GameLevel = (function () {
     }
     GameLevel.init = function () {
         GameLevel.LEVELS = [];
-        GameLevel.LEVELS.push(React.createElement("span", null, "10000" + " " + "00001" + " " + "00000" + " " + "02000" + " " + "00010"));
+        GameLevel.LEVELS.push(React.createElement("span", null, "10000" + " " + "00001" + " " + "01200" + " " + "02000" + " " + "00010"));
     };
     GameLevel.getBoardAsString = function (gameLevelIndex) {
         var retval = "";
