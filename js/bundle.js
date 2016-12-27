@@ -2,13 +2,12 @@
 "use strict";
 var Cell_1 = require("./Cell");
 var Board = (function () {
-    function Board(cols, rows, boardAsString) {
+    function Board(cols, rows) {
         this.cols = cols;
         this.rows = rows;
         this.createCells();
-        this.initCells(boardAsString);
     }
-    Board.prototype.initCells = function (boardAsString) {
+    Board.prototype.load = function (boardAsString) {
         var boardAsStringIndex = 0;
         for (var y = 0; y < this.rows; y++) {
             for (var x = 0; x < this.cols; x++) {
@@ -81,10 +80,13 @@ var CanvasBoard = (function () {
             var y = Math.floor(e.clientY / canvasBoard.cellLength);
             canvasBoard.doModify(x, y);
         });
-        var boardAsString = GameLevel_1.GameLevel.getBoardAsString(Game_1.Game.instance.settings.gameLevelIndex);
-        this.board = new Board_1.Board(CanvasBoard.COLS, CanvasBoard.ROWS, boardAsString);
-        this.draw();
+        this.board = new Board_1.Board(CanvasBoard.COLS, CanvasBoard.ROWS);
+        this.loadBoardAndDraw();
     }
+    CanvasBoard.prototype.loadBoardAndDraw = function () {
+        this.board.load(GameLevel_1.GameLevel.getBoardAsString(Game_1.Game.instance.settings.gameLevelIndex));
+        this.draw();
+    };
     CanvasBoard.prototype.doModify = function (x, y) {
         console.log("You just clicked: " + x + "," + y);
         this.board.cells[x][y].nextState();
@@ -435,6 +437,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Game_1 = require("./Game");
 var React = require("react");
 var MoveCount = (function (_super) {
     __extends(MoveCount, _super);
@@ -456,6 +459,7 @@ var MoveCount = (function (_super) {
         var state = this.state;
         state.moves = 1;
         this.setState(state);
+        Game_1.Game.instance.canvasBoard.loadBoardAndDraw();
     };
     MoveCount.prototype.render = function () {
         return React.createElement("span", { className: "content" },
@@ -468,14 +472,14 @@ var MoveCount = (function (_super) {
             React.createElement("span", { id: "moveCount" }, this.state.moves),
             React.createElement("br", null),
             React.createElement("br", null),
-            React.createElement("input", { type: "text", onChange: this.change }),
+            React.createElement("input", { type: "hidden", onChange: this.change }),
             React.createElement("input", { type: "button", value: "Reset", onClick: this.reset, className: "bottomRight" }));
     };
     return MoveCount;
 }(React.Component));
 exports.MoveCount = MoveCount;
 
-},{"react":217}],11:[function(require,module,exports){
+},{"./Game":5,"react":217}],11:[function(require,module,exports){
 "use strict";
 var Settings = (function () {
     function Settings() {

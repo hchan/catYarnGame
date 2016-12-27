@@ -49,8 +49,12 @@ export class CanvasBoard {
             var y: number = Math.floor(e.clientY / canvasBoard.cellLength);
             canvasBoard.doModify(x, y);
         });
-        var boardAsString : string = GameLevel.getBoardAsString(Game.instance.settings.gameLevelIndex);
-        this.board = new Board(CanvasBoard.COLS, CanvasBoard.ROWS, boardAsString);
+        this.board = new Board(CanvasBoard.COLS, CanvasBoard.ROWS);
+        this.loadBoardAndDraw();
+    }
+
+    loadBoardAndDraw() {
+        this.board.load(GameLevel.getBoardAsString(Game.instance.settings.gameLevelIndex));        
         this.draw();
     }
 

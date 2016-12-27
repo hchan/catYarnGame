@@ -36,6 +36,7 @@ export class MoveCount extends React.Component<Props, {}> {
     let state : Props = this.state;
     state.moves = 1;
     this.setState(state);
+    Game.instance.canvasBoard.loadBoardAndDraw();
   }
 
 
@@ -45,7 +46,7 @@ export class MoveCount extends React.Component<Props, {}> {
       <br/><br/>
       Number of moves : <span id="moveCount">{this.state.moves}</span>
       <br/><br/>
-      <input type="text" onChange={this.change}/>
+      <input type="hidden" onChange={this.change}/>
       <input type="button" value="Reset" onClick={this.reset} className="bottomRight"/>
     </span>;
   }

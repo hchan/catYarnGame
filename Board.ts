@@ -18,14 +18,14 @@ export class Board {
 
       then boardAsString wold be: 00001100200200010000
     **/
-    constructor(cols: number, rows: number, boardAsString : string) {
+    constructor(cols: number, rows: number) {
         this.cols = cols;
         this.rows = rows;
         this.createCells();
-        this.initCells(boardAsString);
     }
 
-    initCells(boardAsString : string) {
+
+    load(boardAsString : string) {
       var boardAsStringIndex : number = 0;
       for (var y = 0; y < this.rows; y++) {
           for (var x = 0; x < this.cols; x++) {
