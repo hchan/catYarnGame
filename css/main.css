@@ -44,3 +44,9 @@ body {
     font-size: 120%;
     font-weight: bold;
 }
+
+.bottomRight {
+	position: absolute;
+	right:    8;
+	bottom:   8;
+}

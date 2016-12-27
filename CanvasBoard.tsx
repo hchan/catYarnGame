@@ -102,7 +102,7 @@ export class CanvasBoard {
       } else {
         let moveCount : number = parseInt($("#moveCount").html());
         moveCount++;
-        $("#moveCount").html(moveCount+"");
+        Game.instance.renderControlPanel({body:<MoveCount levelIndex={Game.instance.settings.gameLevelIndex} moves={moveCount}/>});
       }
     }
 

@@ -127,7 +127,7 @@ var CanvasBoard = (function () {
         else {
             var moveCount = parseInt($("#moveCount").html());
             moveCount++;
-            $("#moveCount").html(moveCount + "");
+            Game_1.Game.instance.renderControlPanel({ body: React.createElement(MoveCount_1.MoveCount, { levelIndex: Game_1.Game.instance.settings.gameLevelIndex, moves: moveCount }) });
         }
     };
     CanvasBoard.prototype.renderYouWin = function () {
@@ -438,9 +438,25 @@ var __extends = (this && this.__extends) || function (d, b) {
 var React = require("react");
 var MoveCount = (function (_super) {
     __extends(MoveCount, _super);
-    function MoveCount() {
-        return _super.call(this) || this;
+    function MoveCount(props) {
+        var _this = _super.call(this, props) || this;
+        _this.change = _this.change.bind(_this);
+        _this.reset = _this.reset.bind(_this);
+        _this.state = {};
+        $.extend(_this.state, _this.props);
+        return _this;
     }
+    MoveCount.prototype.change = function (e) {
+        console.log("change");
+        var state = this.state;
+        state.moves++;
+        this.setState(state);
+    };
+    MoveCount.prototype.reset = function (e) {
+        var state = this.state;
+        state.moves = 1;
+        this.setState(state);
+    };
     MoveCount.prototype.render = function () {
         return React.createElement("span", { className: "content" },
             React.createElement("span", { className: "title" },
@@ -449,10 +465,11 @@ var MoveCount = (function (_super) {
             React.createElement("br", null),
             React.createElement("br", null),
             "Number of moves : ",
-            React.createElement("span", { id: "moveCount" }, this.props.moves),
+            React.createElement("span", { id: "moveCount" }, this.state.moves),
             React.createElement("br", null),
             React.createElement("br", null),
-            "Next");
+            React.createElement("input", { type: "text", onChange: this.change }),
+            React.createElement("input", { type: "button", value: "Reset", onClick: this.reset, className: "bottomRight" }));
     };
     return MoveCount;
 }(React.Component));
