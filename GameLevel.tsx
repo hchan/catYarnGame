@@ -13,11 +13,11 @@ export class GameLevel {
     GameLevel.LEVELS = [];
     GameLevel.LEVELS.push(
       <span>
-        10000
-        00001
-        01200
-        02000
-        00010
+        22222
+        22022
+        20002
+        22022
+        22222
       </span>);
   }
 

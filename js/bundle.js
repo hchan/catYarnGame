@@ -352,7 +352,7 @@ var GameLevel = (function () {
     }
     GameLevel.init = function () {
         GameLevel.LEVELS = [];
-        GameLevel.LEVELS.push(React.createElement("span", null, "10000" + " " + "00001" + " " + "01200" + " " + "02000" + " " + "00010"));
+        GameLevel.LEVELS.push(React.createElement("span", null, "22222" + " " + "22022" + " " + "20002" + " " + "22022" + " " + "22222"));
     };
     GameLevel.getBoardAsString = function (gameLevelIndex) {
         var retval = "";
