@@ -4,6 +4,7 @@
 import {Board} from './Board';
 import {Cell, CellState} from './Cell';
 import {Game, Orientation} from './Game';
+import {GameLevel} from './GameLevel';
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -47,7 +48,8 @@ export class CanvasBoard {
             var y: number = Math.floor(e.clientY / canvasBoard.cellLength);
             canvasBoard.doModify(x, y);
         });
-        this.board = new Board(CanvasBoard.COLS, CanvasBoard.ROWS);
+        var boardAsString : string = GameLevel.getBoardAsString(Game.instance.settings.gameLevelIndex);
+        this.board = new Board(CanvasBoard.COLS, CanvasBoard.ROWS, boardAsString);
         this.draw();
     }
 

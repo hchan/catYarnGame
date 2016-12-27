@@ -28,8 +28,7 @@ export class ControlPanel extends React.Component<Props, {}> {
     its orthogonally adjacent  (up,right,down,left) tiles where applicable.
     If a tile already contains 2 yarn balls, the cat on that tile will make a mess of
     the yarn and henceforth be left with no yarn balls.
-    <br/><br/>
-    Good luck!
+    <span style={{"fontWeight":"bold"}}> Good luck!</span>
     </span>
   </span>;
 

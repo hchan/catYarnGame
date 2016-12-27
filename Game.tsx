@@ -7,6 +7,8 @@ import {ControlPanel, Props} from './ControlPanel'
 import {Cell, CellState} from './Cell'
 import {Board} from './Board'
 import {ImageHelper} from './ImageHelper'
+import {GameLevel} from './GameLevel'
+import {Settings} from './Settings'
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -22,9 +24,11 @@ export class Game {
     static PLEASEWAITTEXT: string = "Please Wait";
     static ANIMATELOADINGLOOPCOUNT: number = 0;
     static ANIMATELOADINGINTERVALID: number;
+    static SETTINGS : Settings;
     width: number;
     height: number;
     orientation : Orientation;
+    settings : Settings;
 
     static instance : Game;
     constructor() {
@@ -33,6 +37,7 @@ export class Game {
     }
 
     init() {
+        this.settings = new Settings();
         this.assignWidthAndHeight();
         $("html").width(this.width);
         $("html").height(this.height);

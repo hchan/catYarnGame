@@ -7,18 +7,31 @@ export class Board {
     rows: number;
     cells: Cell[][];
 
-    constructor(cols: number, rows: number) {
+    /**
+      boardAsString is a long string of representation of what a board looks
+      like
+      i.e. if a board is like:
+      00001
+      10020
+      02000
+      10000
+
+      then boardAsString wold be: 00001100200200010000
+    **/
+    constructor(cols: number, rows: number, boardAsString : string) {
 
         this.cols = cols;
         this.rows = rows;
         // http://stackoverflow.com/questions/30144580/typescript-multidimensional-array-initialization
         this.cells = [];
-
+        var boardAsStringIndex : number = 0;
         for (var y = 0; y < rows; y++) {
             this.cells[y] = [];
             for (var x = 0; x < cols; x++) {
                 this.cells[y][x] = new Cell(y,x);
-                this.cells[y][x].state = CellState.ZERO;
+                var state : number = parseInt(boardAsString.substring(boardAsStringIndex, boardAsStringIndex+1));
+                boardAsStringIndex++;
+                this.cells[y][x].state = state;
             }
         }
 
