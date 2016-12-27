@@ -1,10 +1,11 @@
-/// <reference path="node_modules/@types/jquery/index.d.ts"/>
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Board} from './Board';
 import {Cell, CellState} from './Cell';
 import {Game, Orientation} from './Game';
 import {GameLevel} from './GameLevel';
+import {YouWin} from './YouWin';
+import {MoveCount} from './MoveCount';
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -77,6 +78,8 @@ export class CanvasBoard {
         this.draw();
         if (this.isPuzzleSolved()) {
           this.renderYouWin();
+        } else {
+          this.renderMoveCount();
         }
     }
 
@@ -93,8 +96,18 @@ export class CanvasBoard {
         return retval;
     }
 
+    renderMoveCount() {
+      if ($("#moveCount").length == 0) {
+        Game.instance.renderControlPanel({body:<MoveCount levelIndex={Game.instance.settings.gameLevelIndex} moves={1}/>});
+      } else {
+        let moveCount : number = parseInt($("#moveCount").html());
+        moveCount++;
+        $("#moveCount").html(moveCount+"");
+      }
+    }
+
     renderYouWin() {
-      Game.instance.renderControlPanel({body:<div>You Win!</div>});
+      Game.instance.renderControlPanel({body:<YouWin/>});
     }
 
     draw() {

@@ -9,6 +9,7 @@ import {Board} from './Board'
 import {ImageHelper} from './ImageHelper'
 import {GameLevel} from './GameLevel'
 import {Settings} from './Settings'
+import {Instructions} from './Instructions'
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -123,7 +124,7 @@ export class Game {
     }
 
     addControlPanel() {
-      let props : Props = {body:ControlPanel.initialBody};
+      let props : Props = {body:<Instructions/>};
       this.renderControlPanel(props);
     }
 
