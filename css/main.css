@@ -21,6 +21,7 @@ body {
 
 
 #controlPanel {
+	position: relative;
 	font-size: 2.5vw;
 	word-wrap: break-word;
 	display: table-cell;
@@ -48,5 +49,11 @@ body {
 .bottomRight {
 	position: absolute;
 	right:    8;
+	bottom:   8;
+}
+
+.bottomLeft {
+	position: absolute;
+	left:    8;
 	bottom:   8;
 }

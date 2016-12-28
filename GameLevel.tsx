@@ -11,14 +11,22 @@ export class GameLevel {
 
   static init() {
     GameLevel.LEVELS = [];
-    GameLevel.LEVELS.push(
+    GameLevel.LEVELS = [
       <span>
         22222
         22022
         20002
         22022
         22222
-      </span>);
+      </span>,
+      <span>
+        21112
+        20002
+        20002
+        20002
+        21112
+      </span>
+    ];
   }
 
   static getBoardAsString(gameLevelIndex : number) : string {

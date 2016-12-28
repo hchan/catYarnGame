@@ -2,6 +2,7 @@
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Game} from './Game';
+import {LevelSelector} from './LevelSelector';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
@@ -18,6 +19,11 @@ export class Instructions extends React.Component<Props, {}> {
   // need this like to help with transpile
   refs : {}
 
+  changeLevel(gameLevelIndex : number) {
+    Game.instance.settings.gameLevelIndex = gameLevelIndex;
+    Game.instance.canvasBoard.loadBoardAndDraw();
+  }
+
   render() {
     return <span className="content">
       <span className="title">Cat Yarn Game</span>
@@ -29,6 +35,7 @@ export class Instructions extends React.Component<Props, {}> {
       If a tile already contains 2 yarn balls, the cat on that tile will make a mess of
       the yarn and henceforth be left with no yarn balls.
       <span style={{"fontWeight":"bold"}}> Good luck!</span>
+      <LevelSelector change={this.changeLevel}/>
       </span>
     </span>;
   }
