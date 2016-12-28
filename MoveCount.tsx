@@ -36,7 +36,7 @@ export class MoveCount extends React.Component<Props, {}> {
 
   reset(e) {
     let state : Props = this.state;
-    state.moves = 1;
+    state.moves = 0;
     this.setState(state);
     Game.instance.canvasBoard.loadBoardAndDraw();
   }
@@ -44,10 +44,14 @@ export class MoveCount extends React.Component<Props, {}> {
   changeLevel(gameLevelIndex : number) {
     Game.instance.settings.gameLevelIndex = gameLevelIndex;
     let state : Props = this.state;
-    state.moves = 1;
+    state.moves = 0;
     state.levelIndex = gameLevelIndex;
     this.setState(state);
     Game.instance.canvasBoard.loadBoardAndDraw();
+  }
+
+  instructions(e) {
+    Game.instance.restart();
   }
 
   getLevel() : number {
@@ -62,9 +66,10 @@ export class MoveCount extends React.Component<Props, {}> {
       <br/><br/>
       Number of moves : <span id="moveCount">{this.state.moves}</span>
       <br/><br/>
+      <input type="button" value="Reset" onClick={this.reset}/>
       <input type="hidden" onChange={this.change}/>
       <LevelSelector change={this.changeLevel} levelIndex={this.state.levelIndex}/>
-      <input type="button" value="Reset" onClick={this.reset} className="bottomLeft"/>
+      <input type="button" value="Instructions" onClick={this.instructions} className="bottomLeft"/>
     </span>;
   }
 

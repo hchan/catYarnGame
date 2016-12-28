@@ -36,6 +36,10 @@ export class Game {
         Game.instance = this;
         this.init();
     }
+    
+    restart() {
+      this.init();
+    }
 
     init() {
         this.settings = new Settings();

@@ -15,7 +15,7 @@ export class Settings {
 
 
       this.date = new Date();
-      if (localStorageData.length === null || localStorageData == "null") {
+      if (localStorageData === null || localStorageData.length === null || localStorageData == "null") {
         this.gameLevelIndex = 0;
       } else {
         $.extend(this, JSON.parse(localStorageData));

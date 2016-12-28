@@ -54,7 +54,7 @@ export class CanvasBoard {
     }
 
     loadBoardAndDraw() {
-        this.board.load(GameLevel.getBoardAsString(Game.instance.settings.gameLevelIndex));        
+        this.board.load(GameLevel.getBoardAsString(Game.instance.settings.gameLevelIndex));
         this.draw();
     }
 

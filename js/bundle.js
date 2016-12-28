@@ -237,6 +237,9 @@ var Game = (function () {
         Game.instance = this;
         this.init();
     }
+    Game.prototype.restart = function () {
+        this.init();
+    };
     Game.prototype.init = function () {
         this.settings = new Settings_1.Settings();
         this.assignWidthAndHeight();
@@ -510,17 +513,20 @@ var MoveCount = (function (_super) {
     };
     MoveCount.prototype.reset = function (e) {
         var state = this.state;
-        state.moves = 1;
+        state.moves = 0;
         this.setState(state);
         Game_1.Game.instance.canvasBoard.loadBoardAndDraw();
     };
     MoveCount.prototype.changeLevel = function (gameLevelIndex) {
         Game_1.Game.instance.settings.gameLevelIndex = gameLevelIndex;
         var state = this.state;
-        state.moves = 1;
+        state.moves = 0;
         state.levelIndex = gameLevelIndex;
         this.setState(state);
         Game_1.Game.instance.canvasBoard.loadBoardAndDraw();
+    };
+    MoveCount.prototype.instructions = function (e) {
+        Game_1.Game.instance.restart();
     };
     MoveCount.prototype.getLevel = function () {
         var retval = this.state.levelIndex;
@@ -538,9 +544,10 @@ var MoveCount = (function (_super) {
             React.createElement("span", { id: "moveCount" }, this.state.moves),
             React.createElement("br", null),
             React.createElement("br", null),
+            React.createElement("input", { type: "button", value: "Reset", onClick: this.reset }),
             React.createElement("input", { type: "hidden", onChange: this.change }),
             React.createElement(LevelSelector_1.LevelSelector, { change: this.changeLevel, levelIndex: this.state.levelIndex }),
-            React.createElement("input", { type: "button", value: "Reset", onClick: this.reset, className: "bottomLeft" }));
+            React.createElement("input", { type: "button", value: "Instructions", onClick: this.instructions, className: "bottomLeft" }));
     };
     return MoveCount;
 }(React.Component));
@@ -555,7 +562,7 @@ var Settings = (function () {
     Settings.prototype.init = function () {
         var localStorageData = window.localStorage.getItem(Settings.KEY);
         this.date = new Date();
-        if (localStorageData.length === null || localStorageData == "null") {
+        if (localStorageData === null || localStorageData.length === null || localStorageData == "null") {
             this.gameLevelIndex = 0;
         }
         else {
