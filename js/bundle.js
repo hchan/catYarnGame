@@ -133,7 +133,8 @@ var CanvasBoard = (function () {
         }
     };
     CanvasBoard.prototype.renderYouWin = function () {
-        Game_1.Game.instance.renderControlPanel({ body: React.createElement(YouWin_1.YouWin, null) });
+        var moveCount = parseInt($("#moveCount").html());
+        Game_1.Game.instance.renderControlPanel({ body: React.createElement(YouWin_1.YouWin, { levelIndex: Game_1.Game.instance.settings.gameLevelIndex, moves: moveCount }) });
     };
     CanvasBoard.prototype.draw = function () {
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
@@ -582,24 +583,41 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Game_1 = require("./Game");
+var MoveCount_1 = require("./MoveCount");
+var LevelSelector_1 = require("./LevelSelector");
 var React = require("react");
 var YouWin = (function (_super) {
     __extends(YouWin, _super);
-    function YouWin() {
-        return _super.call(this) || this;
+    function YouWin(props) {
+        return _super.call(this, props) || this;
     }
+    YouWin.prototype.changeLevel = function (gameLevelIndex) {
+        Game_1.Game.instance.settings.gameLevelIndex = gameLevelIndex;
+        var state = this.state;
+        state.moves = 0;
+        state.levelIndex = gameLevelIndex;
+        this.setState(state);
+        Game_1.Game.instance.renderControlPanel({ body: React.createElement(MoveCount_1.MoveCount, { levelIndex: Game_1.Game.instance.settings.gameLevelIndex, moves: 0 }) });
+        Game_1.Game.instance.canvasBoard.loadBoardAndDraw();
+    };
     YouWin.prototype.render = function () {
         return React.createElement("span", { className: "content" },
             React.createElement("span", { className: "title" }, "You Win!"),
             React.createElement("br", null),
             React.createElement("br", null),
-            "Next");
+            "Number of moves : ",
+            React.createElement("span", { id: "moveCount" }, this.state.moves),
+            React.createElement("br", null),
+            React.createElement("br", null),
+            React.createElement(LevelSelector_1.LevelSelector, { change: this.changeLevel, levelIndex: this.state.levelIndex }),
+            React.createElement("input", { type: "button", value: "Instructions", onClick: this.instructions, className: "bottomLeft" }));
     };
     return YouWin;
-}(React.Component));
+}(MoveCount_1.MoveCount));
 exports.YouWin = YouWin;
 
-},{"react":218}],14:[function(require,module,exports){
+},{"./Game":5,"./LevelSelector":9,"./MoveCount":11,"react":218}],14:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
