@@ -29,7 +29,6 @@ export class MoveCount extends React.Component<Props, {}> {
   refs : {}
 
   change(e) {
-    console.log("change")
     let state : Props = this.state;
     state.moves++;
     this.setState(state);
@@ -54,7 +53,6 @@ export class MoveCount extends React.Component<Props, {}> {
   getLevel() : number {
     let retval : number = this.state.levelIndex;
     retval++;
-    console.log(retval)
     return retval;
   }
 
@@ -65,7 +63,7 @@ export class MoveCount extends React.Component<Props, {}> {
       Number of moves : <span id="moveCount">{this.state.moves}</span>
       <br/><br/>
       <input type="hidden" onChange={this.change}/>
-      <LevelSelector change={this.changeLevel}/>
+      <LevelSelector change={this.changeLevel} levelIndex={this.state.levelIndex}/>
       <input type="button" value="Reset" onClick={this.reset} className="bottomLeft"/>
     </span>;
   }

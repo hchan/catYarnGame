@@ -427,7 +427,7 @@ var Instructions = (function (_super) {
                 React.createElement("span", { style: { "fontWeight": "bold" } }, "2"),
                 " yarn balls." + " " + "Clicking on a tile will drop a yarn on that tile in addition to" + " " + "its orthogonally adjacent  (up,right,down,left) tiles where applicable." + " " + "If a tile already contains 2 yarn balls, the cat on that tile will make a mess of" + " " + "the yarn and henceforth be left with no yarn balls.",
                 React.createElement("span", { style: { "fontWeight": "bold" } }, " Good luck!"),
-                React.createElement(LevelSelector_1.LevelSelector, { change: this.changeLevel })));
+                React.createElement(LevelSelector_1.LevelSelector, { change: this.changeLevel, levelIndex: Game_1.Game.instance.settings.gameLevelIndex })));
     };
     return Instructions;
 }(React.Component));
@@ -447,13 +447,14 @@ var LevelSelector = (function (_super) {
     function LevelSelector(props) {
         var _this = _super.call(this, props) || this;
         _this.changeLevel = _this.changeLevel.bind(_this);
-        _this.state = { change: null };
+        _this.state = { change: null, levelIndex: 0 };
         $.extend(_this.state, _this.props);
         return _this;
     }
     LevelSelector.prototype.changeLevel = function (e) {
         var target = e.target;
         var gameLevelIndex = target.value;
+        this.setState({ levelIndex: parseInt(gameLevelIndex) });
         this.props.change(gameLevelIndex);
     };
     LevelSelector.prototype.getLevels = function () {
@@ -503,7 +504,6 @@ var MoveCount = (function (_super) {
         return _this;
     }
     MoveCount.prototype.change = function (e) {
-        console.log("change");
         var state = this.state;
         state.moves++;
         this.setState(state);
@@ -525,7 +525,6 @@ var MoveCount = (function (_super) {
     MoveCount.prototype.getLevel = function () {
         var retval = this.state.levelIndex;
         retval++;
-        console.log(retval);
         return retval;
     };
     MoveCount.prototype.render = function () {
@@ -540,7 +539,7 @@ var MoveCount = (function (_super) {
             React.createElement("br", null),
             React.createElement("br", null),
             React.createElement("input", { type: "hidden", onChange: this.change }),
-            React.createElement(LevelSelector_1.LevelSelector, { change: this.changeLevel }),
+            React.createElement(LevelSelector_1.LevelSelector, { change: this.changeLevel, levelIndex: this.state.levelIndex }),
             React.createElement("input", { type: "button", value: "Reset", onClick: this.reset, className: "bottomLeft" }));
     };
     return MoveCount;
