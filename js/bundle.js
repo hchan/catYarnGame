@@ -367,7 +367,10 @@ var GameLevel = (function () {
         GameLevel.LEVELS = [];
         GameLevel.LEVELS = [
             React.createElement("span", null, "22222" + " " + "22022" + " " + "20002" + " " + "22022" + " " + "22222"),
-            React.createElement("span", null, "21112" + " " + "20002" + " " + "20002" + " " + "20002" + " " + "21112")
+            React.createElement("span", null, "21212" + " " + "11011" + " " + "20202" + " " + "11011" + " " + "21212"),
+            React.createElement("span", null, "00200" + " " + "22222" + " " + "11211" + " " + "22222" + " " + "00200"),
+            React.createElement("span", null, "12121" + " " + "21112" + " " + "11111" + " " + "21112" + " " + "12121"),
+            React.createElement("span", null, "00000" + " " + "00000" + " " + "00000" + " " + "00000" + " " + "00000")
         ];
     };
     GameLevel.getBoardAsString = function (gameLevelIndex) {
