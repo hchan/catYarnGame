@@ -75,26 +75,35 @@ export class SolnFinder {
 
   findSoln(levelIndex : number) : number[] {
     let boardAsString : string = GameLevel.getBoardAsString(levelIndex);
-    console.log(boardAsString);
-    boardAsString = this.modify(boardAsString, 10);
-    console.log(boardAsString);
 
     try {
+      this.search(boardAsString, 0)
       return [];
     } catch (e) {
+      console.log(e); // unfortunately, I get a Max Stack Size error here
       return this.listOfMoves;
     }
 
   }
 
-  search (boardAsString : string, depth : number, position : number) {
+  search (boardAsString : string, position : number) {
     let nextBoardAsString : string;
     if (boardAsString == SolnFinder.YOUWINBOARDASSTRING) {
       throw new Error ("Soln Found!");
+    }
+    if (this.listOfMoves.length > 10) {
+      return;
+    }
+    for(let i=position; position<= (SolnFinder.ROWS * SolnFinder.COLS)-1; i++){
+    		nextBoardAsString = this.modify(boardAsString, i)
+        this.listOfMoves.push(i);
+    		this.search(nextBoardAsString, i+1);
+    		this.listOfMoves.pop();
     }
   }
 
 }
 
 let solnFinder : SolnFinder = new SolnFinder();
-solnFinder.findSoln(0);
+let soln : number[] = solnFinder.findSoln(0);
+console.log(soln)

@@ -13,6 +13,15 @@ export class GameLevel {
   static init() {
     GameLevel.LEVELS = [];
     GameLevel.LEVELS = [
+      /*
+      <span>
+        00122
+        11222
+        22222
+        22222
+        22222
+      </span>,
+            */
       <span>
         22222
         22022
