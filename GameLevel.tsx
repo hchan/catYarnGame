@@ -6,6 +6,7 @@ import * as ReactDOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 
+
 export class GameLevel {
   static LEVELS : JSX.Element [];
 
@@ -56,7 +57,10 @@ export class GameLevel {
         GameLevel.init();
     }
     var jsxString : string = reactElementToJSXString(GameLevel.LEVELS[gameLevelIndex]);
-    retval = $(jsxString).html();
+    //retval = $(jsxString).html();
+    retval = jsxString;
+    retval = retval.replace("<span>", "");
+    retval = retval.replace("</span>", "");
     retval = retval.replace(new RegExp(" ", "g"), "");
     retval = retval.replace(new RegExp("\n", "g"), "");
     retval = retval.replace(new RegExp("\r", "g"), "");

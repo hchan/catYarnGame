@@ -134,6 +134,7 @@ var CanvasBoard = (function () {
     };
     CanvasBoard.prototype.renderYouWin = function () {
         var moveCount = parseInt($("#moveCount").html());
+        moveCount++;
         Game_1.Game.instance.renderControlPanel({ body: React.createElement(YouWin_1.YouWin, { levelIndex: Game_1.Game.instance.settings.gameLevelIndex, moves: moveCount }) });
     };
     CanvasBoard.prototype.draw = function () {
@@ -379,7 +380,9 @@ var GameLevel = (function () {
             GameLevel.init();
         }
         var jsxString = react_element_to_jsx_string_1.default(GameLevel.LEVELS[gameLevelIndex]);
-        retval = $(jsxString).html();
+        retval = jsxString;
+        retval = retval.replace("<span>", "");
+        retval = retval.replace("</span>", "");
         retval = retval.replace(new RegExp(" ", "g"), "");
         retval = retval.replace(new RegExp("\n", "g"), "");
         retval = retval.replace(new RegExp("\r", "g"), "");

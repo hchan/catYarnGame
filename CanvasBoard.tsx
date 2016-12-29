@@ -112,6 +112,7 @@ export class CanvasBoard {
 
     renderYouWin() {
       let moveCount : number = parseInt($("#moveCount").html());
+      moveCount++;
       Game.instance.renderControlPanel({body:<YouWin levelIndex={Game.instance.settings.gameLevelIndex} moves={moveCount}/>});
     }
 
