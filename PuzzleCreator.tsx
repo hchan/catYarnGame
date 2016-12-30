@@ -10,13 +10,13 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 /*
   to run:
   this program is NOT part of Main and is a standalone
-  C:\> ts-node SolnFinder.tsx
+  C:\> ts-node PuzzleCreator.tsx
 */
 
-export class SolnFinder {
+export class PuzzleCreator {
   static ROWS : number = 5;
   static COLS : number = 5;
-  static LAST_POSITION = (SolnFinder.ROWS * SolnFinder.COLS) - 1;
+  static LAST_POSITION = (PuzzleCreator.ROWS * PuzzleCreator.COLS) - 1;
   static YOUWINBOARDASSTRING = "2222222222222222222222222";
   boardDepth : string[]; // key is the boardAsString,  value is search Depth
   listOfMoves : number[]; // indices of board positions i.e. [0,1,2, ... 24];
@@ -31,16 +31,19 @@ export class SolnFinder {
    this.listOfMoves = [];
   }
 
+  /**
+  * NOTE: mod logic is REVERSE.  i.e., it subtracts rather than adds
+  */
   modifySingleCell(boardAsString : string, position : number) : string {
     let cellString : string = boardAsString.substring(position, position+1);
     let cellNumber = parseInt(cellString);
-    if (position < 0 || position > SolnFinder.LAST_POSITION) {
+    if (position < 0 || position > PuzzleCreator.LAST_POSITION) {
       return boardAsString;
     }
 
-    cellNumber++;
-    if (cellNumber > CellState.TWO) {
-        cellNumber = CellState.ZERO;
+    cellNumber--;
+    if (cellNumber < CellState.ZERO) {
+        cellNumber = CellState.TWO;
     }
 
     cellString = cellNumber + "";
@@ -49,7 +52,7 @@ export class SolnFinder {
       cellStringBebore = boardAsString.substring(0, position);
     }
     let cellStringAfter : string = "";
-    if (position+1 <= SolnFinder.LAST_POSITION) {
+    if (position+1 <= PuzzleCreator.LAST_POSITION) {
       cellStringAfter = boardAsString.substring(position+1);
     }
     return cellStringBebore + cellString + cellStringAfter;
@@ -59,51 +62,43 @@ export class SolnFinder {
 
     boardAsString = this.modifySingleCell(boardAsString, position);
     // North
-    boardAsString = this.modifySingleCell(boardAsString, position - SolnFinder.ROWS);
+    boardAsString = this.modifySingleCell(boardAsString, position - PuzzleCreator.ROWS);
     // East
-    if (position % SolnFinder.COLS != (SolnFinder.COLS-1)) {
+    if ((position % PuzzleCreator.COLS) != (PuzzleCreator.COLS-1)) {
       boardAsString = this.modifySingleCell(boardAsString, position + 1);
     }
     // South
-    boardAsString = this.modifySingleCell(boardAsString, position + SolnFinder.ROWS);
+    boardAsString = this.modifySingleCell(boardAsString, position + PuzzleCreator.ROWS);
     // West
-    if (position % SolnFinder.COLS != 0) {
+    if (position % PuzzleCreator.COLS != 0) {
       boardAsString = this.modifySingleCell(boardAsString, position - 1);
     }
     return boardAsString;
   }
 
-  findSoln(levelIndex : number) : number[] {
-    let boardAsString : string = GameLevel.getBoardAsString(levelIndex);
-
-    try {
-      this.search(boardAsString, 0)
-      return [];
-    } catch (e) {
-      console.log(e); // unfortunately, I get a Max Stack Size error here
-      return this.listOfMoves;
+  createRandomPositions(numMoves : number) : number [] {
+    let retval : number[] = [];
+    for (let i : number = 0; i < numMoves; i++) {
+      let position : number = Math.floor((Math.random() * PuzzleCreator.LAST_POSITION));
+      retval.push(position);
     }
-
+    return retval.sort(function(a, b){return a-b});
   }
 
-  search (boardAsString : string, position : number) {
-    let nextBoardAsString : string;
-    if (boardAsString == SolnFinder.YOUWINBOARDASSTRING) {
-      throw new Error ("Soln Found!");
+  getInitialBoard(positions : number[]) : string {
+    let boardAsString : string = PuzzleCreator.YOUWINBOARDASSTRING;
+    for (let i : number = positions.length-1; i > -1; i--) {
+      let position : number = positions[i];
+      boardAsString = this.modify(boardAsString, position)
     }
-    if (this.listOfMoves.length > 10) {
-      return;
-    }
-    for(let i=position; position<= (SolnFinder.ROWS * SolnFinder.COLS)-1; i++){
-    		nextBoardAsString = this.modify(boardAsString, i)
-        this.listOfMoves.push(i);
-    		this.search(nextBoardAsString, i+1);
-    		this.listOfMoves.pop();
-    }
+    return boardAsString;
   }
-
 }
-
-let solnFinder : SolnFinder = new SolnFinder();
-let soln : number[] = solnFinder.findSoln(0);
-console.log(soln)
+let puzzleCreator : PuzzleCreator = new PuzzleCreator();
+let moves : number[] = [];
+for (let i : number = 0 ; i <= PuzzleCreator.LAST_POSITION; i++) {
+  moves.push(i);
+}
+//let moves : number[] = puzzleCreator.createRandomPositions(15);
+console.log(moves)
+console.log(puzzleCreator.getInitialBoard(moves));
