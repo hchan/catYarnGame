@@ -14,6 +14,8 @@ export interface Props {
 
 export class LevelSelector extends React.Component<Props, {}> {
   state : Props;
+  static DAILY_RANDOM : number = -1;
+
   constructor(props) {
     super(props);
     this.changeLevel = this.changeLevel.bind(this);
@@ -39,6 +41,7 @@ export class LevelSelector extends React.Component<Props, {}> {
       for (let i = 0; i < GameLevel.LEVELS.length; i++) {
         retval.push(<option value={i} key={i}>Level {i+1}</option>);
       }
+      retval.push(<option value={GameLevel.DAILY_RANDOM} key={GameLevel.DAILY_RANDOM}>Daily Random</option>);
       return retval;
   }
   render() {

@@ -1,6 +1,7 @@
 /// <reference path="node_modules/@types/jquery/index.d.ts"/>
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
+import {PuzzleCreator} from "./PuzzleCreator";
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
@@ -9,7 +10,7 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 
 export class GameLevel {
   static LEVELS : JSX.Element [];
-
+  static DAILY_RANDOM = -1;
   static init() {
     GameLevel.LEVELS = [];
     GameLevel.LEVELS = [
@@ -56,7 +57,7 @@ export class GameLevel {
         10001
         10001
         21112
-      </span> /* soln [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+      </span> /* soln [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24] */
     ];
   }
 
@@ -65,14 +66,20 @@ export class GameLevel {
     if (GameLevel.LEVELS == null) {
         GameLevel.init();
     }
-    var jsxString : string = reactElementToJSXString(GameLevel.LEVELS[gameLevelIndex]);
-    //retval = $(jsxString).html();
-    retval = jsxString;
-    retval = retval.replace("<span>", "");
-    retval = retval.replace("</span>", "");
-    retval = retval.replace(new RegExp(" ", "g"), "");
-    retval = retval.replace(new RegExp("\n", "g"), "");
-    retval = retval.replace(new RegExp("\r", "g"), "");
+    if (gameLevelIndex == GameLevel.DAILY_RANDOM) {
+      let puzzleCreator : PuzzleCreator = new PuzzleCreator();
+      let randomPositions : number[] = puzzleCreator.createDailyRandomPositions(5);
+      return puzzleCreator.getInitialBoard(randomPositions);
+    } else {
+      var jsxString : string = reactElementToJSXString(GameLevel.LEVELS[gameLevelIndex]);
+      //retval = $(jsxString).html();
+      retval = jsxString;
+      retval = retval.replace("<span>", "");
+      retval = retval.replace("</span>", "");
+      retval = retval.replace(new RegExp(" ", "g"), "");
+      retval = retval.replace(new RegExp("\n", "g"), "");
+      retval = retval.replace(new RegExp("\r", "g"), "");
+    }
     return retval;
   }
 

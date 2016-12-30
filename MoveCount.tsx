@@ -21,7 +21,6 @@ export class MoveCount extends React.Component<Props, {}> {
     this.reset = this.reset.bind(this);
     this.state = {};
     $.extend(this.state, this.props);
-    console.log(this.state)
   }
 
 
@@ -60,9 +59,17 @@ export class MoveCount extends React.Component<Props, {}> {
     return retval;
   }
 
+  getTitle() : string {
+    if (this.state.levelIndex == LevelSelector.DAILY_RANDOM) {
+      return "Daily Random";
+    } else {
+      return "Level " + this.getLevel();
+    }
+  }
+
   render() {
     return <span className="content">
-      <span className="title">Level {this.getLevel()}</span>
+      <span className="title">{this.getTitle()}</span>
       <br/><br/>
       Number of moves : <span id="moveCount">{this.state.moves}</span>
       <br/><br/>

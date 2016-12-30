@@ -59,7 +59,6 @@ export class CanvasBoard {
     }
 
     doModify(x: number, y: number) {
-        console.log("You just clicked: " + x + "," + y); // TODO STOP HERE
         // click Cell
         this.board.cells[x][y].nextState();
         // North

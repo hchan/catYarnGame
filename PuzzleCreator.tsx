@@ -7,11 +7,6 @@ import * as React from "react"
 import * as ReactDOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 import reactElementToJSXString from 'react-element-to-jsx-string';
-/*
-  to run:
-  this program is NOT part of Main and is a standalone
-  C:\> ts-node PuzzleCreator.tsx
-*/
 
 export class PuzzleCreator {
   static ROWS : number = 5;
@@ -20,6 +15,8 @@ export class PuzzleCreator {
   static YOUWINBOARDASSTRING = "2222222222222222222222222";
   boardDepth : string[]; // key is the boardAsString,  value is search Depth
   listOfMoves : number[]; // indices of board positions i.e. [0,1,2, ... 24];
+  static seed : number; // random seed
+
   constructor() {
     GameLevel.init();
     this.init();
@@ -29,6 +26,13 @@ export class PuzzleCreator {
 
    this.boardDepth = [];
    this.listOfMoves = [];
+   PuzzleCreator.initSeed();
+  }
+
+  static initSeed() {
+    let now : Date = new Date();
+    let fullDaysSinceEpoch : number = Math.floor((now.getTime())/8.64e7);
+    PuzzleCreator.seed = fullDaysSinceEpoch;
   }
 
   /**
@@ -76,10 +80,27 @@ export class PuzzleCreator {
     return boardAsString;
   }
 
+
+
+  dailyRandomFunc() :  number {
+    let rand : number = Math.sin(PuzzleCreator.seed++) * 10000;
+    return rand - Math.floor(rand);
+  }
+
+
+  createDailyRandomPositions(numMoves : number) : number [] {
+    PuzzleCreator.initSeed();
+    return this.createRandomPositionsWithFunc(numMoves, this.dailyRandomFunc);
+  }
+
   createRandomPositions(numMoves : number) : number [] {
+    return this.createRandomPositionsWithFunc(numMoves, Math.random);
+  }
+
+  createRandomPositionsWithFunc(numMoves : number, randomFunc : Function) : number [] {
     let retval : number[] = [];
     for (let i : number = 0; i < numMoves; i++) {
-      let position : number = Math.floor((Math.random() * PuzzleCreator.LAST_POSITION));
+      let position : number = Math.floor((randomFunc() * PuzzleCreator.LAST_POSITION));
       retval.push(position);
     }
     return retval.sort(function(a, b){return a-b});
@@ -94,11 +115,3 @@ export class PuzzleCreator {
     return boardAsString;
   }
 }
-let puzzleCreator : PuzzleCreator = new PuzzleCreator();
-let moves : number[] = [];
-for (let i : number = 0 ; i <= PuzzleCreator.LAST_POSITION; i++) {
-  moves.push(i);
-}
-//let moves : number[] = puzzleCreator.createRandomPositions(15);
-console.log(moves)
-console.log(puzzleCreator.getInitialBoard(moves));
