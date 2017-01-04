@@ -367,11 +367,26 @@ var GameLevel = (function () {
     GameLevel.init = function () {
         GameLevel.LEVELS = [];
         GameLevel.LEVELS = [
-            React.createElement("span", null, "22222" + " " + "22022" + " " + "20002" + " " + "22022" + " " + "22222"),
-            React.createElement("span", null, "21212" + " " + "11011" + " " + "20202" + " " + "11011" + " " + "21212"),
-            React.createElement("span", null, "00200" + " " + "22222" + " " + "11211" + " " + "22222" + " " + "00200"),
-            React.createElement("span", null, "12121" + " " + "21112" + " " + "11111" + " " + "21112" + " " + "12121"),
-            React.createElement("span", null, "21112" + " " + "10001" + " " + "10001" + " " + "10001" + " " + "21112")
+            {
+                boardRepresentation: React.createElement("span", null, "22222" + " " + "22022" + " " + "20002" + " " + "22022" + " " + "22222"),
+                soln: [12, 12]
+            },
+            {
+                boardRepresentation: React.createElement("span", null, "21212" + " " + "11011" + " " + "20202" + " " + "11011" + " " + "21212"),
+                soln: [6, 8, 16, 18]
+            },
+            {
+                boardRepresentation: React.createElement("span", null, "00200" + " " + "22222" + " " + "11211" + " " + "22222" + " " + "00200"),
+                soln: [0, 0, 4, 4, 10, 14, 20, 20, 24, 24]
+            },
+            {
+                boardRepresentation: React.createElement("span", null, "12121" + " " + "21112" + " " + "11111" + " " + "21112" + " " + "12121"),
+                soln: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
+            },
+            {
+                boardRepresentation: React.createElement("span", null, "21112" + " " + "10001" + " " + "10001" + " " + "10001" + " " + "21112"),
+                soln: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            }
         ];
     };
     GameLevel.getBoardAsString = function (gameLevelIndex) {
@@ -381,11 +396,11 @@ var GameLevel = (function () {
         }
         if (gameLevelIndex == GameLevel.DAILY_RANDOM) {
             var puzzleCreator = new PuzzleCreator_1.PuzzleCreator();
-            var randomPositions = puzzleCreator.createDailyRandomPositions(5);
+            var randomPositions = puzzleCreator.createDailyRandomPositions();
             return puzzleCreator.getInitialBoard(randomPositions);
         }
         else {
-            var jsxString = react_element_to_jsx_string_1.default(GameLevel.LEVELS[gameLevelIndex]);
+            var jsxString = react_element_to_jsx_string_1.default(GameLevel.LEVELS[gameLevelIndex].boardRepresentation);
             retval = jsxString;
             retval = retval.replace("<span>", "");
             retval = retval.replace("</span>", "");
@@ -631,9 +646,9 @@ var PuzzleCreator = (function () {
         var rand = Math.sin(PuzzleCreator.seed++) * 10000;
         return rand - Math.floor(rand);
     };
-    PuzzleCreator.prototype.createDailyRandomPositions = function (numMoves) {
+    PuzzleCreator.prototype.createDailyRandomPositions = function () {
         PuzzleCreator.initSeed();
-        return this.createRandomPositionsWithFunc(numMoves, this.dailyRandomFunc);
+        return this.createRandomPositionsWithFunc(PuzzleCreator.DEFAULT_NUM_MOVES, this.dailyRandomFunc);
     };
     PuzzleCreator.prototype.createRandomPositions = function (numMoves) {
         return this.createRandomPositionsWithFunc(numMoves, Math.random);
@@ -658,6 +673,7 @@ var PuzzleCreator = (function () {
 }());
 PuzzleCreator.ROWS = 5;
 PuzzleCreator.COLS = 5;
+PuzzleCreator.DEFAULT_NUM_MOVES = 5;
 PuzzleCreator.LAST_POSITION = (PuzzleCreator.ROWS * PuzzleCreator.COLS) - 1;
 PuzzleCreator.YOUWINBOARDASSTRING = "2222222222222222222222222";
 exports.PuzzleCreator = PuzzleCreator;

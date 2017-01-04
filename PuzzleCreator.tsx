@@ -11,6 +11,7 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 export class PuzzleCreator {
   static ROWS : number = 5;
   static COLS : number = 5;
+  static DEFAULT_NUM_MOVES : number = 5;
   static LAST_POSITION = (PuzzleCreator.ROWS * PuzzleCreator.COLS) - 1;
   static YOUWINBOARDASSTRING = "2222222222222222222222222";
   boardDepth : string[]; // key is the boardAsString,  value is search Depth
@@ -88,9 +89,9 @@ export class PuzzleCreator {
   }
 
 
-  createDailyRandomPositions(numMoves : number) : number [] {
+  createDailyRandomPositions() : number [] {
     PuzzleCreator.initSeed();
-    return this.createRandomPositionsWithFunc(numMoves, this.dailyRandomFunc);
+    return this.createRandomPositionsWithFunc(PuzzleCreator.DEFAULT_NUM_MOVES, this.dailyRandomFunc);
   }
 
   createRandomPositions(numMoves : number) : number [] {

@@ -7,9 +7,14 @@ import * as ReactDOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 
+export interface LevelDefn {
+  boardRepresentation : JSX.Element
+  hints? : string[];
+  soln : number[];
+}
 
 export class GameLevel {
-  static LEVELS : JSX.Element [];
+  static LEVELS : LevelDefn [];
   static DAILY_RANDOM = -1;
   static init() {
     GameLevel.LEVELS = [];
@@ -23,41 +28,61 @@ export class GameLevel {
         22222
       </span>,
             */
-      <span>
-        22222
-        22022
-        20002
-        22022
-        22222
-      </span>, /* soln: [12,12] */
-      <span>
-        21212
-        11011
-        20202
-        11011
-        21212
-      </span>, /* soln : [6,8, 16, 18] */
-      <span>
-        00200
-        22222
-        11211
-        22222
-        00200
-      </span>,/* soln : [0,0,4,4,10,14,20,20,24,24]*/
-      <span>
-        12121
-        21112
-        11111
-        21112
-        12121
-      </span>, /* soln : [0,2,4,6,8,10,12,14,16,18,20,22]*/
-      <span>
-        21112
-        10001
-        10001
-        10001
-        21112
-      </span> /* soln [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24] */
+      {
+        boardRepresentation :
+        <span>
+          22222
+          22022
+          20002
+          22022
+          22222
+        </span>,
+        soln : [12,12]
+      },
+      {
+        boardRepresentation :
+        <span>
+          21212
+          11011
+          20202
+          11011
+          21212
+        </span>,
+        soln : [6,8, 16, 18]
+      },
+      {
+        boardRepresentation :
+        <span>
+          00200
+          22222
+          11211
+          22222
+          00200
+        </span>,
+        soln : [0,0,4,4,10,14,20,20,24,24]
+      },
+      {
+        boardRepresentation :
+        <span>
+          12121
+          21112
+          11111
+          21112
+          12121
+        </span>,
+        soln : [0,2,4,6,8,10,12,14,16,18,20,22]
+      },
+      {
+        boardRepresentation :
+        <span>
+          21112
+          10001
+          10001
+          10001
+          21112
+        </span>,
+        soln : [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+      }
     ];
   }
 
@@ -68,10 +93,10 @@ export class GameLevel {
     }
     if (gameLevelIndex == GameLevel.DAILY_RANDOM) {
       let puzzleCreator : PuzzleCreator = new PuzzleCreator();
-      let randomPositions : number[] = puzzleCreator.createDailyRandomPositions(5);
+      let randomPositions : number[] = puzzleCreator.createDailyRandomPositions();
       return puzzleCreator.getInitialBoard(randomPositions);
     } else {
-      var jsxString : string = reactElementToJSXString(GameLevel.LEVELS[gameLevelIndex]);
+      var jsxString : string = reactElementToJSXString(GameLevel.LEVELS[gameLevelIndex].boardRepresentation);
       //retval = $(jsxString).html();
       retval = jsxString;
       retval = retval.replace("<span>", "");

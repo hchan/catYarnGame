@@ -11,6 +11,6 @@ moves = puzzleCreator.createRandomPositions(5);
 console.log(moves)
 console.log(puzzleCreator.getInitialBoard(moves));
 
-moves = puzzleCreator.createDailyRandomPositions(5);
+moves = puzzleCreator.createDailyRandomPositions();
 console.log(moves)
 console.log(puzzleCreator.getInitialBoard(moves));
