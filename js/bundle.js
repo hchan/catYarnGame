@@ -190,7 +190,7 @@ var Cell = (function () {
     return Cell;
 }());
 Cell.IMAGENAME_PREFIX = "cat";
-Cell.IMAGENAME_SUFFIX = ".jpg";
+Cell.IMAGENAME_SUFFIX = ".png";
 exports.Cell = Cell;
 var CellState;
 (function (CellState) {
@@ -418,20 +418,21 @@ exports.GameLevel = GameLevel;
 },{"./PuzzleCreator":12,"react":219,"react-element-to-jsx-string":194}],7:[function(require,module,exports){
 "use strict";
 var Game_1 = require("./Game");
+var Cell_1 = require("./Cell");
 var ImageHelper = (function () {
     function ImageHelper() {
     }
     ImageHelper.prototype.populate = function () {
-        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat0.jpg");
-        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat1.jpg");
-        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat2.jpg");
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat0" + Cell_1.Cell.IMAGENAME_SUFFIX);
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat1" + Cell_1.Cell.IMAGENAME_SUFFIX);
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat2" + Cell_1.Cell.IMAGENAME_SUFFIX);
     };
     return ImageHelper;
 }());
 ImageHelper.DIR = "img";
 exports.ImageHelper = ImageHelper;
 
-},{"./Game":5}],8:[function(require,module,exports){
+},{"./Cell":3,"./Game":5}],8:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

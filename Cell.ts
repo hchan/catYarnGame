@@ -1,7 +1,7 @@
 import {ImageHelper} from './ImageHelper';
 export class Cell {
     static IMAGENAME_PREFIX : string = "cat";
-    static IMAGENAME_SUFFIX : string = ".jpg";
+    static IMAGENAME_SUFFIX : string = ".png";
 
     state: CellState
     col: number;
