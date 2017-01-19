@@ -16,6 +16,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp-webserver": "^0.9.1",
     "jquery": "^3.1.1",
+    "jquery-browserify": "^1.8.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-element-to-jsx-string": "^5.0.4",

@@ -8,11 +8,16 @@ var source = require('vinyl-source-stream');
 var tsify = require("tsify");
 var glob = require('glob');
 const b = require('gulp-browserify-typescript');
-var files = glob.sync('*.ts');
+var files = [];
+files.push("node_modules/jquery-browserify/lib/jquery.js");
+files = files.concat(glob.sync('*.ts'));
+
 var outputFile = 'bundle.js';
 var outputPath = "js";
 var webserver = require('gulp-webserver');
 var exec = require('child_process').exec;
+
+
 
 gulp.task("default", function () {
 
