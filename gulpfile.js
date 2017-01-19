@@ -1,6 +1,6 @@
 /**
   To add more typings: C:\>typings install
-  otherwise run gulp and then load index.html
+  otherwise run gulp and then load the startup html
 */
 var gulp = require("gulp");
 var browserify = require("browserify");
@@ -9,6 +9,8 @@ var tsify = require("tsify");
 var glob = require('glob');
 const b = require('gulp-browserify-typescript');
 var files = [];
+// adding vanilla jquery to the files didn't work
+// adding jquery-browserify works
 files.push("node_modules/jquery-browserify/lib/jquery.js");
 files = files.concat(glob.sync('*.ts'));
 
