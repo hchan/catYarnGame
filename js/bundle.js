@@ -445,7 +445,9 @@ var React = require("react");
 var Instructions = (function (_super) {
     __extends(Instructions, _super);
     function Instructions() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        _this.title = $("title").text();
+        return _this;
     }
     Instructions.prototype.changeLevel = function (gameLevelIndex) {
         Game_1.Game.instance.settings.gameLevelIndex = gameLevelIndex;
@@ -453,7 +455,7 @@ var Instructions = (function (_super) {
     };
     Instructions.prototype.render = function () {
         return React.createElement("span", { className: "content" },
-            React.createElement("span", { className: "title" }, "Cat Yarn Game"),
+            React.createElement("span", { className: "title" }, this.title),
             React.createElement("br", null),
             React.createElement("br", null),
             React.createElement("span", { className: "description" },

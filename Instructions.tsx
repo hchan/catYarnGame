@@ -12,8 +12,10 @@ export interface Props {
 
 
 export class Instructions extends React.Component<Props, {}> {
+  title : string;
   constructor() {
     super();
+    this.title = $("title").text();
   }
 
   // need this like to help with transpile
@@ -26,7 +28,7 @@ export class Instructions extends React.Component<Props, {}> {
 
   render() {
     return <span className="content">
-      <span className="title">Cat Yarn Game</span>
+      <span className="title">{this.title}</span>
       <br/><br/>
       <span className="description">The goal of this game is
       to give every cat on each tile exactly <span style={{"fontWeight":"bold"}}>2</span> yarn balls.
