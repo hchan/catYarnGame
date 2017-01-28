@@ -41,6 +41,10 @@ body {
 #canvasBoard:hover {
   cursor:crosshair;
 }
+
+#canvasBoard {
+	background-color : beige;
+}
 .title {
     font-size: 120%;
     font-weight: bold;

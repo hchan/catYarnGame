@@ -36,7 +36,7 @@ export class Game {
         Game.instance = this;
         this.init();
     }
-    
+
     restart() {
       this.init();
     }

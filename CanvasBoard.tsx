@@ -143,12 +143,16 @@ export class CanvasBoard {
         var cell: Cell = this.board.cells[x][y];
         var imageName = cell.getImageName();
         var image: HTMLImageElement = Game.IMAGE_DICT[imageName];
+        var padding : number = 10;
+        var lengthOfImage = (this.width - ((CanvasBoard.COLS+1) * padding))/ CanvasBoard.COLS;
+        console.log(lengthOfImage)
         var me = this;
+
         this.ctx.drawImage(image,
-            x * me.cellLength,
-            y * me.cellLength,
-            me.cellLength,
-            me.cellLength
+            x * me.cellLength + padding - (x/CanvasBoard.COLS * padding),
+            y * me.cellLength + padding - (y/CanvasBoard.ROWS * padding),
+            lengthOfImage,
+            lengthOfImage
         );
 
     }
