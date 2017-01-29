@@ -19,9 +19,10 @@ export class CanvasBoard {
     cellLength: number;
     static COLS: number = 5;
     static ROWS: number = 5;
+    static htmlId : string = "canvasBoard";
 
     constructor() {
-        var jQuerySelector: JQuery = $("<canvas id='canvasBoard' ></canvas>");
+        var jQuerySelector: JQuery = $("<canvas id='" + CanvasBoard.htmlId + "' ></canvas>");
         if (Game.instance.orientation == Orientation.LANDSCAPE) {
           this.width = Game.instance.height;
           this.height = Game.instance.height;
@@ -50,7 +51,7 @@ export class CanvasBoard {
             canvasBoard.doModify(x, y);
         });
         this.board = new Board(CanvasBoard.COLS, CanvasBoard.ROWS);
-        this.loadBoardAndDraw();
+        //this.loadBoardAndDraw();
     }
 
     loadBoardAndDraw() {
@@ -145,7 +146,6 @@ export class CanvasBoard {
         var image: HTMLImageElement = Game.IMAGE_DICT[imageName];
         var padding : number = 10;
         var lengthOfImage = (this.width - ((CanvasBoard.COLS+1) * padding))/ CanvasBoard.COLS;
-        console.log(lengthOfImage)
         var me = this;
 
         this.ctx.drawImage(image,

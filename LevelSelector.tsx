@@ -38,6 +38,9 @@ export class LevelSelector extends React.Component<Props, {}> {
 
   getLevels() : JSX.Element[] {
       let retval : JSX.Element[] = [];
+      if (GameLevel.LEVELS == null) {
+          GameLevel.init();
+      }
       for (let i = 0; i < GameLevel.LEVELS.length; i++) {
         retval.push(<option value={i} key={i}>Level {i+1}</option>);
       }

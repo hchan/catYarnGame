@@ -10,6 +10,7 @@ import {ImageHelper} from './ImageHelper'
 import {GameLevel} from './GameLevel'
 import {Settings} from './Settings'
 import {Instructions} from './Instructions'
+import {Welcome} from './Welcome'
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -53,6 +54,7 @@ export class Game {
           this.orientation = Orientation.PORTRAIT;
           $("body").css({"display": "inline"})
         }
+
 
         this.initLoading();
         this.animateLoading();
@@ -122,9 +124,20 @@ export class Game {
     doAfterPreloadImages() {
         self.clearInterval(Game.ANIMATELOADINGINTERVALID);
         $("body").html("");
-        this.canvasBoard = new CanvasBoard();
-        $("body").append(this.canvasBoard.canvas);
-        this.addControlPanel();
+        $("body").append("<span id='game-header'/>")
+        $("body").append("<span id='game-body'/>")
+        $("body").append("<span id='game-footer'/>")
+        this.addWelcome();
+        //this.canvasBoard = new CanvasBoard();
+        //$("#" + CanvasBoard.htmlId);//.hide();
+        //$("#game-body").append(this.canvasBoard.canvas);
+        //this.canvasBoard.loadBoardAndDraw();
+        //this.addControlPanel();
+    }
+
+    addWelcome() {
+      var welcome : JSX.Element = <Welcome/>;
+      ReactDOM.render(welcome, document.getElementById("game-body"));
     }
 
     addControlPanel() {
@@ -160,6 +173,7 @@ export class Game {
           controlPanelElement.parentNode.removeChild(controlPanelElement);
         }
         document.getElementsByTagName("body")[0].appendChild(controlPanel);
+
     }
 
     storeImageAndLoadNext(imageLocationIndex) {
