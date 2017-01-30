@@ -124,9 +124,9 @@ export class Game {
     doAfterPreloadImages() {
         self.clearInterval(Game.ANIMATELOADINGINTERVALID);
         $("body").html("");
-        $("body").append("<span id='game-header'/>")
-        $("body").append("<span id='game-body'/>")
-        $("body").append("<span id='game-footer'/>")
+        $("body").append("<span id='welcome-header'/>")
+        $("body").append("<span id='welcome-body'/>")
+        $("body").append("<span id='welcome-footer'/>")
         this.addWelcome();
         //this.canvasBoard = new CanvasBoard();
         //$("#" + CanvasBoard.htmlId);//.hide();
@@ -135,9 +135,21 @@ export class Game {
         //this.addControlPanel();
     }
 
+    static beginPlay() {
+      $("body").html("");
+      $("body").append("<span id='game-header'/>")
+      $("body").append("<span id='game-body'/>")
+      $("body").append("<span id='game-footer'/>")
+      Game.instance.canvasBoard = new CanvasBoard();
+
+      $("#game-body").append(  Game.instance.canvasBoard.canvas);
+        Game.instance.canvasBoard.loadBoardAndDraw();
+      //this.addControlPanel();
+    }
+
     addWelcome() {
       var welcome : JSX.Element = <Welcome/>;
-      ReactDOM.render(welcome, document.getElementById("game-body"));
+      ReactDOM.render(welcome, document.getElementById("welcome-body"));
     }
 
     addControlPanel() {

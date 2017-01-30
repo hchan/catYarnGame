@@ -23,7 +23,7 @@ body {
 
 #controlPanel {
 	position: relative;
-	font-size: 2.5vw;
+	font-size: 2.5vh;
 	word-wrap: break-word;
 	display: table-cell;
   vertical-align: top;
@@ -62,41 +62,80 @@ body {
 	left:    8;
 	bottom:   8;
 }
-#game-body {
+
+#welcome-body {
+	position: absolute;
 	height: 100%;
+	width: 100%;
+	padding-top: 10vh;
+	padding-bottom: 10vh;
+	padding-left: 10vw;
+	padding-right: 10vw;
 }
 
 #welcome {
-	padding-top: 10%;
 	display: table;
 	width: 100%;
-	height: 80%;
+	height: 100%;
 }
 
-#welcome-left {
-	display : table-cell;
-	width: 10%;
-}
-
-#welcome-right {
-	display : table-cell;
-	width: 10%;
-}
 
 #welcome .description {
-
-  z-index: 100;
-	padding: 2vw;
-	border: 2vw solid blue;
-	border-radius: 8vw;
+	position: relative;
+	padding: 1vh;
+	border: 1vh solid blue;
+	border-radius: 8vh;
 	display : table-cell;
-	font-size: 7vw;
-	width: 80%;
+	font-size: 7vh;
+	width: 100%;
+	line-height: 100%;
 }
 
-.meetOomi {
+#welcome .description .text {
+		display: table-cell;
+}
 
+.welcome-btn {
+	display: block;
+	margin: auto;
+}
+.imageContainer {
+	position: relative;
+	display: inline-block;
+}
+#meetOomiImg {
 	position: absolute;
-	float: right;
-	width: 50vw;
+	width: 50vh;
+	top: -10vh;
+  right: -10vw;
+
+	z-index: 1;
+}
+
+.buttonContainer {
+	display: block;
+	width: 100%;
+	position: relative;
+}
+
+.buttonTableContainer {
+	display: table;
+	width: 100%;
+	position: relative;
+
+	z-index: 2;
+}
+.buttonFiller {
+	display: table-cell;
+	width: 33%
+}
+
+#playBtn {
+	font-family: fantasy;
+	font-size: 11vh;
+	position: absolute;
+	padding: 3vh;
+	left: 0;
+	right: 0;
+	bottom: -5vh;
 }
