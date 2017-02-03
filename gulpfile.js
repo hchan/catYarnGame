@@ -1,6 +1,5 @@
 /**
-  To add more typings: C:\>typings install
-  otherwise run gulp and then load the startup html
+  To add more typings use package.json
 */
 var gulp = require("gulp");
 var browserify = require("browserify");
@@ -9,11 +8,19 @@ var tsify = require("tsify");
 var glob = require('glob');
 const b = require('gulp-browserify-typescript');
 var files = [];
-// adding vanilla jquery to the files didn't work
-// adding jquery-browserify works
-//files.push("node_modules/jquery-browserify/lib/jquery.js");
-files.push("node_modules/jquery/dist/jquery.min.js");
-files.push("node_modules/bootstrap/dist/js/bootstrap.min.js");
+/*
+ To add jquery,
+ modify Main.ts to have these lines:
+
+ import * as $ from "jquery"
+ window['$'] = $;
+ window['jQuery'] = $;
+
+*/
+/*
+  To add bootstrap
+  import "bootstrap"; in Main.ts
+*/
 files = files.concat(glob.sync('*.ts'));
 
 var outputFile = 'bundle.js';

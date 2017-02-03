@@ -139,3 +139,12 @@ body {
 	right: 0;
 	bottom: -5vh;
 }
+
+
+.modal {
+		margin:0 auto;
+		display:block;
+		position: fixed;
+
+		border:1px solid;
+}

@@ -1,6 +1,7 @@
 /// <reference path="node_modules/@types/jquery/index.d.ts"/>
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
+/// <reference path="node_modules/@types/bootstrap/index.d.ts"/>
 import {Game} from './Game';
 import {LevelSelector} from './LevelSelector';
 import * as React from "react"
@@ -53,6 +54,12 @@ export class MoveCount extends React.Component<Props, {}> {
     Game.instance.restart();
   }
 
+  hints(e) {
+    $('#myModal').modal('show');
+    $('.modal-content').css('height', "97%");
+
+  }
+
   getLevel() : number {
     let retval : number = this.state.levelIndex;
     retval++;
@@ -76,10 +83,17 @@ export class MoveCount extends React.Component<Props, {}> {
       <input type="button" value="Reset" onClick={this.reset}/>
       <input type="hidden" onChange={this.change}/>
       <LevelSelector change={this.changeLevel} levelIndex={this.state.levelIndex}/>
-      <input type="button" value="Hints" onClick={this.instructions}
-      className="topRight"/>
+      <input type="button" className="btn btn-info btn-lg topRight" value="Hints" onClick={this.hints}/>
       <input type="button" value="Instructions" onClick={this.instructions}
       className="bottomLeft"/>
+      <div className="modal fade" id="myModal"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display:'none'}}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+
+            Hello
+           </div>
+        </div>
+      </div>
     </span>;
   }
 

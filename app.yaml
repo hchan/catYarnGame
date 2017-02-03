@@ -7,6 +7,10 @@ handlers:
    static_files: index.html
    upload: index.html
 
+ - url: /(.*.html)
+   static_files: \1
+   upload: (.*.html)
+
  - url: /js/(.*)
    static_files: js/\1
    upload: js/(.*)
@@ -23,3 +27,7 @@ handlers:
  - url: /favicon.ico
    static_files: favicon.ico
    upload: favicon.ico
+
+ - url: /node_modules/bootstrap/dist/css/(.*)
+   static_files: node_modules/bootstrap/dist/css/\1
+   upload: node_modules/bootstrap/dist/css/(.*)
