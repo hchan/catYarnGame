@@ -11,7 +11,9 @@ const b = require('gulp-browserify-typescript');
 var files = [];
 // adding vanilla jquery to the files didn't work
 // adding jquery-browserify works
-files.push("node_modules/jquery-browserify/lib/jquery.js");
+//files.push("node_modules/jquery-browserify/lib/jquery.js");
+files.push("node_modules/jquery/dist/jquery.min.js");
+files.push("node_modules/bootstrap/dist/js/bootstrap.min.js");
 files = files.concat(glob.sync('*.ts'));
 
 var outputFile = 'bundle.js';
