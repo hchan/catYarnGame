@@ -122,17 +122,21 @@ export class Game {
     }
 
     doAfterPreloadImages() {
-        self.clearInterval(Game.ANIMATELOADINGINTERVALID);
-        $("body").html("");
+      self.clearInterval(Game.ANIMATELOADINGINTERVALID);
+      $("body").html("");
+      if (window.location.hash != null && window.location.hash == "#play") {
+        Game.beginPlay();
+      } else {
         $("body").append("<span id='welcome-header'/>")
         $("body").append("<span id='welcome-body'/>")
-        $("body").append("<span id='welcome-footer'/>")
+        $("ebody").append("<span id='welcome-footer'/>")
         this.addWelcome();
         //this.canvasBoard = new CanvasBoard();
         //$("#" + CanvasBoard.htmlId);//.hide();
         //$("#game-body").append(this.canvasBoard.canvas);
         //this.canvasBoard.loadBoardAndDraw();
         //this.addControlPanel();
+      }
     }
 
     static beginPlay() {

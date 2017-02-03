@@ -76,7 +76,10 @@ export class MoveCount extends React.Component<Props, {}> {
       <input type="button" value="Reset" onClick={this.reset}/>
       <input type="hidden" onChange={this.change}/>
       <LevelSelector change={this.changeLevel} levelIndex={this.state.levelIndex}/>
-      <input type="button" value="Instructions" onClick={this.instructions} className="bottomLeft"/>
+      <input type="button" value="Hints" onClick={this.instructions}
+      className="topRight"/>
+      <input type="button" value="Instructions" onClick={this.instructions}
+      className="bottomLeft"/>
     </span>;
   }
 
