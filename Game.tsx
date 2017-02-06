@@ -11,6 +11,8 @@ import {GameLevel} from './GameLevel'
 import {Settings} from './Settings'
 import {Instructions} from './Instructions'
 import {Welcome} from './Welcome'
+import {GameHeader} from './GameHeader'
+import {GameFooter} from './GameFooter'
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -129,7 +131,7 @@ export class Game {
       } else {
         $("body").append("<span id='welcome-header'/>")
         $("body").append("<span id='welcome-body'/>")
-        $("ebody").append("<span id='welcome-footer'/>")
+        $("body").append("<span id='welcome-footer'/>")
         this.addWelcome();
         //this.canvasBoard = new CanvasBoard();
         //$("#" + CanvasBoard.htmlId);//.hide();
@@ -145,9 +147,12 @@ export class Game {
       $("body").append("<span id='game-body'/>")
       $("body").append("<span id='game-footer'/>")
       Game.instance.canvasBoard = new CanvasBoard();
-
+      var gameHeader : JSX.Element = <GameHeader/>;
+      var gameFooter : JSX.Element = <GameFooter/>;
+      Game.instance.canvasBoard.loadBoardAndDraw();
       $("#game-body").append(  Game.instance.canvasBoard.canvas);
-        Game.instance.canvasBoard.loadBoardAndDraw();
+      ReactDOM.render(gameHeader, document.getElementById("game-header"));
+      ReactDOM.render(gameFooter, document.getElementById("game-footer"));
       //this.addControlPanel();
     }
 
