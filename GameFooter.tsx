@@ -39,7 +39,7 @@ export class GameFooter extends React.Component<Props, {}> {
   }
 
   render() {
-    return <div id="game-footer-table">
+    return <div className="game-row">
       <div className="game-table-cell left">
       left
       </div>

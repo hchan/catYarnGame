@@ -7,8 +7,8 @@ import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 export interface Props {
-  levelIndex: number;
-  change : React.EventHandler<any>;
+  levelIndex?: number;
+  change? : React.EventHandler<any>;
 }
 
 
@@ -29,9 +29,15 @@ export class LevelSelector extends React.Component<Props, {}> {
 
   changeLevel(e : React.FormEvent) {
     let target : HTMLSelectElement = e.target as HTMLSelectElement;
-    let gameLevelIndex = target.value;
-    this.setState( {levelIndex : parseInt(gameLevelIndex)} as Props);
-    this.props.change(gameLevelIndex)
+    let gameLevelIndex : number = parseInt(target.value);
+    //this.setState( {levelIndex : parseInt(gameLevelIndex)} as Props);
+    //this.props.change(gameLevelIndex)
+    Game.instance.settings.gameLevelIndex = gameLevelIndex;
+    let state : Props = this.state;
+    //state.moves = 0;
+    state.levelIndex = gameLevelIndex;
+    this.setState(state);
+    Game.instance.canvasBoard.loadBoardAndDraw();
   }
 
 
@@ -48,7 +54,7 @@ export class LevelSelector extends React.Component<Props, {}> {
       return retval;
   }
   render() {
-    return <span className="bottomRight">
+    return <span className="levelSelector">
              <select onChange={this.changeLevel} value={this.state.levelIndex}>
               {this.getLevels()}
              </select>

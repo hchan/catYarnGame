@@ -7,24 +7,22 @@ import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 export interface Props {
-
+  levelIndex: number;
 }
 
 
 export class GameHeader extends React.Component<Props, {}> {
+  state : Props;
   title : string;
-  constructor() {
-    super();
-    this.title = $("title").text();
+  constructor(props) {
+    super(props);
+    this.state = {levelIndex : 0};
+    //$.extend(this.state, this.props);
   }
 
   // need this like to help with transpile
   refs : {}
 
-  changeLevel(gameLevelIndex : number) {
-    Game.instance.settings.gameLevelIndex = gameLevelIndex;
-    Game.instance.canvasBoard.loadBoardAndDraw();
-  }
 
   doInstructions() {
     alert("Instructions Not Implemented Yet")
@@ -39,12 +37,12 @@ export class GameHeader extends React.Component<Props, {}> {
   }
 
   render() {
-    return <div id="game-header-table">
+    return <div className="game-row">
       <div className="game-table-cell left">
       left
       </div>
       <div className="game-table-cell center">
-      middle
+      <LevelSelector levelIndex={this.state.levelIndex}/>
       </div>
       <div className="game-table-cell right">
       right

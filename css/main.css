@@ -149,11 +149,15 @@ body {
 		border:1px solid;
 }
 
-#game-header-table {
+#game-header {
 	display : table;
 }
-#game-footer-table {
+#game-footer {
 	display : table;
+}
+
+.game-row {
+	display: table-row;
 }
 .game-table-cell {
 	display: table-cell;

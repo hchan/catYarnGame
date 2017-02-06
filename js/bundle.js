@@ -325,12 +325,24 @@ var Game = (function () {
         $("body").append("<span id='game-body'/>");
         $("body").append("<span id='game-footer'/>");
         Game.instance.canvasBoard = new CanvasBoard_1.CanvasBoard();
-        var gameHeader = React.createElement(GameHeader_1.GameHeader, null);
+        var gameHeader = React.createElement(GameHeader_1.GameHeader, { levelIndex: 0 });
         var gameFooter = React.createElement(GameFooter_1.GameFooter, null);
         Game.instance.canvasBoard.loadBoardAndDraw();
         $("#game-body").append(Game.instance.canvasBoard.canvas);
-        ReactDOM.render(gameHeader, document.getElementById("game-header"));
-        ReactDOM.render(gameFooter, document.getElementById("game-footer"));
+        Game.staticReplaceElement("game-header", gameHeader);
+        Game.staticReplaceElement("game-footer", gameFooter);
+        var gameHeaderHeight = (Game.instance.height - $("#game-body").height()) / 2;
+        var gameFooterHeight = gameHeaderHeight;
+        console.log(gameFooterHeight);
+        $("#game-header").height(gameHeaderHeight);
+        $("#game-footer").height(gameFooterHeight);
+    };
+    Game.staticReplaceElement = function (id, jsxElement) {
+        var temp = document.createElement("span");
+        temp.id = id;
+        ReactDOM.render(jsxElement, temp);
+        var container = document.getElementsByTagName("body")[0];
+        container.replaceChild(temp, document.getElementById(id));
     };
     Game.prototype.addWelcome = function () {
         var welcome = React.createElement(Welcome_1.Welcome, null);
@@ -414,7 +426,7 @@ var GameFooter = (function (_super) {
         Game_1.Game.beginPlay();
     };
     GameFooter.prototype.render = function () {
-        return React.createElement("div", { id: "game-footer-table" },
+        return React.createElement("div", { className: "game-row" },
             React.createElement("div", { className: "game-table-cell left" }, "left"),
             React.createElement("div", { className: "game-table-cell center" }, "middle"),
             React.createElement("div", { className: "game-table-cell right" }, "right"));
@@ -431,18 +443,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Game_1 = require("./Game");
+var LevelSelector_1 = require("./LevelSelector");
 var React = require("react");
 var GameHeader = (function (_super) {
     __extends(GameHeader, _super);
-    function GameHeader() {
-        var _this = _super.call(this) || this;
-        _this.title = $("title").text();
+    function GameHeader(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = { levelIndex: 0 };
         return _this;
     }
-    GameHeader.prototype.changeLevel = function (gameLevelIndex) {
-        Game_1.Game.instance.settings.gameLevelIndex = gameLevelIndex;
-        Game_1.Game.instance.canvasBoard.loadBoardAndDraw();
-    };
     GameHeader.prototype.doInstructions = function () {
         alert("Instructions Not Implemented Yet");
     };
@@ -453,16 +462,17 @@ var GameHeader = (function (_super) {
         Game_1.Game.beginPlay();
     };
     GameHeader.prototype.render = function () {
-        return React.createElement("div", { id: "game-header-table" },
+        return React.createElement("div", { className: "game-row" },
             React.createElement("div", { className: "game-table-cell left" }, "left"),
-            React.createElement("div", { className: "game-table-cell center" }, "middle"),
+            React.createElement("div", { className: "game-table-cell center" },
+                React.createElement(LevelSelector_1.LevelSelector, { levelIndex: this.state.levelIndex })),
             React.createElement("div", { className: "game-table-cell right" }, "right"));
     };
     return GameHeader;
 }(React.Component));
 exports.GameHeader = GameHeader;
 
-},{"./Game":5,"react":236}],8:[function(require,module,exports){
+},{"./Game":5,"./LevelSelector":11,"react":236}],8:[function(require,module,exports){
 "use strict";
 var PuzzleCreator_1 = require("./PuzzleCreator");
 var React = require("react");
@@ -582,6 +592,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Game_1 = require("./Game");
 var GameLevel_1 = require("./GameLevel");
 var React = require("react");
 var LevelSelector = (function (_super) {
@@ -595,9 +606,12 @@ var LevelSelector = (function (_super) {
     }
     LevelSelector.prototype.changeLevel = function (e) {
         var target = e.target;
-        var gameLevelIndex = target.value;
-        this.setState({ levelIndex: parseInt(gameLevelIndex) });
-        this.props.change(gameLevelIndex);
+        var gameLevelIndex = parseInt(target.value);
+        Game_1.Game.instance.settings.gameLevelIndex = gameLevelIndex;
+        var state = this.state;
+        state.levelIndex = gameLevelIndex;
+        this.setState(state);
+        Game_1.Game.instance.canvasBoard.loadBoardAndDraw();
     };
     LevelSelector.prototype.getLevels = function () {
         var retval = [];
@@ -613,7 +627,7 @@ var LevelSelector = (function (_super) {
         return retval;
     };
     LevelSelector.prototype.render = function () {
-        return React.createElement("span", { className: "bottomRight" },
+        return React.createElement("span", { className: "levelSelector" },
             React.createElement("select", { onChange: this.changeLevel, value: this.state.levelIndex }, this.getLevels()));
     };
     return LevelSelector;
@@ -621,7 +635,7 @@ var LevelSelector = (function (_super) {
 LevelSelector.DAILY_RANDOM = -1;
 exports.LevelSelector = LevelSelector;
 
-},{"./GameLevel":8,"react":236}],12:[function(require,module,exports){
+},{"./Game":5,"./GameLevel":8,"react":236}],12:[function(require,module,exports){
 "use strict";
 var Game_1 = require("./Game");
 var $ = require("jquery");

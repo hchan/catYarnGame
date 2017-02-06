@@ -147,13 +147,31 @@ export class Game {
       $("body").append("<span id='game-body'/>")
       $("body").append("<span id='game-footer'/>")
       Game.instance.canvasBoard = new CanvasBoard();
-      var gameHeader : JSX.Element = <GameHeader/>;
+      var gameHeader : JSX.Element = <GameHeader levelIndex={0}/>;
       var gameFooter : JSX.Element = <GameFooter/>;
       Game.instance.canvasBoard.loadBoardAndDraw();
       $("#game-body").append(  Game.instance.canvasBoard.canvas);
-      ReactDOM.render(gameHeader, document.getElementById("game-header"));
-      ReactDOM.render(gameFooter, document.getElementById("game-footer"));
+      Game.staticReplaceElement("game-header", gameHeader);
+      Game.staticReplaceElement("game-footer", gameFooter);
+      var gameHeaderHeight : number = (Game.instance.height - $("#game-body").height())/2;
+      var gameFooterHeight : number = gameHeaderHeight;
+      console.log(gameFooterHeight)
+      $("#game-header").height(gameHeaderHeight);
+      $("#game-footer").height(gameFooterHeight);
       //this.addControlPanel();
+    }
+
+    // http://stackoverflow.com/questions/30686796/react-render-replace-container-instead-of-inserting-into
+    static staticReplaceElement(id : string, jsxElement : JSX.Element ) {
+      // temporary render target
+      var temp : Element = document.createElement("span");
+      temp.id = id;
+      // render
+      ReactDOM.render(jsxElement, temp);
+      // grab the container
+      var container : Element = document.getElementsByTagName("body")[0];
+      // and replace the child
+      container.replaceChild(temp, document.getElementById(id));
     }
 
     addWelcome() {
