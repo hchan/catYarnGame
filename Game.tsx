@@ -50,6 +50,7 @@ export class Game {
         $("html").width(this.width);
         $("html").height(this.height);
         if (this.width > this.height) {
+          alert("LANDSCAPE orientation is not supported!!")
           this.orientation = Orientation.LANDSCAPE;
           $("body").css({"display": "table"})
         } else {

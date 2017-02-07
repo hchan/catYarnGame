@@ -36,16 +36,24 @@ export class GameHeader extends React.Component<Props, {}> {
     Game.beginPlay();
   }
 
+  doInfo() {
+    alert("TODO - show Info ... info buttons are usually top right corner right?");
+  }
+
+  doHome() {
+    alert("TODO - should this go to welcome page?");
+  }
+
   render() {
     return <div className="game-row">
       <div className="game-table-cell left">
-      left
+        <input type="image" src="img/home.png" id="info" onClick={this.doHome}/>
       </div>
       <div className="game-table-cell center">
-      <LevelSelector levelIndex={this.state.levelIndex}/>
+        <LevelSelector levelIndex={this.state.levelIndex}/>
       </div>
       <div className="game-table-cell right">
-      right
+        <input type="image" src="img/info.png" id="info" onClick={this.doInfo}/>
       </div>
     </div>;
   }

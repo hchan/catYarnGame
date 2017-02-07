@@ -3,6 +3,7 @@
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Game} from './Game';
 import {LevelSelector} from './LevelSelector';
+import {MoveCount} from './MoveCount';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
@@ -38,16 +39,27 @@ export class GameFooter extends React.Component<Props, {}> {
     Game.beginPlay();
   }
 
+  doReset() {
+    alert("TODO - Reset Board")
+  }
+
+  doHints() {
+    alert("TODO - do Hints")
+  }
+  
   render() {
     return <div className="game-row">
       <div className="game-table-cell left">
-      left
+        <input type="image" src="img/reset.png" id="info" onClick={this.doReset}/>
       </div>
       <div className="game-table-cell center">
-      middle
+        <span id="movesContainer">
+          <span>Moves:   </span>
+          <span id="movesCount">0</span>
+        </span>
       </div>
       <div className="game-table-cell right">
-      right
+        <input type="image" src="img/hints.png" id="info" onClick={this.doHints}/>
       </div>
     </div>;
   }

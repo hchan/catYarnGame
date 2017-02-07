@@ -36,18 +36,17 @@ export class CanvasBoard {
         jQuerySelector.prop('width', this.width)
         jQuerySelector.prop('height', this.height)
         this.cellLength = Math.floor(this.cellLength);
-
-
-
-
         jQuerySelector.css({ display: 'table-cell' });
         this.jQuerySelector = jQuerySelector;
         this.canvas = this.jQuerySelector.get(0) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext("2d");
         var canvasBoard: CanvasBoard = this;
+
         this.canvas.addEventListener("click", function(e: MouseEvent) {
-            var x: number = Math.floor(e.clientX / canvasBoard.cellLength);
-            var y: number = Math.floor(e.clientY / canvasBoard.cellLength);
+            let xOffset = $("#" + CanvasBoard.htmlId).offset().left;
+            let yOffset = $("#" + CanvasBoard.htmlId).offset().top;
+            let x: number = Math.floor((e.clientX - xOffset)/ canvasBoard.cellLength);
+            let y: number = Math.floor((e.clientY - yOffset)/ canvasBoard.cellLength);
             canvasBoard.doModify(x, y);
         });
         this.board = new Board(CanvasBoard.COLS, CanvasBoard.ROWS);
@@ -101,6 +100,7 @@ export class CanvasBoard {
     }
 
     renderMoveCount() {
+      /*
       if ($("#moveCount").length == 0) {
         Game.instance.renderControlPanel({body:<MoveCount levelIndex={Game.instance.settings.gameLevelIndex} moves={1}/>});
       } else {
@@ -108,12 +108,19 @@ export class CanvasBoard {
         moveCount++;
         Game.instance.renderControlPanel({body:<MoveCount levelIndex={Game.instance.settings.gameLevelIndex} moves={moveCount}/>});
       }
+      */
+      let moveCount : number = parseInt($("#movesCount").html());
+      moveCount++;
+      $("#movesCount").html("" + moveCount);
     }
 
     renderYouWin() {
+      /*
       let moveCount : number = parseInt($("#moveCount").html());
       moveCount++;
       Game.instance.renderControlPanel({body:<YouWin levelIndex={Game.instance.settings.gameLevelIndex} moves={moveCount}/>});
+      */
+      alert("todo - You Win")
     }
 
     draw() {

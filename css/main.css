@@ -151,9 +151,13 @@ body {
 
 #game-header {
 	display : table;
+	background-color: lightblue;
+	width: 100vw;
 }
 #game-footer {
 	display : table;
+	background-color: #ee0000;
+	width: 100vw;
 }
 
 .game-row {
@@ -162,14 +166,31 @@ body {
 .game-table-cell {
 	display: table-cell;
 	width: 33vw;
+	vertical-align: middle;
 }
 
 .game-table-cell.left {
+	padding-left: 1vw;
 	text-align: left;
 }
 .game-table-cell.center {
 	text-align: center;
 }
 .game-table-cell.right {
+	padding-right: 1vw;
 	text-align: right;
+}
+
+.form-control {
+	height: 6vh;
+	font-size: 4vh;
+	padding: 0.5vh;
+}
+
+#info {
+	height: 6vh;
+}
+
+#movesContainer {
+	font-size: 4vh;
 }

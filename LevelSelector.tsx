@@ -55,7 +55,7 @@ export class LevelSelector extends React.Component<Props, {}> {
   }
   render() {
     return <span className="levelSelector">
-             <select onChange={this.changeLevel} value={this.state.levelIndex}>
+             <select className="form-control" onChange={this.changeLevel} value={this.state.levelIndex}>
               {this.getLevels()}
              </select>
            </span>;
