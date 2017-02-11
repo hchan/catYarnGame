@@ -13,6 +13,7 @@ import {Instructions} from './Instructions'
 import {Welcome} from './Welcome'
 import {GameHeader} from './GameHeader'
 import {GameFooter} from './GameFooter'
+import {PaddingDirection} from './PaddingDirection'
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -20,6 +21,7 @@ export enum Orientation {
   LANDSCAPE,
   PORTRAIT
 }
+
 export class Game {
     canvasBoard: CanvasBoard
     //controlPanel: ControlPanel
@@ -29,10 +31,12 @@ export class Game {
     static ANIMATELOADINGLOOPCOUNT: number = 0;
     static ANIMATELOADINGINTERVALID: number;
     static SETTINGS : Settings;
+    static HEIGHT_TO_WIDTH : number = 4/3;
     width: number;
     height: number;
     orientation : Orientation;
     settings : Settings;
+    paddingDirection : PaddingDirection;
 
     static instance : Game;
     constructor() {
@@ -49,6 +53,7 @@ export class Game {
         this.assignWidthAndHeight();
         $("html").width(this.width);
         $("html").height(this.height);
+        /*
         if (this.width > this.height) {
           alert("LANDSCAPE orientation is not supported!!")
           this.orientation = Orientation.LANDSCAPE;
@@ -57,6 +62,10 @@ export class Game {
           this.orientation = Orientation.PORTRAIT;
           $("body").css({"display": "inline"})
         }
+        */
+
+        this.orientation = Orientation.PORTRAIT;
+        $("body").css({"display": "inline"})
 
 
         this.initLoading();
@@ -89,6 +98,18 @@ export class Game {
        {
              this.width = document.getElementsByTagName('body')[0].clientWidth,
              this.height = document.getElementsByTagName('body')[0].clientHeight
+       }
+
+       let preWidthBeforeAdjust : number = this.width;
+       let preHeightBeforeAdjust : number = this.height;
+       if ((this.height / this.width) <  Game.HEIGHT_TO_WIDTH) {
+         this.width = this.height / Game.HEIGHT_TO_WIDTH;
+         this.paddingDirection = PaddingDirection.HORIZONTAL;
+         $("body").css("margin-left", (preWidthBeforeAdjust - this.width)/2 )
+       } else {
+         this.height = this.width * Game.HEIGHT_TO_WIDTH;
+         this.paddingDirection = PaddingDirection.VERTICAL;
+        $("body").css("margin-top", (preHeightBeforeAdjust - this.height)/2 )
        }
     }
 
@@ -155,10 +176,14 @@ export class Game {
       Game.staticReplaceElement("game-header", gameHeader);
       Game.staticReplaceElement("game-footer", gameFooter);
       var gameHeaderHeight : number = (Game.instance.height - $("#game-body").height())/2;
+      var gameHeaderWidth : number = Game.instance.width;
       var gameFooterHeight : number = gameHeaderHeight;
+      var gameFooterWidth : number = Game.instance.width;
       console.log(gameFooterHeight)
       $("#game-header").height(gameHeaderHeight);
+      $("#game-header").width(gameHeaderWidth);
       $("#game-footer").height(gameFooterHeight);
+      $("#game-footer").width(gameFooterWidth);
       //this.addControlPanel();
     }
 
