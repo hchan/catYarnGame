@@ -34,6 +34,8 @@ export class Game {
     static HEIGHT_TO_WIDTH : number = 4/3;
     width: number;
     height: number;
+    widthBeforeRatioAdjust: number;
+    heightBeforeRatioAdjust: number;
     orientation : Orientation;
     settings : Settings;
     paddingDirection : PaddingDirection;
@@ -100,17 +102,28 @@ export class Game {
              this.height = document.getElementsByTagName('body')[0].clientHeight
        }
 
-       let preWidthBeforeAdjust : number = this.width;
-       let preHeightBeforeAdjust : number = this.height;
+       this.widthBeforeRatioAdjust = this.width;
+       this.heightBeforeRatioAdjust = this.height;
        if ((this.height / this.width) <  Game.HEIGHT_TO_WIDTH) {
          this.width = this.height / Game.HEIGHT_TO_WIDTH;
          this.paddingDirection = PaddingDirection.HORIZONTAL;
-         $("body").css("margin-left", (preWidthBeforeAdjust - this.width)/2 )
+         $("body").css("margin-left", (this.widthBeforeRatioAdjust - this.width)/2 )
        } else {
          this.height = this.width * Game.HEIGHT_TO_WIDTH;
          this.paddingDirection = PaddingDirection.VERTICAL;
-        $("body").css("margin-top", (preHeightBeforeAdjust - this.height)/2 )
+        $("body").css("margin-top", (this.heightBeforeRatioAdjust - this.height)/2 )
+
+
        }
+    }
+
+    postAssignWidthAndHeight() {
+      if (this.paddingDirection === PaddingDirection.VERTICAL) {
+        let fontSize : number = parseInt($("#movesContainer").css("font-size"));
+        fontSize *= this.height/this.heightBeforeRatioAdjust;
+        $("#movesContainer").css("font-size", fontSize);
+        $(".form-control").css("font-size", fontSize);
+      }
     }
 
     initLoading() {
@@ -179,11 +192,11 @@ export class Game {
       var gameHeaderWidth : number = Game.instance.width;
       var gameFooterHeight : number = gameHeaderHeight;
       var gameFooterWidth : number = Game.instance.width;
-      console.log(gameFooterHeight)
       $("#game-header").height(gameHeaderHeight);
       $("#game-header").width(gameHeaderWidth);
       $("#game-footer").height(gameFooterHeight);
       $("#game-footer").width(gameFooterWidth);
+      Game.instance.postAssignWidthAndHeight();
       //this.addControlPanel();
     }
 

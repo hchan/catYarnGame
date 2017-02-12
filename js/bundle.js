@@ -265,17 +265,25 @@ var Game = (function () {
             this.width = document.getElementsByTagName('body')[0].clientWidth,
                 this.height = document.getElementsByTagName('body')[0].clientHeight;
         }
-        var preWidthBeforeAdjust = this.width;
-        var preHeightBeforeAdjust = this.height;
+        this.widthBeforeRatioAdjust = this.width;
+        this.heightBeforeRatioAdjust = this.height;
         if ((this.height / this.width) < Game.HEIGHT_TO_WIDTH) {
             this.width = this.height / Game.HEIGHT_TO_WIDTH;
             this.paddingDirection = PaddingDirection_1.PaddingDirection.HORIZONTAL;
-            $("body").css("margin-left", (preWidthBeforeAdjust - this.width) / 2);
+            $("body").css("margin-left", (this.widthBeforeRatioAdjust - this.width) / 2);
         }
         else {
             this.height = this.width * Game.HEIGHT_TO_WIDTH;
             this.paddingDirection = PaddingDirection_1.PaddingDirection.VERTICAL;
-            $("body").css("margin-top", (preHeightBeforeAdjust - this.height) / 2);
+            $("body").css("margin-top", (this.heightBeforeRatioAdjust - this.height) / 2);
+        }
+    };
+    Game.prototype.postAssignWidthAndHeight = function () {
+        if (this.paddingDirection === PaddingDirection_1.PaddingDirection.VERTICAL) {
+            var fontSize = parseInt($("#movesContainer").css("font-size"));
+            fontSize *= this.height / this.heightBeforeRatioAdjust;
+            $("#movesContainer").css("font-size", fontSize);
+            $(".form-control").css("font-size", fontSize);
         }
     };
     Game.prototype.initLoading = function () {
@@ -334,11 +342,11 @@ var Game = (function () {
         var gameHeaderWidth = Game.instance.width;
         var gameFooterHeight = gameHeaderHeight;
         var gameFooterWidth = Game.instance.width;
-        console.log(gameFooterHeight);
         $("#game-header").height(gameHeaderHeight);
         $("#game-header").width(gameHeaderWidth);
         $("#game-footer").height(gameFooterHeight);
         $("#game-footer").width(gameFooterWidth);
+        Game.instance.postAssignWidthAndHeight();
     };
     Game.staticReplaceElement = function (id, jsxElement) {
         var temp = document.createElement("span");
