@@ -31,6 +31,7 @@ export class Game {
     static ANIMATELOADINGLOOPCOUNT: number = 0;
     static ANIMATELOADINGINTERVALID: number;
     static SETTINGS : Settings;
+    static FONT_SIZE : number = 4; // 4vh == 4 % of vertical height
     static HEIGHT_TO_WIDTH : number = 4/3;
     width: number;
     height: number;
@@ -53,8 +54,7 @@ export class Game {
     init() {
         this.settings = new Settings();
         this.assignWidthAndHeight();
-        $("html").width(this.width);
-        $("html").height(this.height);
+
         /*
         if (this.width > this.height) {
           alert("LANDSCAPE orientation is not supported!!")
@@ -108,22 +108,35 @@ export class Game {
          this.width = this.height / Game.HEIGHT_TO_WIDTH;
          this.paddingDirection = PaddingDirection.HORIZONTAL;
          $("body").css("margin-left", (this.widthBeforeRatioAdjust - this.width)/2 )
+         $("body").css("margin-top", 0);
        } else {
          this.height = this.width * Game.HEIGHT_TO_WIDTH;
          this.paddingDirection = PaddingDirection.VERTICAL;
-        $("body").css("margin-top", (this.heightBeforeRatioAdjust - this.height)/2 )
-
-
+         $("body").css("margin-top", (this.heightBeforeRatioAdjust - this.height)/2 )
+         $("body").css("margin-left", 0);
        }
+       $("html").width(this.width);
+       $("html").height(this.height);
     }
 
-    postAssignWidthAndHeight() {
+    fixFontSize() {
+      let fontSizePixels : number = this.height * Game.FONT_SIZE * 0.01;
       if (this.paddingDirection === PaddingDirection.VERTICAL) {
-        let fontSize : number = parseInt($("#movesContainer").css("font-size"));
-        fontSize *= this.height/this.heightBeforeRatioAdjust;
-        $("#movesContainer").css("font-size", fontSize);
-        $(".form-control").css("font-size", fontSize);
+        fontSizePixels *= this.height/this.heightBeforeRatioAdjust;
       }
+      console.log(fontSizePixels)
+      $("#movesContainer").css("font-size", fontSizePixels);
+      $(".form-control").css("font-size", fontSizePixels);
+    }
+
+    addResizeHandler() {
+      $(window).off("resize");
+      $( window ).resize(function() {
+          Game.instance.assignWidthAndHeight();
+          Game.instance.resizeGameHeaderAndFooter();
+          Game.instance.canvasBoard.resize();
+          Game.instance.fixFontSize();
+      });
     }
 
     initLoading() {
@@ -186,22 +199,27 @@ export class Game {
       var gameFooter : JSX.Element = <GameFooter/>;
       Game.instance.canvasBoard.loadBoardAndDraw();
       $("#game-body").append(  Game.instance.canvasBoard.canvas);
-      Game.staticReplaceElement("game-header", gameHeader);
-      Game.staticReplaceElement("game-footer", gameFooter);
-      var gameHeaderHeight : number = (Game.instance.height - $("#game-body").height())/2;
-      var gameHeaderWidth : number = Game.instance.width;
-      var gameFooterHeight : number = gameHeaderHeight;
-      var gameFooterWidth : number = Game.instance.width;
+      Game.replaceElement("game-header", gameHeader);
+      Game.replaceElement("game-footer", gameFooter);
+      Game.instance.resizeGameHeaderAndFooter();
+      Game.instance.fixFontSize();
+      Game.instance.addResizeHandler();
+      //this.addControlPanel();
+    }
+
+    resizeGameHeaderAndFooter() {
+      let gameHeaderHeight : number = (Game.instance.height - $("#game-body").height())/2;
+      let gameHeaderWidth : number = Game.instance.width;
+      let gameFooterHeight : number = gameHeaderHeight;
+      let gameFooterWidth : number = Game.instance.width;
       $("#game-header").height(gameHeaderHeight);
       $("#game-header").width(gameHeaderWidth);
       $("#game-footer").height(gameFooterHeight);
       $("#game-footer").width(gameFooterWidth);
-      Game.instance.postAssignWidthAndHeight();
-      //this.addControlPanel();
     }
 
     // http://stackoverflow.com/questions/30686796/react-render-replace-container-instead-of-inserting-into
-    static staticReplaceElement(id : string, jsxElement : JSX.Element ) {
+    static replaceElement(id : string, jsxElement : JSX.Element ) {
       // temporary render target
       var temp : Element = document.createElement("span");
       temp.id = id;

@@ -81,6 +81,12 @@ var CanvasBoard = (function () {
         });
         this.board = new Board_1.Board(CanvasBoard.COLS, CanvasBoard.ROWS);
     }
+    CanvasBoard.prototype.resize = function () {
+        this.width = Game_1.Game.instance.width;
+        this.height = Game_1.Game.instance.width;
+        $("#" + CanvasBoard.htmlId).css("width", this.width);
+        $("#" + CanvasBoard.htmlId).css("height", this.height);
+    };
     CanvasBoard.prototype.loadBoardAndDraw = function () {
         this.board.load(GameLevel_1.GameLevel.getBoardAsString(Game_1.Game.instance.settings.gameLevelIndex));
         this.draw();
@@ -242,8 +248,6 @@ var Game = (function () {
     Game.prototype.init = function () {
         this.settings = new Settings_1.Settings();
         this.assignWidthAndHeight();
-        $("html").width(this.width);
-        $("html").height(this.height);
         this.orientation = Orientation.PORTRAIT;
         $("body").css({ "display": "inline" });
         this.initLoading();
@@ -271,20 +275,34 @@ var Game = (function () {
             this.width = this.height / Game.HEIGHT_TO_WIDTH;
             this.paddingDirection = PaddingDirection_1.PaddingDirection.HORIZONTAL;
             $("body").css("margin-left", (this.widthBeforeRatioAdjust - this.width) / 2);
+            $("body").css("margin-top", 0);
         }
         else {
             this.height = this.width * Game.HEIGHT_TO_WIDTH;
             this.paddingDirection = PaddingDirection_1.PaddingDirection.VERTICAL;
             $("body").css("margin-top", (this.heightBeforeRatioAdjust - this.height) / 2);
+            $("body").css("margin-left", 0);
         }
+        $("html").width(this.width);
+        $("html").height(this.height);
     };
-    Game.prototype.postAssignWidthAndHeight = function () {
+    Game.prototype.fixFontSize = function () {
+        var fontSizePixels = this.height * Game.FONT_SIZE * 0.01;
         if (this.paddingDirection === PaddingDirection_1.PaddingDirection.VERTICAL) {
-            var fontSize = parseInt($("#movesContainer").css("font-size"));
-            fontSize *= this.height / this.heightBeforeRatioAdjust;
-            $("#movesContainer").css("font-size", fontSize);
-            $(".form-control").css("font-size", fontSize);
+            fontSizePixels *= this.height / this.heightBeforeRatioAdjust;
         }
+        console.log(fontSizePixels);
+        $("#movesContainer").css("font-size", fontSizePixels);
+        $(".form-control").css("font-size", fontSizePixels);
+    };
+    Game.prototype.addResizeHandler = function () {
+        $(window).off("resize");
+        $(window).resize(function () {
+            Game.instance.assignWidthAndHeight();
+            Game.instance.resizeGameHeaderAndFooter();
+            Game.instance.canvasBoard.resize();
+            Game.instance.fixFontSize();
+        });
     };
     Game.prototype.initLoading = function () {
         $("body").html("<div id='loading'><div id='pleaseWait'>"
@@ -336,8 +354,13 @@ var Game = (function () {
         var gameFooter = React.createElement(GameFooter_1.GameFooter, null);
         Game.instance.canvasBoard.loadBoardAndDraw();
         $("#game-body").append(Game.instance.canvasBoard.canvas);
-        Game.staticReplaceElement("game-header", gameHeader);
-        Game.staticReplaceElement("game-footer", gameFooter);
+        Game.replaceElement("game-header", gameHeader);
+        Game.replaceElement("game-footer", gameFooter);
+        Game.instance.resizeGameHeaderAndFooter();
+        Game.instance.fixFontSize();
+        Game.instance.addResizeHandler();
+    };
+    Game.prototype.resizeGameHeaderAndFooter = function () {
         var gameHeaderHeight = (Game.instance.height - $("#game-body").height()) / 2;
         var gameHeaderWidth = Game.instance.width;
         var gameFooterHeight = gameHeaderHeight;
@@ -346,9 +369,8 @@ var Game = (function () {
         $("#game-header").width(gameHeaderWidth);
         $("#game-footer").height(gameFooterHeight);
         $("#game-footer").width(gameFooterWidth);
-        Game.instance.postAssignWidthAndHeight();
     };
-    Game.staticReplaceElement = function (id, jsxElement) {
+    Game.replaceElement = function (id, jsxElement) {
         var temp = document.createElement("span");
         temp.id = id;
         ReactDOM.render(jsxElement, temp);
@@ -405,6 +427,7 @@ Game.IMAGE_LOCATIONS = [];
 Game.IMAGE_DICT = {};
 Game.PLEASEWAITTEXT = "Please Wait";
 Game.ANIMATELOADINGLOOPCOUNT = 0;
+Game.FONT_SIZE = 4;
 Game.HEIGHT_TO_WIDTH = 4 / 3;
 exports.Game = Game;
 

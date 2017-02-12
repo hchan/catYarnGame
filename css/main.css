@@ -184,7 +184,7 @@ body {
 
 .form-control {
 	height: 6vh;
-	font-size: 4vh;
+	/* font-size: 4vh;  moved to code */
 	padding: 0.5vh;
 }
 
@@ -193,5 +193,5 @@ body {
 }
 
 #movesContainer {
-	font-size: 4vh;
+	/* font-size: 4vh; moved to code */
 }

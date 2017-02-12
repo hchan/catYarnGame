@@ -35,6 +35,7 @@ export class CanvasBoard {
         }
         jQuerySelector.prop('width', this.width)
         jQuerySelector.prop('height', this.height)
+
         this.cellLength = Math.floor(this.cellLength);
         jQuerySelector.css({ display: 'table-cell' });
         this.jQuerySelector = jQuerySelector;
@@ -51,6 +52,13 @@ export class CanvasBoard {
         });
         this.board = new Board(CanvasBoard.COLS, CanvasBoard.ROWS);
         //this.loadBoardAndDraw();
+    }
+
+    resize() {
+      this.width = Game.instance.width;
+      this.height = Game.instance.width;
+      $("#" + CanvasBoard.htmlId).css("width", this.width)
+      $("#" + CanvasBoard.htmlId).css("height", this.height)
     }
 
     loadBoardAndDraw() {
