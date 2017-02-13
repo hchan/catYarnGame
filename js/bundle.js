@@ -53,39 +53,41 @@ var Game_1 = require("./Game");
 var GameLevel_1 = require("./GameLevel");
 var CanvasBoard = (function () {
     function CanvasBoard() {
+        CanvasBoard.instance = this;
         var jQuerySelector = $("<canvas id='" + CanvasBoard.htmlId + "' ></canvas>");
-        if (Game_1.Game.instance.orientation == Game_1.Orientation.LANDSCAPE) {
-            this.width = Game_1.Game.instance.height;
-            this.height = Game_1.Game.instance.height;
-            this.cellLength = this.height / CanvasBoard.COLS;
-        }
-        else {
-            this.width = Game_1.Game.instance.width;
-            this.height = Game_1.Game.instance.width;
-            this.cellLength = this.height / CanvasBoard.COLS;
-        }
-        jQuerySelector.prop('width', this.width);
-        jQuerySelector.prop('height', this.height);
+        this.resize(jQuerySelector);
         this.cellLength = Math.floor(this.cellLength);
         jQuerySelector.css({ display: 'table-cell' });
         this.jQuerySelector = jQuerySelector;
         this.canvas = this.jQuerySelector.get(0);
         this.ctx = this.canvas.getContext("2d");
         var canvasBoard = this;
-        this.canvas.addEventListener("click", function (e) {
-            var xOffset = $("#" + CanvasBoard.htmlId).offset().left;
-            var yOffset = $("#" + CanvasBoard.htmlId).offset().top;
-            var x = Math.floor((e.clientX - xOffset) / canvasBoard.cellLength);
-            var y = Math.floor((e.clientY - yOffset) / canvasBoard.cellLength);
-            canvasBoard.doModify(x, y);
-        });
+        this.canvas.addEventListener("click", this.doClick);
         this.board = new Board_1.Board(CanvasBoard.COLS, CanvasBoard.ROWS);
     }
-    CanvasBoard.prototype.resize = function () {
+    CanvasBoard.prototype.assignCellLength = function () {
+        this.cellLength = this.height / CanvasBoard.COLS;
+    };
+    CanvasBoard.prototype.doClick = function (e) {
+        var xOffset = $("#" + CanvasBoard.htmlId).offset().left;
+        var yOffset = $("#" + CanvasBoard.htmlId).offset().top;
+        var x = Math.floor((e.clientX - xOffset) / CanvasBoard.instance.cellLength);
+        var y = Math.floor((e.clientY - yOffset) / CanvasBoard.instance.cellLength);
+        CanvasBoard.instance.doModify(x, y);
+    };
+    CanvasBoard.prototype.resize = function (jQuerySelector) {
         this.width = Game_1.Game.instance.width;
         this.height = Game_1.Game.instance.width;
-        $("#" + CanvasBoard.htmlId).css("width", this.width);
-        $("#" + CanvasBoard.htmlId).css("height", this.height);
+        this.assignCellLength();
+        console.log(jQuerySelector);
+        if (jQuerySelector) {
+            jQuerySelector.prop('width', this.width);
+            jQuerySelector.prop('height', this.height);
+        }
+        else {
+            $("#" + CanvasBoard.htmlId).prop("width", this.width);
+            $("#" + CanvasBoard.htmlId).prop("height", this.height);
+        }
     };
     CanvasBoard.prototype.loadBoardAndDraw = function () {
         this.board.load(GameLevel_1.GameLevel.getBoardAsString(Game_1.Game.instance.settings.gameLevelIndex));
@@ -291,7 +293,6 @@ var Game = (function () {
         if (this.paddingDirection === PaddingDirection_1.PaddingDirection.VERTICAL) {
             fontSizePixels *= this.height / this.heightBeforeRatioAdjust;
         }
-        console.log(fontSizePixels);
         $("#movesContainer").css("font-size", fontSizePixels);
         $(".form-control").css("font-size", fontSizePixels);
     };
@@ -301,6 +302,7 @@ var Game = (function () {
             Game.instance.assignWidthAndHeight();
             Game.instance.resizeGameHeaderAndFooter();
             Game.instance.canvasBoard.resize();
+            Game.instance.canvasBoard.draw();
             Game.instance.fixFontSize();
         });
     };

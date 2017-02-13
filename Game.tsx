@@ -124,7 +124,6 @@ export class Game {
       if (this.paddingDirection === PaddingDirection.VERTICAL) {
         fontSizePixels *= this.height/this.heightBeforeRatioAdjust;
       }
-      console.log(fontSizePixels)
       $("#movesContainer").css("font-size", fontSizePixels);
       $(".form-control").css("font-size", fontSizePixels);
     }
@@ -135,6 +134,7 @@ export class Game {
           Game.instance.assignWidthAndHeight();
           Game.instance.resizeGameHeaderAndFooter();
           Game.instance.canvasBoard.resize();
+          Game.instance.canvasBoard.draw();
           Game.instance.fixFontSize();
       });
     }

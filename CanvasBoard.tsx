@@ -20,22 +20,12 @@ export class CanvasBoard {
     static COLS: number = 5;
     static ROWS: number = 5;
     static htmlId : string = "canvasBoard";
+    static instance : CanvasBoard;
 
     constructor() {
+        CanvasBoard.instance = this;
         var jQuerySelector: JQuery = $("<canvas id='" + CanvasBoard.htmlId + "' ></canvas>");
-        if (Game.instance.orientation == Orientation.LANDSCAPE) {
-          this.width = Game.instance.height;
-          this.height = Game.instance.height;
-
-          this.cellLength = this.height / CanvasBoard.COLS;
-        } else {
-          this.width = Game.instance.width;
-          this.height = Game.instance.width;
-          this.cellLength = this.height / CanvasBoard.COLS;
-        }
-        jQuerySelector.prop('width', this.width)
-        jQuerySelector.prop('height', this.height)
-
+        this.resize(jQuerySelector);
         this.cellLength = Math.floor(this.cellLength);
         jQuerySelector.css({ display: 'table-cell' });
         this.jQuerySelector = jQuerySelector;
@@ -43,22 +33,35 @@ export class CanvasBoard {
         this.ctx = this.canvas.getContext("2d");
         var canvasBoard: CanvasBoard = this;
 
-        this.canvas.addEventListener("click", function(e: MouseEvent) {
-            let xOffset = $("#" + CanvasBoard.htmlId).offset().left;
-            let yOffset = $("#" + CanvasBoard.htmlId).offset().top;
-            let x: number = Math.floor((e.clientX - xOffset)/ canvasBoard.cellLength);
-            let y: number = Math.floor((e.clientY - yOffset)/ canvasBoard.cellLength);
-            canvasBoard.doModify(x, y);
-        });
+        this.canvas.addEventListener("click", this.doClick);
         this.board = new Board(CanvasBoard.COLS, CanvasBoard.ROWS);
         //this.loadBoardAndDraw();
     }
 
-    resize() {
+    assignCellLength() {
+      this.cellLength = this.height / CanvasBoard.COLS;
+    }
+
+    doClick(e : MouseEvent) {
+      let xOffset = $("#" + CanvasBoard.htmlId).offset().left;
+      let yOffset = $("#" + CanvasBoard.htmlId).offset().top;
+      let x: number = Math.floor((e.clientX - xOffset)/ CanvasBoard.instance.cellLength);
+      let y: number = Math.floor((e.clientY - yOffset)/ CanvasBoard.instance.cellLength);
+      CanvasBoard.instance.doModify(x, y);
+    }
+
+    resize(jQuerySelector?: JQuery) {
       this.width = Game.instance.width;
       this.height = Game.instance.width;
-      $("#" + CanvasBoard.htmlId).css("width", this.width)
-      $("#" + CanvasBoard.htmlId).css("height", this.height)
+      this.assignCellLength();
+      console.log(jQuerySelector)
+      if (jQuerySelector) {
+        jQuerySelector.prop('width', this.width)
+        jQuerySelector.prop('height', this.height)
+      } else {
+        $("#" + CanvasBoard.htmlId).prop("width", this.width)
+        $("#" + CanvasBoard.htmlId).prop("height", this.height)
+      }
     }
 
     loadBoardAndDraw() {
@@ -162,7 +165,6 @@ export class CanvasBoard {
         var padding : number = 10;
         var lengthOfImage = (this.width - ((CanvasBoard.COLS+1) * padding))/ CanvasBoard.COLS;
         var me = this;
-
         this.ctx.drawImage(image,
             x * me.cellLength + padding - (x/CanvasBoard.COLS * padding),
             y * me.cellLength + padding - (y/CanvasBoard.ROWS * padding),
