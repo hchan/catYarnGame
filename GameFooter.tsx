@@ -14,6 +14,7 @@ export interface Props {
 
 export class GameFooter extends React.Component<Props, {}> {
   title : string;
+
   constructor() {
     super();
     this.title = $("title").text();
@@ -44,9 +45,9 @@ export class GameFooter extends React.Component<Props, {}> {
   }
 
   doHints() {
-    alert("TODO - do Hints")
+    $('#hintsModal').modal('show');
   }
-  
+
   render() {
     return <div className="game-row">
       <div className="game-table-cell left">
@@ -60,6 +61,19 @@ export class GameFooter extends React.Component<Props, {}> {
       </div>
       <div className="game-table-cell right">
         <input type="image" src="img/hints.png" id="info" onClick={this.doHints}/>
+        <div className="modal fade" id="hintsModal"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display:'none'}}>
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 className="modal-title">Hints</h4>
+              </div>
+              <div className="modal-body">
+                <p>One fine body&hellip;</p>
+              </div>
+             </div>
+            </div>
+        </div>
       </div>
     </div>;
   }

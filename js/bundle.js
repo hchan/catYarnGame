@@ -466,7 +466,7 @@ var GameFooter = (function (_super) {
         alert("TODO - Reset Board");
     };
     GameFooter.prototype.doHints = function () {
-        alert("TODO - do Hints");
+        $('#hintsModal').modal('show');
     };
     GameFooter.prototype.render = function () {
         return React.createElement("div", { className: "game-row" },
@@ -477,7 +477,16 @@ var GameFooter = (function (_super) {
                     React.createElement("span", null, "Moves:   "),
                     React.createElement("span", { id: "movesCount" }, "0"))),
             React.createElement("div", { className: "game-table-cell right" },
-                React.createElement("input", { type: "image", src: "img/hints.png", id: "info", onClick: this.doHints })));
+                React.createElement("input", { type: "image", src: "img/hints.png", id: "info", onClick: this.doHints }),
+                React.createElement("div", { className: "modal fade", id: "hintsModal", role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true", style: { display: 'none' } },
+                    React.createElement("div", { className: "modal-dialog", role: "document" },
+                        React.createElement("div", { className: "modal-content" },
+                            React.createElement("div", { className: "modal-header" },
+                                React.createElement("button", { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
+                                    React.createElement("span", { "aria-hidden": "true" }, "\u00D7")),
+                                React.createElement("h4", { className: "modal-title" }, "Hints")),
+                            React.createElement("div", { className: "modal-body" },
+                                React.createElement("p", null, "One fine body\u2026")))))));
     };
     return GameFooter;
 }(React.Component));

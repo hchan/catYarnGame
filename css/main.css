@@ -10,6 +10,11 @@ body {
 	background-color: black;
 }
 
+body.modal-open {
+	overflow: hidden;
+	white-space: nowrap
+}
+
 #loading {
 	position: fixed;
 	top: 40%;
@@ -141,13 +146,26 @@ body {
 	bottom: -5vh;
 }
 
+#hintsModal {
+	padding: 0 !important;
+	text-align: left;
+}
 
-.modal {
-		margin:0 auto;
-		display:block;
-		position: fixed;
 
-		border:1px solid;
+
+.modal-dialog {
+	margin :0 !important;
+}
+.modal-content {
+  height: auto;
+	height: 96vh;
+	width: 96vw;
+  border-radius: 2vh;
+	border: 0 !important;
+	margin-top: 2vh;
+	margin-bottom: 2vh;
+	margin-left: 2vw;
+	margin-right: 2vw;
 }
 
 #game-header {
