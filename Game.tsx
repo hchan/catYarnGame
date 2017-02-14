@@ -225,6 +225,7 @@ export class Game {
       temp.id = id;
       // render
       ReactDOM.render(jsxElement, temp);
+
       // grab the container
       var container : Element = document.getElementsByTagName("body")[0];
       // and replace the child

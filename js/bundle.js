@@ -79,7 +79,6 @@ var CanvasBoard = (function () {
         this.width = Game_1.Game.instance.width;
         this.height = Game_1.Game.instance.width;
         this.assignCellLength();
-        console.log(jQuerySelector);
         if (jQuerySelector) {
             jQuerySelector.prop('width', this.width);
             jQuerySelector.prop('height', this.height);
@@ -447,6 +446,8 @@ var GameFooter = (function (_super) {
     function GameFooter() {
         var _this = _super.call(this) || this;
         _this.title = $("title").text();
+        _this.getLevelDisplay = _this.getLevelDisplay.bind(_this);
+        _this.doHints = _this.doHints.bind(_this);
         return _this;
     }
     GameFooter.prototype.changeLevel = function (gameLevelIndex) {
@@ -467,6 +468,10 @@ var GameFooter = (function (_super) {
     };
     GameFooter.prototype.doHints = function () {
         $('#hintsModal').modal('show');
+        this.setState({});
+    };
+    GameFooter.prototype.getLevelDisplay = function () {
+        return $(".levelSelector option:selected").text();
     };
     GameFooter.prototype.render = function () {
         return React.createElement("div", { className: "game-row" },
@@ -484,9 +489,11 @@ var GameFooter = (function (_super) {
                             React.createElement("div", { className: "modal-header" },
                                 React.createElement("button", { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
                                     React.createElement("span", { "aria-hidden": "true" }, "\u00D7")),
-                                React.createElement("h4", { className: "modal-title" }, "Hints")),
+                                React.createElement("h4", { className: "modal-title" },
+                                    "Hints - ",
+                                    this.getLevelDisplay())),
                             React.createElement("div", { className: "modal-body" },
-                                React.createElement("p", null, "One fine body\u2026")))))));
+                                React.createElement("p", { id: "hintsBody" }, "Hints Body")))))));
     };
     return GameFooter;
 }(React.Component));

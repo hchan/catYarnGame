@@ -54,7 +54,6 @@ export class CanvasBoard {
       this.width = Game.instance.width;
       this.height = Game.instance.width;
       this.assignCellLength();
-      console.log(jQuerySelector)
       if (jQuerySelector) {
         jQuerySelector.prop('width', this.width)
         jQuerySelector.prop('height', this.height)

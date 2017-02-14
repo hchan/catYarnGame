@@ -18,6 +18,8 @@ export class GameFooter extends React.Component<Props, {}> {
   constructor() {
     super();
     this.title = $("title").text();
+    this.getLevelDisplay = this.getLevelDisplay.bind(this);
+    this.doHints = this.doHints.bind(this);
   }
 
   // need this like to help with transpile
@@ -46,7 +48,13 @@ export class GameFooter extends React.Component<Props, {}> {
 
   doHints() {
     $('#hintsModal').modal('show');
+    this.setState({}); // forces update so that getLevelDisplay will work
   }
+
+  getLevelDisplay() : string {
+    return $(".levelSelector option:selected").text();
+  }
+
 
   render() {
     return <div className="game-row">
@@ -66,10 +74,10 @@ export class GameFooter extends React.Component<Props, {}> {
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 className="modal-title">Hints</h4>
+                  <h4 className="modal-title">Hints - {this.getLevelDisplay()}</h4>
               </div>
               <div className="modal-body">
-                <p>One fine body&hellip;</p>
+                <p id="hintsBody">Hints Body</p>
               </div>
              </div>
             </div>
