@@ -21,6 +21,7 @@ export class GameFooter extends React.Component<Props, {}> {
     this.title = $("title").text();
     this.getLevelDisplay = this.getLevelDisplay.bind(this);
     this.doHints = this.doHints.bind(this);
+    this.getMoves = this.getMoves.bind(this);
   }
 
   // need this like to help with transpile
@@ -61,6 +62,16 @@ export class GameFooter extends React.Component<Props, {}> {
     return GameLevel.LEVELS[levelIndex].soln.length;
   }
 
+  getMoves() : JSX.Element[] {
+    let retval : JSX.Element[] = new Array<JSX.Element>();
+    let levelIndex = parseInt($(".levelSelector option:selected").val());
+    for (let i = 0; i < GameLevel.LEVELS[levelIndex].soln.length; i++) {
+      let solnIndex : number = GameLevel.LEVELS[levelIndex].soln[i];
+      retval.push(<li className="solnIndex">{solnIndex+1}</li>);
+    }
+    return retval;
+  }
+
   render() {
     return <div className="game-row">
       <div className="game-table-cell left">
@@ -86,6 +97,9 @@ export class GameFooter extends React.Component<Props, {}> {
                 <p><span className="levelDisplay">{this.getLevelDisplay()}</span>, can be solved in
                   <span className="solvableMoves">{this.getSolvableMoves()}</span> moves
                 </p>
+                <ol>
+                  {this.getMoves()}
+                </ol>
               </div>
              </div>
             </div>

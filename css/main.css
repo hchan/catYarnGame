@@ -14,6 +14,11 @@ body.modal-open {
 	overflow: hidden;
 }
 
+.modal-body {
+	overflow-y: auto;
+	height: 85%;
+}
+
 #loading {
 	position: fixed;
 	top: 40%;

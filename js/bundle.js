@@ -107,11 +107,9 @@ var CanvasBoard = (function () {
             this.board.cells[x - 1][y].nextState();
         }
         this.draw();
+        this.renderMoveCount();
         if (this.isPuzzleSolved()) {
             this.renderYouWin();
-        }
-        else {
-            this.renderMoveCount();
         }
     };
     CanvasBoard.prototype.isPuzzleSolved = function () {
@@ -299,8 +297,8 @@ var Game = (function () {
         $(window).off("resize");
         $(window).resize(function () {
             Game.instance.assignWidthAndHeight();
-            Game.instance.resizeGameHeaderAndFooter();
             Game.instance.canvasBoard.resize();
+            Game.instance.resizeGameHeaderAndFooter();
             Game.instance.canvasBoard.draw();
             Game.instance.fixFontSize();
         });
@@ -449,6 +447,7 @@ var GameFooter = (function (_super) {
         _this.title = $("title").text();
         _this.getLevelDisplay = _this.getLevelDisplay.bind(_this);
         _this.doHints = _this.doHints.bind(_this);
+        _this.getMoves = _this.getMoves.bind(_this);
         return _this;
     }
     GameFooter.prototype.changeLevel = function (gameLevelIndex) {
@@ -478,6 +477,15 @@ var GameFooter = (function (_super) {
         var levelIndex = parseInt($(".levelSelector option:selected").val());
         return GameLevel_1.GameLevel.LEVELS[levelIndex].soln.length;
     };
+    GameFooter.prototype.getMoves = function () {
+        var retval = new Array();
+        var levelIndex = parseInt($(".levelSelector option:selected").val());
+        for (var i = 0; i < GameLevel_1.GameLevel.LEVELS[levelIndex].soln.length; i++) {
+            var solnIndex = GameLevel_1.GameLevel.LEVELS[levelIndex].soln[i];
+            retval.push(React.createElement("li", { className: "solnIndex" }, solnIndex + 1));
+        }
+        return retval;
+    };
     GameFooter.prototype.render = function () {
         return React.createElement("div", { className: "game-row" },
             React.createElement("div", { className: "game-table-cell left" },
@@ -503,7 +511,8 @@ var GameFooter = (function (_super) {
                                     React.createElement("span", { className: "levelDisplay" }, this.getLevelDisplay()),
                                     ", can be solved in",
                                     React.createElement("span", { className: "solvableMoves" }, this.getSolvableMoves()),
-                                    " moves")))))));
+                                    " moves"),
+                                React.createElement("ol", null, this.getMoves())))))));
     };
     return GameFooter;
 }(React.Component));

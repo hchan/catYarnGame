@@ -132,8 +132,9 @@ export class Game {
       $(window).off("resize");
       $( window ).resize(function() {
           Game.instance.assignWidthAndHeight();
-          Game.instance.resizeGameHeaderAndFooter();
           Game.instance.canvasBoard.resize();
+          Game.instance.resizeGameHeaderAndFooter(); // should be ran after canvasBoard.resize()
+
           Game.instance.canvasBoard.draw();
           Game.instance.fixFontSize();
       });

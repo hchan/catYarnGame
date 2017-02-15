@@ -54,6 +54,7 @@ export class CanvasBoard {
       this.width = Game.instance.width;
       this.height = Game.instance.width;
       this.assignCellLength();
+      // must use .prop (not css as css puts it in style)
       if (jQuerySelector) {
         jQuerySelector.prop('width', this.width)
         jQuerySelector.prop('height', this.height)
@@ -89,11 +90,10 @@ export class CanvasBoard {
         }
 
         this.draw();
+        this.renderMoveCount();
         if (this.isPuzzleSolved()) {
           this.renderYouWin();
-        } else {
-          this.renderMoveCount();
-        }
+        } 
     }
 
     isPuzzleSolved() : boolean {
