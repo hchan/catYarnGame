@@ -4,6 +4,7 @@
 import {Game} from './Game';
 import {LevelSelector} from './LevelSelector';
 import {MoveCount} from './MoveCount';
+import {GameLevel} from './GameLevel';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
@@ -55,6 +56,10 @@ export class GameFooter extends React.Component<Props, {}> {
     return $(".levelSelector option:selected").text();
   }
 
+  getSolvableMoves() : number {
+    let levelIndex = parseInt($(".levelSelector option:selected").val());
+    return GameLevel.LEVELS[levelIndex].soln.length;
+  }
 
   render() {
     return <div className="game-row">
@@ -77,7 +82,10 @@ export class GameFooter extends React.Component<Props, {}> {
                   <h4 className="modal-title">Hints - {this.getLevelDisplay()}</h4>
               </div>
               <div className="modal-body">
-                <p id="hintsBody">Hints Body</p>
+                <p id="hintsBody">These hints are only applicable when the board has been set to its inital state</p>
+                <p><span className="levelDisplay">{this.getLevelDisplay()}</span>, can be solved in
+                  <span className="solvableMoves">{this.getSolvableMoves()}</span> moves
+                </p>
               </div>
              </div>
             </div>

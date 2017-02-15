@@ -440,6 +440,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Game_1 = require("./Game");
+var GameLevel_1 = require("./GameLevel");
 var React = require("react");
 var GameFooter = (function (_super) {
     __extends(GameFooter, _super);
@@ -473,6 +474,10 @@ var GameFooter = (function (_super) {
     GameFooter.prototype.getLevelDisplay = function () {
         return $(".levelSelector option:selected").text();
     };
+    GameFooter.prototype.getSolvableMoves = function () {
+        var levelIndex = parseInt($(".levelSelector option:selected").val());
+        return GameLevel_1.GameLevel.LEVELS[levelIndex].soln.length;
+    };
     GameFooter.prototype.render = function () {
         return React.createElement("div", { className: "game-row" },
             React.createElement("div", { className: "game-table-cell left" },
@@ -493,13 +498,18 @@ var GameFooter = (function (_super) {
                                     "Hints - ",
                                     this.getLevelDisplay())),
                             React.createElement("div", { className: "modal-body" },
-                                React.createElement("p", { id: "hintsBody" }, "Hints Body")))))));
+                                React.createElement("p", { id: "hintsBody" }, "These hints are only applicable when the board has been set to its inital state"),
+                                React.createElement("p", null,
+                                    React.createElement("span", { className: "levelDisplay" }, this.getLevelDisplay()),
+                                    ", can be solved in",
+                                    React.createElement("span", { className: "solvableMoves" }, this.getSolvableMoves()),
+                                    " moves")))))));
     };
     return GameFooter;
 }(React.Component));
 exports.GameFooter = GameFooter;
 
-},{"./Game":5,"react":235}],7:[function(require,module,exports){
+},{"./Game":5,"./GameLevel":8,"react":235}],7:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

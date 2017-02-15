@@ -12,7 +12,6 @@ body {
 
 body.modal-open {
 	overflow: hidden;
-	white-space: nowrap
 }
 
 #loading {
@@ -212,4 +211,12 @@ body.modal-open {
 
 #movesContainer {
 	/* font-size: 4vh; moved to code */
+}
+
+.levelDisplay {
+	font-weight: bold;
+}
+
+.solvableMoves {
+	font-weight: bold;
 }
