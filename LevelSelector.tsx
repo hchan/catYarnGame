@@ -3,6 +3,7 @@
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Game} from './Game';
 import {GameLevel} from './GameLevel';
+import {GameFooter} from './GameFooter';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
@@ -38,6 +39,9 @@ export class LevelSelector extends React.Component<Props, {}> {
     state.levelIndex = gameLevelIndex;
     this.setState(state);
     Game.instance.canvasBoard.loadBoardAndDraw();
+    Game.replaceElement("game-footer",<GameFooter/>);
+    Game.instance.resizeGameHeaderAndFooter();
+    Game.instance.fixFontSize();
   }
 
 
