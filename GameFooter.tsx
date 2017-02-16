@@ -10,15 +10,15 @@ import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 export interface Props {
-
+    levelIndex?: number;
 }
 
 
 export class GameFooter extends React.Component<Props, {}> {
   title : string;
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.doHints = this.doHints.bind(this);
     this.doReset = this.doReset.bind(this);
   }
@@ -50,7 +50,7 @@ export class GameFooter extends React.Component<Props, {}> {
       </div>
       <div className="game-table-cell right">
         <input type="image" src="img/hints.png" id="info" onClick={this.doHints}/>
-        <Hints/>
+        <Hints levelIndex={this.props.levelIndex}/>
       </div>
     </div>;
   }

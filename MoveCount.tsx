@@ -82,18 +82,11 @@ export class MoveCount extends React.Component<Props, {}> {
       <br/><br/>
       <input type="button" value="Reset" onClick={this.reset}/>
       <input type="hidden" onChange={this.change}/>
-      <LevelSelector change={this.changeLevel} levelIndex={this.state.levelIndex}/>
+      <LevelSelector changeLevel={this.changeLevel} levelIndex={this.state.levelIndex}/>
       <input type="button" className="btn btn-info btn-lg topRight" value="Hints" onClick={this.hints}/>
       <input type="button" value="Instructions" onClick={this.instructions}
       className="bottomLeft"/>
-      <div className="modal fade" id="myModal"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display:'none'}}>
-        <div className="modal-dialog">
-          <div className="modal-content">
-
-            Hello
-           </div>
-        </div>
-      </div>
+    
     </span>;
   }
 

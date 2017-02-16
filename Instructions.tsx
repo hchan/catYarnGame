@@ -13,8 +13,8 @@ export interface Props {
 
 export class Instructions extends React.Component<Props, {}> {
   title : string;
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.title = $("title").text();
   }
 
@@ -37,7 +37,7 @@ export class Instructions extends React.Component<Props, {}> {
       If a tile already contains 2 yarn balls, the cat on that tile will make a mess of
       the yarn and henceforth be left with no yarn balls.
       <span style={{"fontWeight":"bold"}}> Good luck!</span>
-      <LevelSelector change={this.changeLevel} levelIndex={Game.instance.settings.gameLevelIndex}/>
+      <LevelSelector changeLevel={this.changeLevel} levelIndex={Game.instance.settings.gameLevelIndex}/>
       </span>
     </span>;
   }

@@ -8,6 +8,7 @@ import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 export interface Props {
   levelIndex: number;
+  changeLevel : Function;
 }
 
 
@@ -16,7 +17,6 @@ export class GameHeader extends React.Component<Props, {}> {
   title : string;
   constructor(props) {
     super(props);
-    this.state = {levelIndex : 0};
     //$.extend(this.state, this.props);
   }
 
@@ -50,7 +50,7 @@ export class GameHeader extends React.Component<Props, {}> {
         <input type="image" src="img/home.png" id="info" onClick={this.doHome}/>
       </div>
       <div className="game-table-cell center">
-        <LevelSelector levelIndex={this.state.levelIndex}/>
+        <LevelSelector levelIndex={this.props.levelIndex} changeLevel={this.props.changeLevel}/>
       </div>
       <div className="game-table-cell right">
         <input type="image" src="img/info.png" id="info" onClick={this.doInfo}/>

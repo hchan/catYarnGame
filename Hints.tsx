@@ -10,6 +10,7 @@ import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 export interface Props {
+  levelIndex? : number
   revealIndex? : number
 }
 
@@ -17,10 +18,11 @@ export interface Props {
 export class Hints extends React.Component<Props, Props> {
   title : string;
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      revealIndex : 0
+        levelIndex : this.props.levelIndex,
+        revealIndex : 0
     }
     this.getMoves = this.getMoves.bind(this);
     this.revealNext = this.revealNext.bind(this);
@@ -32,19 +34,25 @@ export class Hints extends React.Component<Props, Props> {
 
 
   getLevelDisplay() : string {
-    return $(".levelSelector option:selected").text();
+    return "Level " + (this.props.levelIndex+1);
   }
 
   getSolvableMoves() : number {
-    let levelIndex = parseInt($(".levelSelector option:selected").val());
-    return GameLevel.LEVELS[levelIndex].soln.length;
+    return GameLevel.LEVELS[this.props.levelIndex].soln.length;
+  }
+
+  componentWillReceiveProps (newProps : Props) {
+    if (!(newProps.levelIndex == this.props.levelIndex)) {
+      this.setState({
+          revealIndex : 0
+      })
+    }
   }
 
   getMoves() : JSX.Element[] {
     let retval : JSX.Element[] = new Array<JSX.Element>();
-    let levelIndex = parseInt($(".levelSelector option:selected").val());
-    for (let i = 0; i < GameLevel.LEVELS[levelIndex].soln.length; i++) {
-      let solnIndex : number = GameLevel.LEVELS[levelIndex].soln[i];
+    for (let i = 0; i < GameLevel.LEVELS[this.props.levelIndex].soln.length; i++) {
+      let solnIndex : number = GameLevel.LEVELS[this.props.levelIndex].soln[i];
       if (i <= this.state.revealIndex) {
         retval.push(<li key={i} className="solnIndex">{solnIndex+1}</li>);
       } else {

@@ -9,7 +9,7 @@ import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 export interface Props {
   levelIndex?: number;
-  change? : React.EventHandler<any>;
+  changeLevel? : Function;
 }
 
 
@@ -20,8 +20,6 @@ export class LevelSelector extends React.Component<Props, {}> {
   constructor(props) {
     super(props);
     this.changeLevel = this.changeLevel.bind(this);
-    this.state = { change : null, levelIndex : 0};
-    $.extend(this.state, this.props);
   }
 
 
@@ -34,14 +32,15 @@ export class LevelSelector extends React.Component<Props, {}> {
     //this.setState( {levelIndex : parseInt(gameLevelIndex)} as Props);
     //this.props.change(gameLevelIndex)
     Game.instance.settings.gameLevelIndex = gameLevelIndex;
-    let state : Props = this.state;
+  //  let state : Props = this.state;
     //state.moves = 0;
-    state.levelIndex = gameLevelIndex;
-    this.setState(state);
+  //  state.levelIndex = gameLevelIndex;
+    //this.setState(state);
     Game.instance.canvasBoard.loadBoardAndDraw();
-    Game.replaceElement("game-footer",<GameFooter/>);
-    Game.instance.resizeGameHeaderAndFooter();
-    Game.instance.fixFontSize();
+  //  Game.replaceElement("game-footer",<GameFooter/>);
+  //  Game.instance.resizeGameHeaderAndFooter();
+  //  Game.instance.fixFontSize();
+    this.props.changeLevel(e);
   }
 
 
@@ -59,7 +58,7 @@ export class LevelSelector extends React.Component<Props, {}> {
   }
   render() {
     return <span className="levelSelector">
-             <select className="form-control" onChange={this.changeLevel} value={this.state.levelIndex}>
+             <select className="form-control" onChange={this.changeLevel} value={this.props.levelIndex}>
               {this.getLevels()}
              </select>
            </span>;

@@ -37,7 +37,7 @@ export class YouWin extends MoveCount {
       <br/><br/>
       Number of moves : <span id="moveCount">{this.state.moves}</span>
       <br/><br/>
-      <LevelSelector change={this.changeLevel} levelIndex={this.state.levelIndex}/>
+      <LevelSelector changeLevel={this.changeLevel} levelIndex={this.state.levelIndex}/>
       <input type="button" value="Instructions" onClick={this.instructions} className="bottomLeft"/>
     </span>;
   }

@@ -14,6 +14,7 @@ import {Welcome} from './Welcome'
 import {GameHeader} from './GameHeader'
 import {GameFooter} from './GameFooter'
 import {PaddingDirection} from './PaddingDirection'
+import {GameComponent} from './GameComponent'
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -192,16 +193,22 @@ export class Game {
 
     static beginPlay() {
       $("body").html("");
+      let gameComponent : JSX.Element = <GameComponent levelIndex={0}/>;
+      ReactDOM.render(gameComponent, document.body);
+
+/*
       $("body").append("<span id='game-header'/>")
       $("body").append("<span id='game-body'/>")
       $("body").append("<span id='game-footer'/>")
+      */
       Game.instance.canvasBoard = new CanvasBoard();
-      var gameHeader : JSX.Element = <GameHeader levelIndex={0}/>;
-      var gameFooter : JSX.Element = <GameFooter/>;
+
+      //var gameHeader : JSX.Element = <GameHeader levelIndex={0}/>;
+      //var gameFooter : JSX.Element = <GameFooter/>;
       Game.instance.canvasBoard.loadBoardAndDraw();
       $("#game-body").append(  Game.instance.canvasBoard.canvas);
-      Game.replaceElement("game-header", gameHeader);
-      Game.replaceElement("game-footer", gameFooter);
+      //Game.replaceElement("game-header", gameHeader);
+      //Game.replaceElement("game-footer", gameFooter);
       Game.instance.resizeGameHeaderAndFooter();
       Game.instance.fixFontSize();
       Game.instance.addResizeHandler();
