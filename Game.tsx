@@ -71,6 +71,7 @@ export class Game {
         $("body").css({"display": "inline"})
 
 
+        this.addResizeHandler();
         this.initLoading();
         this.animateLoading();
         this.preloadImages();
@@ -133,12 +134,26 @@ export class Game {
       $(window).off("resize");
       $( window ).resize(function() {
           Game.instance.assignWidthAndHeight();
-          Game.instance.canvasBoard.resize();
+          if ($("#" + CanvasBoard.htmlId).length > 0) {
+            Game.instance.canvasBoard.resize();
+            Game.instance.canvasBoard.draw();
+          } else {
+            Game.instance.resizeWelcome()
+          }
           Game.instance.resizeGameHeaderAndFooter(); // should be ran after canvasBoard.resize()
-
-          Game.instance.canvasBoard.draw();
           Game.instance.fixFontSize();
       });
+    }
+
+    resizeWelcome() {
+      if (this.paddingDirection === PaddingDirection.VERTICAL) {
+        $("#welcomeImg").height($("html").width() * Game.HEIGHT_TO_WIDTH);
+        $("#welcomeImg").width($("html").width())
+      } else {
+        $("#welcomeImg").height($("html").height());
+        $("#welcomeImg").width($("html").height() / Game.HEIGHT_TO_WIDTH)
+      }
+
     }
 
     initLoading() {
@@ -179,16 +194,23 @@ export class Game {
       if (window.location.hash != null && window.location.hash == "#play") {
         Game.beginPlay();
       } else {
-        $("body").append("<span id='welcome-header'/>")
-        $("body").append("<span id='welcome-body'/>")
-        $("body").append("<span id='welcome-footer'/>")
-        this.addWelcome();
-        //this.canvasBoard = new CanvasBoard();
-        //$("#" + CanvasBoard.htmlId);//.hide();
-        //$("#game-body").append(this.canvasBoard.canvas);
-        //this.canvasBoard.loadBoardAndDraw();
-        //this.addControlPanel();
+        this.doWelcome();
       }
+    }
+
+    doWelcome() {
+      $("body").html("");
+      /*
+      $("body").append("<span id='welcome-header'/>")
+      $("body").append("<span id='welcome-body'/>")
+      $("body").append("<span id='welcome-footer'/>")
+      */
+      this.addWelcome();
+      //this.canvasBoard = new CanvasBoard();
+      //$("#" + CanvasBoard.htmlId);//.hide();
+      //$("#game-body").append(this.canvasBoard.canvas);
+      //this.canvasBoard.loadBoardAndDraw();
+      //this.addControlPanel();
     }
 
     static beginPlay() {
@@ -211,7 +233,6 @@ export class Game {
       //Game.replaceElement("game-footer", gameFooter);
       Game.instance.resizeGameHeaderAndFooter();
       Game.instance.fixFontSize();
-      Game.instance.addResizeHandler();
       //this.addControlPanel();
     }
 
@@ -242,7 +263,11 @@ export class Game {
 
     addWelcome() {
       var welcome : JSX.Element = <Welcome/>;
-      ReactDOM.render(welcome, document.getElementById("welcome-body"));
+      ReactDOM.render(welcome, document.body);
+      this.resizeGameHeaderAndFooter();
+      this.fixFontSize();
+      this.addResizeHandler();
+      this.resizeWelcome();
     }
 
     addControlPanel() {

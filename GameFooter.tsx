@@ -2,6 +2,7 @@
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Game} from './Game';
+import {GameProps} from './GameProps';
 import {LevelSelector} from './LevelSelector';
 import {MoveCount} from './MoveCount';
 import {GameLevel} from './GameLevel';
@@ -9,12 +10,9 @@ import {Hints} from './Hints';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
-export interface Props {
-    levelIndex?: number;
-}
 
 
-export class GameFooter extends React.Component<Props, {}> {
+export class GameFooter extends React.Component<GameProps, {}> {
   title : string;
 
   constructor(props) {
@@ -29,7 +27,7 @@ export class GameFooter extends React.Component<Props, {}> {
 
   doHints() {
     $('#hintsModal').modal('show');
-    this.setState({}); // forces update so that getLevelDisplay will work
+    this.setState({}); // forces update so that Hints.getLevelDisplay will work
   }
 
   doReset() {
@@ -50,7 +48,7 @@ export class GameFooter extends React.Component<Props, {}> {
       </div>
       <div className="game-table-cell right">
         <input type="image" src="img/hints.png" id="info" onClick={this.doHints}/>
-        <Hints levelIndex={this.props.levelIndex}/>
+        <Hints {...this.props}/>
       </div>
     </div>;
   }

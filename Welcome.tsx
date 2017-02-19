@@ -39,43 +39,13 @@ export class Welcome extends React.Component<Props, {}> {
   }
 
   render() {
-    return <div id="welcome">
-      <span id="welcome-left">{' '}</span>
-        <span className="description">
-
-          <img src="img/cat0.png" id="meetOomiImg"/>
-          <span className="text">
-          Meet Oomi!<br/>
-          Much sad,<br/>
-          need yarn.<br/>
-          Please help.
-          </span>
-          <br/>
-          <span className="buttonContainer">
-            <span className="buttonTableContainer">
-              <span className="buttonFiller">{' '}</span>
-                <input type="button" id="instructionsBtn"
-                onClick={this.doInstructions}
-                className="btn-primary welcome-btn" value="Instructions"/>
-              <span className="buttonFiller">{' '}</span>
-            </span>
-          </span>
-          <span className="buttonContainer">
-            <span className="buttonTableContainer">
-              <span className="buttonFiller">{' '}</span>
-                <input type="button" id="aboutBtn" className="btn-primary welcome-btn"
-                onClick={this.doAbout}
-                value="About"/>
-              <span className="buttonFiller">{' '}</span>
-            </span>
+    return <div id="game">
+      <span id="game-left">{' '}</span>
+          <span id="game-body">
+            <img id="welcomeImg" src="img/welcome.png"/>
           </span>
 
-          <input type="button" id="playBtn" className="btn-primary welcome-btn"
-          onClick={this.doPlay}
-          value="Play"/>
-        </span>
-
-      <span id="welcome-right">{' '}</span>
+      <span id="game-right">{' '}</span>
     </div>;
   }
 

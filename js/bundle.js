@@ -248,6 +248,7 @@ var Game = (function () {
         this.assignWidthAndHeight();
         this.orientation = Orientation.PORTRAIT;
         $("body").css({ "display": "inline" });
+        this.addResizeHandler();
         this.initLoading();
         this.animateLoading();
         this.preloadImages();
@@ -296,11 +297,26 @@ var Game = (function () {
         $(window).off("resize");
         $(window).resize(function () {
             Game.instance.assignWidthAndHeight();
-            Game.instance.canvasBoard.resize();
+            if ($("#" + CanvasBoard_1.CanvasBoard.htmlId).length > 0) {
+                Game.instance.canvasBoard.resize();
+                Game.instance.canvasBoard.draw();
+            }
+            else {
+                Game.instance.resizeWelcome();
+            }
             Game.instance.resizeGameHeaderAndFooter();
-            Game.instance.canvasBoard.draw();
             Game.instance.fixFontSize();
         });
+    };
+    Game.prototype.resizeWelcome = function () {
+        if (this.paddingDirection === PaddingDirection_1.PaddingDirection.VERTICAL) {
+            $("#welcomeImg").height($("html").width() * Game.HEIGHT_TO_WIDTH);
+            $("#welcomeImg").width($("html").width());
+        }
+        else {
+            $("#welcomeImg").height($("html").height());
+            $("#welcomeImg").width($("html").height() / Game.HEIGHT_TO_WIDTH);
+        }
     };
     Game.prototype.initLoading = function () {
         $("body").html("<div id='loading'><div id='pleaseWait'>"
@@ -336,11 +352,12 @@ var Game = (function () {
             Game.beginPlay();
         }
         else {
-            $("body").append("<span id='welcome-header'/>");
-            $("body").append("<span id='welcome-body'/>");
-            $("body").append("<span id='welcome-footer'/>");
-            this.addWelcome();
+            this.doWelcome();
         }
+    };
+    Game.prototype.doWelcome = function () {
+        $("body").html("");
+        this.addWelcome();
     };
     Game.beginPlay = function () {
         $("body").html("");
@@ -351,7 +368,6 @@ var Game = (function () {
         $("#game-body").append(Game.instance.canvasBoard.canvas);
         Game.instance.resizeGameHeaderAndFooter();
         Game.instance.fixFontSize();
-        Game.instance.addResizeHandler();
     };
     Game.prototype.resizeGameHeaderAndFooter = function () {
         var gameHeaderHeight = (Game.instance.height - $("#game-body").height()) / 2;
@@ -372,7 +388,11 @@ var Game = (function () {
     };
     Game.prototype.addWelcome = function () {
         var welcome = React.createElement(Welcome_1.Welcome, null);
-        ReactDOM.render(welcome, document.getElementById("welcome-body"));
+        ReactDOM.render(welcome, document.body);
+        this.resizeGameHeaderAndFooter();
+        this.fixFontSize();
+        this.addResizeHandler();
+        this.resizeWelcome();
     };
     Game.prototype.addControlPanel = function () {
         var props = { body: React.createElement(Instructions_1.Instructions, null) };
@@ -431,6 +451,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var GameHeader_1 = require("./GameHeader");
 var GameFooter_1 = require("./GameFooter");
 var React = require("react");
@@ -440,7 +468,8 @@ var GameComponent = (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.changeLevel = _this.changeLevel.bind(_this);
         _this.state = {
-            levelIndex: _this.props.levelIndex
+            levelIndex: _this.props.levelIndex,
+            changeLevel: _this.changeLevel
         };
         return _this;
     }
@@ -450,14 +479,15 @@ var GameComponent = (function (_super) {
         this.setState({
             levelIndex: newLevelIndex
         });
+        $("#movesCount").html("0");
     };
     GameComponent.prototype.render = function () {
         return React.createElement("span", { id: 'game' },
             React.createElement("span", { id: 'game-header' },
-                React.createElement(GameHeader_1.GameHeader, { levelIndex: this.state.levelIndex, changeLevel: this.changeLevel })),
+                React.createElement(GameHeader_1.GameHeader, __assign({}, this.state))),
             React.createElement("span", { id: 'game-body' }),
             React.createElement("span", { id: 'game-footer' },
-                React.createElement(GameFooter_1.GameFooter, { levelIndex: this.state.levelIndex })));
+                React.createElement(GameFooter_1.GameFooter, __assign({}, this.state))));
     };
     return GameComponent;
 }(React.Component));
@@ -469,6 +499,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
 };
 var Hints_1 = require("./Hints");
 var React = require("react");
@@ -497,7 +535,7 @@ var GameFooter = (function (_super) {
                     React.createElement("span", { id: "movesCount" }, "0"))),
             React.createElement("div", { className: "game-table-cell right" },
                 React.createElement("input", { type: "image", src: "img/hints.png", id: "info", onClick: this.doHints }),
-                React.createElement(Hints_1.Hints, { levelIndex: this.props.levelIndex })));
+                React.createElement(Hints_1.Hints, __assign({}, this.props))));
     };
     return GameFooter;
 }(React.Component));
@@ -509,6 +547,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
 };
 var Game_1 = require("./Game");
 var LevelSelector_1 = require("./LevelSelector");
@@ -531,14 +577,15 @@ var GameHeader = (function (_super) {
         alert("TODO - show Info ... info buttons are usually top right corner right?");
     };
     GameHeader.prototype.doHome = function () {
-        alert("TODO - should this go to welcome page?");
+        window.location.hash = '';
+        Game_1.Game.instance.doWelcome();
     };
     GameHeader.prototype.render = function () {
         return React.createElement("div", { className: "game-row" },
             React.createElement("div", { className: "game-table-cell left" },
                 React.createElement("input", { type: "image", src: "img/home.png", id: "info", onClick: this.doHome })),
             React.createElement("div", { className: "game-table-cell center" },
-                React.createElement(LevelSelector_1.LevelSelector, { levelIndex: this.props.levelIndex, changeLevel: this.props.changeLevel })),
+                React.createElement(LevelSelector_1.LevelSelector, __assign({}, this.props))),
             React.createElement("div", { className: "game-table-cell right" },
                 React.createElement("input", { type: "image", src: "img/info.png", id: "info", onClick: this.doInfo })));
     };
@@ -946,31 +993,11 @@ var Welcome = (function (_super) {
         Game_1.Game.beginPlay();
     };
     Welcome.prototype.render = function () {
-        return React.createElement("div", { id: "welcome" },
-            React.createElement("span", { id: "welcome-left" }, ' '),
-            React.createElement("span", { className: "description" },
-                React.createElement("img", { src: "img/cat0.png", id: "meetOomiImg" }),
-                React.createElement("span", { className: "text" },
-                    "Meet Oomi!",
-                    React.createElement("br", null),
-                    "Much sad,",
-                    React.createElement("br", null),
-                    "need yarn.",
-                    React.createElement("br", null),
-                    "Please help."),
-                React.createElement("br", null),
-                React.createElement("span", { className: "buttonContainer" },
-                    React.createElement("span", { className: "buttonTableContainer" },
-                        React.createElement("span", { className: "buttonFiller" }, ' '),
-                        React.createElement("input", { type: "button", id: "instructionsBtn", onClick: this.doInstructions, className: "btn-primary welcome-btn", value: "Instructions" }),
-                        React.createElement("span", { className: "buttonFiller" }, ' '))),
-                React.createElement("span", { className: "buttonContainer" },
-                    React.createElement("span", { className: "buttonTableContainer" },
-                        React.createElement("span", { className: "buttonFiller" }, ' '),
-                        React.createElement("input", { type: "button", id: "aboutBtn", className: "btn-primary welcome-btn", onClick: this.doAbout, value: "About" }),
-                        React.createElement("span", { className: "buttonFiller" }, ' '))),
-                React.createElement("input", { type: "button", id: "playBtn", className: "btn-primary welcome-btn", onClick: this.doPlay, value: "Play" })),
-            React.createElement("span", { id: "welcome-right" }, ' '));
+        return React.createElement("div", { id: "game" },
+            React.createElement("span", { id: "game-left" }, ' '),
+            React.createElement("span", { id: "game-body" },
+                React.createElement("img", { id: "welcomeImg", src: "img/welcome.png" })),
+            React.createElement("span", { id: "game-right" }, ' '));
     };
     return Welcome;
 }(React.Component));

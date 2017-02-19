@@ -2,6 +2,7 @@
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Game} from './Game';
+import {GameProps} from './GameProps';
 import {LevelSelector} from './LevelSelector';
 import {MoveCount} from './MoveCount';
 import {GameLevel} from './GameLevel';
@@ -11,23 +12,20 @@ import {Hints} from './Hints';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
-export interface Props {
-  levelIndex? : number;
-}
-
-export interface State {
-  levelIndex? : number;
-}
 
 
-export class GameComponent extends React.Component<Props, State> {
+export class GameComponent extends React.Component<GameProps, GameProps> {
 
   constructor(props) {
     super(props);
     this.changeLevel = this.changeLevel.bind(this);
+    //$.extend(this.state, this.props);
+
     this.state = {
-      levelIndex : this.props.levelIndex
+      levelIndex : this.props.levelIndex,
+      changeLevel : this.changeLevel
     };
+    
   }
 
 
@@ -40,16 +38,17 @@ export class GameComponent extends React.Component<Props, State> {
       this.setState({
         levelIndex : newLevelIndex
       })
+      $("#movesCount").html("0");
   }
 
   render() {
     return <span id='game'>
        <span id='game-header'>
-        <GameHeader levelIndex={this.state.levelIndex} changeLevel={this.changeLevel}/>
+        <GameHeader {...this.state} />
        </span>
        <span id='game-body'/>
        <span id='game-footer'>
-        <GameFooter levelIndex={this.state.levelIndex}/>
+        <GameFooter {...this.state}/>
        </span>
       </span>;
   }

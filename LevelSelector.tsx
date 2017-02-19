@@ -4,17 +4,13 @@
 import {Game} from './Game';
 import {GameLevel} from './GameLevel';
 import {GameFooter} from './GameFooter';
+import {GameProps} from './GameProps';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
-export interface Props {
-  levelIndex?: number;
-  changeLevel? : Function;
-}
 
 
-export class LevelSelector extends React.Component<Props, {}> {
-  state : Props;
+export class LevelSelector extends React.Component<GameProps, {}> {
   static DAILY_RANDOM : number = -1;
 
   constructor(props) {
