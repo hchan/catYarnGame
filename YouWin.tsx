@@ -27,7 +27,6 @@ export class YouWin extends MoveCount {
     state.moves = 0;
     state.levelIndex = gameLevelIndex;
     this.setState(state);
-    Game.instance.renderControlPanel({body:<MoveCount levelIndex={Game.instance.settings.gameLevelIndex} moves={0}/>});
     Game.instance.canvasBoard.loadBoardAndDraw();
   }
 

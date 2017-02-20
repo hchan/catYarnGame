@@ -31,7 +31,8 @@ export class GameFooter extends React.Component<GameProps, {}> {
   }
 
   doReset() {
-    alert("Do Reset")
+    Game.instance.canvasBoard.loadBoardAndDraw();
+    Game.resetMoves();
   }
 
 

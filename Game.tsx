@@ -213,6 +213,11 @@ export class Game {
       //this.addControlPanel();
     }
 
+    static resetMoves() {
+
+      $("#movesCount").html("0");
+    }
+    
     static beginPlay() {
       window.location.hash = "#play";
       $("body").html("");
