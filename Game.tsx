@@ -214,6 +214,7 @@ export class Game {
     }
 
     static beginPlay() {
+      window.location.hash = "#play";
       $("body").html("");
       let gameComponent : JSX.Element = <GameComponent levelIndex={0}/>;
       ReactDOM.render(gameComponent, document.body);
@@ -270,41 +271,8 @@ export class Game {
       this.resizeWelcome();
     }
 
-    addControlPanel() {
-      let props : Props = {body:<Instructions/>};
-      this.renderControlPanel(props);
-    }
 
 
-    renderControlPanel (props : Props) {
-      // temporary render target
-      let temp = document.createElement("div");
-      let width: number = this.width - this.canvasBoard.width;
-      let height: number = this.height - this.canvasBoard.height;
-
-      if (width == 0) {
-        width = this.width;
-      }
-      if (height == 0) {
-        height = this.height;
-      }
-
-      props.style = {"width" : width, "height" : height};
-      var controlPanelComponent =
-        <ControlPanel
-          style= {props.style}
-          body = {props.body}
-        /> ;
-        ReactDOM.render(controlPanelComponent, temp);
-        let controlPanel = temp.firstChild;
-
-        let controlPanelElement : HTMLElement = document.getElementById("controlPanel");
-        if (controlPanelElement != null) {
-          controlPanelElement.parentNode.removeChild(controlPanelElement);
-        }
-        document.getElementsByTagName("body")[0].appendChild(controlPanel);
-
-    }
 
     storeImageAndLoadNext(imageLocationIndex) {
         var imageObj: HTMLImageElement = new Image();

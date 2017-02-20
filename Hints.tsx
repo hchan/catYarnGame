@@ -74,7 +74,7 @@ export class Hints extends React.Component<Props, Props> {
   }
 
   render() {
-    return <div className="modal fade" id="hintsModal"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display:'none'}}>
+    return <div className="modal fade game-modal" id="hintsModal"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display:'none'}}>
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">

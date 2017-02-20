@@ -224,7 +224,6 @@ var CanvasBoard_1 = require("./CanvasBoard");
 var ControlPanel_1 = require("./ControlPanel");
 var ImageHelper_1 = require("./ImageHelper");
 var Settings_1 = require("./Settings");
-var Instructions_1 = require("./Instructions");
 var Welcome_1 = require("./Welcome");
 var PaddingDirection_1 = require("./PaddingDirection");
 var GameComponent_1 = require("./GameComponent");
@@ -360,6 +359,7 @@ var Game = (function () {
         this.addWelcome();
     };
     Game.beginPlay = function () {
+        window.location.hash = "#play";
         $("body").html("");
         var gameComponent = React.createElement(GameComponent_1.GameComponent, { levelIndex: 0 });
         ReactDOM.render(gameComponent, document.body);
@@ -393,10 +393,6 @@ var Game = (function () {
         this.fixFontSize();
         this.addResizeHandler();
         this.resizeWelcome();
-    };
-    Game.prototype.addControlPanel = function () {
-        var props = { body: React.createElement(Instructions_1.Instructions, null) };
-        this.renderControlPanel(props);
     };
     Game.prototype.renderControlPanel = function (props) {
         var temp = document.createElement("div");
@@ -444,7 +440,7 @@ Game.FONT_SIZE = 4;
 Game.HEIGHT_TO_WIDTH = 4 / 3;
 exports.Game = Game;
 
-},{"./CanvasBoard":2,"./ControlPanel":4,"./GameComponent":6,"./ImageHelper":11,"./Instructions":12,"./PaddingDirection":15,"./Settings":17,"./Welcome":18,"react":237,"react-dom":85}],6:[function(require,module,exports){
+},{"./CanvasBoard":2,"./ControlPanel":4,"./GameComponent":6,"./ImageHelper":11,"./PaddingDirection":15,"./Settings":17,"./Welcome":18,"react":237,"react-dom":85}],6:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -557,6 +553,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 var Game_1 = require("./Game");
+var Instructions_1 = require("./Instructions");
 var LevelSelector_1 = require("./LevelSelector");
 var React = require("react");
 var GameHeader = (function (_super) {
@@ -564,17 +561,14 @@ var GameHeader = (function (_super) {
     function GameHeader(props) {
         return _super.call(this, props) || this;
     }
-    GameHeader.prototype.doInstructions = function () {
-        alert("Instructions Not Implemented Yet");
-    };
     GameHeader.prototype.doAbout = function () {
         alert("Not Implemented Either");
     };
     GameHeader.prototype.doPlay = function () {
         Game_1.Game.beginPlay();
     };
-    GameHeader.prototype.doInfo = function () {
-        alert("TODO - show Info ... info buttons are usually top right corner right?");
+    GameHeader.prototype.doInstructions = function () {
+        $('#instructionsModal').modal('show');
     };
     GameHeader.prototype.doHome = function () {
         window.location.hash = '';
@@ -587,13 +581,14 @@ var GameHeader = (function (_super) {
             React.createElement("div", { className: "game-table-cell center" },
                 React.createElement(LevelSelector_1.LevelSelector, __assign({}, this.props))),
             React.createElement("div", { className: "game-table-cell right" },
-                React.createElement("input", { type: "image", src: "img/info.png", id: "info", onClick: this.doInfo })));
+                React.createElement("input", { type: "image", src: "img/info.png", id: "info", onClick: this.doInstructions }),
+                React.createElement(Instructions_1.Instructions, __assign({}, this.props))));
     };
     return GameHeader;
 }(React.Component));
 exports.GameHeader = GameHeader;
 
-},{"./Game":5,"./LevelSelector":13,"react":237}],9:[function(require,module,exports){
+},{"./Game":5,"./Instructions":12,"./LevelSelector":13,"react":237}],9:[function(require,module,exports){
 "use strict";
 var PuzzleCreator_1 = require("./PuzzleCreator");
 var React = require("react");
@@ -712,7 +707,7 @@ var Hints = (function (_super) {
         });
     };
     Hints.prototype.render = function () {
-        return React.createElement("div", { className: "modal fade", id: "hintsModal", role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true", style: { display: 'none' } },
+        return React.createElement("div", { className: "modal fade game-modal", id: "hintsModal", role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true", style: { display: 'none' } },
             React.createElement("div", { className: "modal-dialog", role: "document" },
                 React.createElement("div", { className: "modal-content" },
                     React.createElement("div", { className: "modal-header" },
@@ -758,37 +753,32 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Game_1 = require("./Game");
-var LevelSelector_1 = require("./LevelSelector");
 var React = require("react");
 var Instructions = (function (_super) {
     __extends(Instructions, _super);
     function Instructions(props) {
-        var _this = _super.call(this, props) || this;
-        _this.title = $("title").text();
-        return _this;
+        return _super.call(this, props) || this;
     }
-    Instructions.prototype.changeLevel = function (gameLevelIndex) {
-        Game_1.Game.instance.settings.gameLevelIndex = gameLevelIndex;
-        Game_1.Game.instance.canvasBoard.loadBoardAndDraw();
-    };
     Instructions.prototype.render = function () {
-        return React.createElement("span", { className: "content" },
-            React.createElement("span", { className: "title" }, this.title),
-            React.createElement("br", null),
-            React.createElement("br", null),
-            React.createElement("span", { className: "description" },
-                "The goal of this game is" + " " + "to give every cat on each tile exactly ",
-                React.createElement("span", { style: { "fontWeight": "bold" } }, "2"),
-                " yarn balls." + " " + "Clicking on a tile will drop a yarn on that tile in addition to" + " " + "its orthogonally adjacent  (up,right,down,left) tiles where applicable." + " " + "If a tile already contains 2 yarn balls, the cat on that tile will make a mess of" + " " + "the yarn and henceforth be left with no yarn balls.",
-                React.createElement("span", { style: { "fontWeight": "bold" } }, " Good luck!"),
-                React.createElement(LevelSelector_1.LevelSelector, { changeLevel: this.changeLevel, levelIndex: Game_1.Game.instance.settings.gameLevelIndex })));
+        return React.createElement("div", { className: "modal fade game-modal", id: "instructionsModal", role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true", style: { display: 'none' } },
+            React.createElement("div", { className: "modal-dialog", role: "document" },
+                React.createElement("div", { className: "modal-content" },
+                    React.createElement("div", { className: "modal-header" },
+                        React.createElement("button", { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
+                            React.createElement("span", { "aria-hidden": "true" }, "\u00D7")),
+                        React.createElement("h4", { className: "modal-title" }, "Instructions")),
+                    React.createElement("div", { className: "modal-body" },
+                        React.createElement("p", { id: "instructionsBody" },
+                            "The goal of this game is" + " " + "to give every cat on each tile exactly ",
+                            React.createElement("span", { style: { "fontWeight": "bold" } }, "2"),
+                            " yarn balls." + " " + "Clicking on a tile will drop a yarn on that tile in addition to" + " " + "its orthogonally adjacent  (up,right,down,left) tiles where applicable." + " " + "If a tile already contains 2 yarn balls, the cat on that tile will make a mess of" + " " + "the yarn and henceforth be left with no yarn balls.",
+                            React.createElement("span", { style: { "fontWeight": "bold" } }, " Good luck!"))))));
     };
     return Instructions;
 }(React.Component));
 exports.Instructions = Instructions;
 
-},{"./Game":5,"./LevelSelector":13,"react":237}],13:[function(require,module,exports){
+},{"react":237}],13:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -996,7 +986,7 @@ var Welcome = (function (_super) {
         return React.createElement("div", { id: "game" },
             React.createElement("span", { id: "game-left" }, ' '),
             React.createElement("span", { id: "game-body" },
-                React.createElement("img", { id: "welcomeImg", src: "img/welcome.png" })),
+                React.createElement("img", { className: "welcomeImg", id: "welcomeImg", src: "img/welcome.png", onClick: this.doPlay })),
             React.createElement("span", { id: "game-right" }, ' '));
     };
     return Welcome;

@@ -3,6 +3,7 @@
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Game} from './Game';
 import {GameProps} from './GameProps';
+import {Instructions} from './Instructions';
 import {LevelSelector} from './LevelSelector';
 import * as React from "react"
 import * as DOM from 'react-dom';
@@ -20,9 +21,6 @@ export class GameHeader extends React.Component<GameProps, GameProps> {
   refs : {}
 
 
-  doInstructions() {
-    alert("Instructions Not Implemented Yet")
-  }
 
   doAbout() {
     alert("Not Implemented Either")
@@ -32,8 +30,8 @@ export class GameHeader extends React.Component<GameProps, GameProps> {
     Game.beginPlay();
   }
 
-  doInfo() {
-    alert("TODO - show Info ... info buttons are usually top right corner right?");
+  doInstructions() {
+    $('#instructionsModal').modal('show');
   }
 
   doHome() {
@@ -50,7 +48,8 @@ export class GameHeader extends React.Component<GameProps, GameProps> {
         <LevelSelector {...this.props}/>
       </div>
       <div className="game-table-cell right">
-        <input type="image" src="img/info.png" id="info" onClick={this.doInfo}/>
+        <input type="image" src="img/info.png" id="info" onClick={this.doInstructions}/>
+        <Instructions {...this.props}/>
       </div>
     </div>;
   }

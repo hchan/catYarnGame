@@ -150,7 +150,7 @@ body.modal-open {
 	bottom: -5vh;
 }
 
-#hintsModal {
+.game-modal {
 	padding: 0 !important;
 	text-align: left;
 }
@@ -224,4 +224,8 @@ body.modal-open {
 
 .solvableMoves {
 	font-weight: bold;
+}
+
+.welcomeImg:hover {
+	cursor: pointer;
 }

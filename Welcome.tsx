@@ -42,7 +42,8 @@ export class Welcome extends React.Component<Props, {}> {
     return <div id="game">
       <span id="game-left">{' '}</span>
           <span id="game-body">
-            <img id="welcomeImg" src="img/welcome.png"/>
+
+            <img className="welcomeImg" id="welcomeImg" src="img/welcome.png" onClick={this.doPlay}/>
           </span>
 
       <span id="game-right">{' '}</span>
