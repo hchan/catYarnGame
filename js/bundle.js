@@ -74,7 +74,7 @@ var CanvasBoard = (function () {
         var yOffset = $("#" + CanvasBoard.htmlId).offset().top;
         var x = Math.floor((e.clientX - xOffset) / CanvasBoard.instance.cellLength);
         var y = Math.floor((e.clientY - yOffset) / CanvasBoard.instance.cellLength);
-        new Audio(SoundHelper_1.SoundHelper.DIR + "/" + "meow.mp3").play();
+        Game_1.Game.SOUND_DICT[SoundHelper_1.SoundHelper.DIR + "/" + "meow.mp3"].play();
         CanvasBoard.instance.doModify(x, y);
     };
     CanvasBoard.prototype.resize = function (jQuerySelector) {
@@ -270,6 +270,9 @@ var Game = (function () {
         var fontSizePixels = this.height * Game.FONT_SIZE * 0.01;
         if (this.paddingDirection === PaddingDirection_1.PaddingDirection.VERTICAL) {
             fontSizePixels *= this.height / this.heightBeforeRatioAdjust;
+        }
+        if (fontSizePixels < 14) {
+            fontSizePixels = 14;
         }
         $("#movesContainer").css("font-size", fontSizePixels);
         $(".form-control").css("font-size", fontSizePixels);

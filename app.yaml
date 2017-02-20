@@ -24,6 +24,10 @@ handlers:
    static_files: img/\1
    upload: img/(.*)
 
+- url: /snd/(.*)
+   static_files: snd/\1
+   upload: snd/(.*)
+
  - url: /favicon.ico
    static_files: favicon.ico
    upload: favicon.ico

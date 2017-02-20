@@ -48,8 +48,8 @@ export class CanvasBoard {
       let yOffset = $("#" + CanvasBoard.htmlId).offset().top;
       let x: number = Math.floor((e.clientX - xOffset)/ CanvasBoard.instance.cellLength);
       let y: number = Math.floor((e.clientY - yOffset)/ CanvasBoard.instance.cellLength);
-      //Game.SOUND_DICT[SoundHelper.DIR + "/" + "meow.mp3"].play();
-      new Audio(SoundHelper.DIR + "/" + "meow.mp3").play();
+      Game.SOUND_DICT[SoundHelper.DIR + "/" + "meow.mp3"].play();
+      //new Audio(SoundHelper.DIR + "/" + "meow.mp3").play();
       CanvasBoard.instance.doModify(x, y);
     }
 

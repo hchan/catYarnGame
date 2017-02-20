@@ -129,6 +129,9 @@ export class Game {
       if (this.paddingDirection === PaddingDirection.VERTICAL) {
         fontSizePixels *= this.height/this.heightBeforeRatioAdjust;
       }
+      if (fontSizePixels < 14) {
+        fontSizePixels  = 14;
+      }
       $("#movesContainer").css("font-size", fontSizePixels);
       $(".form-control").css("font-size", fontSizePixels);
     }

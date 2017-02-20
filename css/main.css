@@ -188,26 +188,29 @@ body.modal-open {
 }
 .game-table-cell {
 	display: table-cell;
-	width: 33vw;
 	vertical-align: middle;
 }
 
 .game-table-cell.left {
 	padding-left: 1vw;
 	text-align: left;
+	width: 30%;
 }
 .game-table-cell.center {
 	text-align: center;
+	width: 40%;
 }
 .game-table-cell.right {
 	padding-right: 1vw;
 	text-align: right;
+	width: 30%;
 }
 
 .form-control {
 	height: 6vh;
 	/* font-size: 4vh;  moved to code */
 	padding: 0.5vh;
+	text-align: center;
 }
 
 #info {
