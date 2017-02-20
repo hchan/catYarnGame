@@ -4,6 +4,7 @@ import {Board} from './Board';
 import {Cell, CellState} from './Cell';
 import {Game, Orientation} from './Game';
 import {GameLevel} from './GameLevel';
+import {SoundHelper} from './SoundHelper';
 import {YouWin} from './YouWin';
 import {MoveCount} from './MoveCount';
 import * as React from "react"
@@ -47,6 +48,8 @@ export class CanvasBoard {
       let yOffset = $("#" + CanvasBoard.htmlId).offset().top;
       let x: number = Math.floor((e.clientX - xOffset)/ CanvasBoard.instance.cellLength);
       let y: number = Math.floor((e.clientY - yOffset)/ CanvasBoard.instance.cellLength);
+      //Game.SOUND_DICT[SoundHelper.DIR + "/" + "meow.mp3"].play();
+      new Audio(SoundHelper.DIR + "/" + "meow.mp3").play();
       CanvasBoard.instance.doModify(x, y);
     }
 
@@ -93,7 +96,7 @@ export class CanvasBoard {
         this.renderMoveCount();
         if (this.isPuzzleSolved()) {
           this.renderYouWin();
-        } 
+        }
     }
 
     isPuzzleSolved() : boolean {

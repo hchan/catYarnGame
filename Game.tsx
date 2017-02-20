@@ -7,6 +7,7 @@ import {ControlPanel, Props} from './ControlPanel'
 import {Cell, CellState} from './Cell'
 import {Board} from './Board'
 import {ImageHelper} from './ImageHelper'
+import {SoundHelper} from './SoundHelper'
 import {GameLevel} from './GameLevel'
 import {Settings} from './Settings'
 import {Instructions} from './Instructions'
@@ -27,7 +28,9 @@ export class Game {
     canvasBoard: CanvasBoard
     //controlPanel: ControlPanel
     static IMAGE_LOCATIONS: string[] = [];
+    static SOUND_LOCATIONS: string[] = [];
     static IMAGE_DICT: { [key: string]: HTMLImageElement } = {};
+    static SOUND_DICT: { [key: string]: HTMLAudioElement } = {};
     static PLEASEWAITTEXT: string = "Please Wait";
     static ANIMATELOADINGLOOPCOUNT: number = 0;
     static ANIMATELOADINGINTERVALID: number;
@@ -74,7 +77,7 @@ export class Game {
         this.addResizeHandler();
         this.initLoading();
         this.animateLoading();
-        this.preloadImages();
+        this.preloadImagesAndSounds();
     }
 
     assignWidthAndHeight() {
@@ -172,9 +175,11 @@ export class Game {
         }, 1000);
     }
 
-    preloadImages() {
-        var imageHelper = new ImageHelper();
+    preloadImagesAndSounds() {
+        let imageHelper = new ImageHelper();
         imageHelper.populate();
+        let soundHelper = new SoundHelper();
+        soundHelper.populate();
         this.storeImageAndLoadNext(0);
 
     }
@@ -188,7 +193,7 @@ export class Game {
         }
     }
 
-    doAfterPreloadImages() {
+    doAfterPreloadImagesAndSounds() {
       self.clearInterval(Game.ANIMATELOADINGINTERVALID);
       $("body").html("");
       if (window.location.hash != null && window.location.hash == "#play") {
@@ -217,7 +222,7 @@ export class Game {
 
       $("#movesCount").html("0");
     }
-    
+
     static beginPlay() {
       window.location.hash = "#play";
       $("body").html("");
@@ -276,10 +281,26 @@ export class Game {
       this.resizeWelcome();
     }
 
+    storeSoundAndLoadNext(soundLocationIndex : number) {
+
+      let soundObj: HTMLAudioElement = new Audio();
+      let soundLocation = Game.SOUND_LOCATIONS[soundLocationIndex];
+      soundObj.src = soundLocation;
+      soundObj.preload = "auto";
+      let me = this;
+      soundObj.onloadeddata = function() {
+          Game.SOUND_DICT[soundLocation] = soundObj;
+          let nextIndex = soundLocationIndex + 1;
+          if (nextIndex < Game.SOUND_LOCATIONS.length) {
+              me.storeSoundAndLoadNext(soundLocationIndex + 1);
+          } else {
+              me.doAfterPreloadImagesAndSounds();
+          }
+      }
+    }
 
 
-
-    storeImageAndLoadNext(imageLocationIndex) {
+    storeImageAndLoadNext(imageLocationIndex : number) {
         var imageObj: HTMLImageElement = new Image();
         var imageLocation = Game.IMAGE_LOCATIONS[imageLocationIndex];
         imageObj.src = imageLocation;
@@ -290,7 +311,7 @@ export class Game {
             if (nextIndex < Game.IMAGE_LOCATIONS.length) {
                 me.storeImageAndLoadNext(imageLocationIndex + 1);
             } else {
-                me.doAfterPreloadImages();
+                me.storeSoundAndLoadNext(0);
             }
         }
     }
