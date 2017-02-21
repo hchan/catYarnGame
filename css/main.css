@@ -217,6 +217,10 @@ body.modal-open {
 	height: 6vh;
 }
 
+#loading {
+	color: white;
+}
+
 #movesContainer {
 	/* font-size: 4vh; moved to code */
 }

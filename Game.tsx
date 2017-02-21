@@ -16,6 +16,7 @@ import {GameHeader} from './GameHeader'
 import {GameFooter} from './GameFooter'
 import {PaddingDirection} from './PaddingDirection'
 import {GameComponent} from './GameComponent'
+import {PleaseWait} from './PleaseWait'
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
 
@@ -31,9 +32,7 @@ export class Game {
     static SOUND_LOCATIONS: string[] = [];
     static IMAGE_DICT: { [key: string]: HTMLImageElement } = {};
     static SOUND_DICT: { [key: string]: HTMLAudioElement } = {};
-    static PLEASEWAITTEXT: string = "Please Wait";
-    static ANIMATELOADINGLOOPCOUNT: number = 0;
-    static ANIMATELOADINGINTERVALID: number;
+
     static SETTINGS : Settings;
     static FONT_SIZE : number = 4; // 4vh == 4 % of vertical height
     static HEIGHT_TO_WIDTH : number = 4/3;
@@ -56,8 +55,9 @@ export class Game {
     }
 
     init() {
-        this.settings = new Settings();
-        this.assignWidthAndHeight();
+       $("body").css({"display": "inline"})
+       this.orientation = Orientation.PORTRAIT;
+        this.initLoading();
 
         /*
         if (this.width > this.height) {
@@ -69,14 +69,6 @@ export class Game {
           $("body").css({"display": "inline"})
         }
         */
-
-        this.orientation = Orientation.PORTRAIT;
-        $("body").css({"display": "inline"})
-
-
-        this.addResizeHandler();
-        this.initLoading();
-        this.animateLoading();
         this.preloadImagesAndSounds();
     }
 
@@ -163,20 +155,11 @@ export class Game {
     }
 
     initLoading() {
-        $("body").html("<div id='loading'><div id='pleaseWait'>"
-          + Game.PLEASEWAITTEXT
-            + "</div></div>");
+      let pleaseWait : JSX.Element = <PleaseWait/>;
+      ReactDOM.render(pleaseWait, document.body);
     }
 
-    animateLoading() {
-        Game.ANIMATELOADINGINTERVALID = self.setInterval(function() {
-            var indexOfAnimation: number = Game.ANIMATELOADINGLOOPCOUNT % Game.PLEASEWAITTEXT.length;
-            var preText: string = Game.PLEASEWAITTEXT.substring(0, indexOfAnimation);
-            var postText: string = Game.PLEASEWAITTEXT.substring(indexOfAnimation + 1);
-            $("#pleaseWait").html(preText + "." + postText);
-            Game.ANIMATELOADINGLOOPCOUNT++;
-        }, 1000);
-    }
+
 
     preloadImagesAndSounds() {
         let imageHelper = new ImageHelper();
@@ -197,7 +180,10 @@ export class Game {
     }
 
     doAfterPreloadImagesAndSounds() {
-      self.clearInterval(Game.ANIMATELOADINGINTERVALID);
+      self.clearInterval(PleaseWait.ANIMATELOADINGINTERVALID);
+      this.settings = new Settings();
+      this.assignWidthAndHeight();
+      this.addResizeHandler();
       $("body").html("");
       if (window.location.hash != null && window.location.hash == "#play") {
         Game.beginPlay();
