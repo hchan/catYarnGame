@@ -2,6 +2,8 @@
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {GameLevel} from "./GameLevel";
+import {LevelDefn} from "./LevelDefn";
+import {LevelDefnComponent} from "./LevelDefnComponent";
 import {CellState, Cell} from "./Cell";
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
@@ -88,6 +90,16 @@ export class PuzzleCreator {
     return rand - Math.floor(rand);
   }
 
+  createLevelDefn() : LevelDefn {
+    let soln = this.createDailyRandomPositions();
+    let boardAsString = this.getInitialBoard(soln);
+    let boardRepresentation : JSX.Element = <LevelDefnComponent>{boardAsString}</LevelDefnComponent>;
+    let retval : LevelDefn = {
+        boardRepresentation : boardRepresentation,
+        soln : soln
+    };
+    return retval;
+  }
 
   createDailyRandomPositions() : number [] {
     PuzzleCreator.initSeed();

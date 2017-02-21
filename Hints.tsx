@@ -3,6 +3,8 @@
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Game} from './Game';
 import {LevelSelector} from './LevelSelector';
+import {LevelDefn} from './LevelDefn';
+import {PuzzleCreator} from './PuzzleCreator';
 import {MoveCount} from './MoveCount';
 import {GameLevel} from './GameLevel';
 import {GameFooter} from './GameFooter';
@@ -34,11 +36,21 @@ export class Hints extends React.Component<Props, Props> {
 
 
   getLevelDisplay() : string {
-    return "Level " + (this.props.levelIndex+1);
+    let retval : string = "Level ";
+    if (this.props.levelIndex == LevelSelector.DAILY_RANDOM) {
+      retval = LevelSelector.DAILY_RANDOM_TEXT;
+    } else {
+      retval += (this.props.levelIndex+1);
+    }
+    return retval;
   }
 
   getSolvableMoves() : number {
-    return GameLevel.LEVELS[this.props.levelIndex].soln.length;
+    if (this.props.levelIndex == LevelSelector.DAILY_RANDOM) {
+      return PuzzleCreator.DEFAULT_NUM_MOVES;
+    } else {
+      return GameLevel.LEVELS[this.props.levelIndex].soln.length;
+    }
   }
 
   componentWillReceiveProps (newProps : Props) {
@@ -51,8 +63,16 @@ export class Hints extends React.Component<Props, Props> {
 
   getMoves() : JSX.Element[] {
     let retval : JSX.Element[] = new Array<JSX.Element>();
-    for (let i = 0; i < GameLevel.LEVELS[this.props.levelIndex].soln.length; i++) {
-      let solnIndex : number = GameLevel.LEVELS[this.props.levelIndex].soln[i];
+    let levelDefn : LevelDefn = null;
+    if (this.props.levelIndex != LevelSelector.DAILY_RANDOM) {
+      levelDefn =  GameLevel.LEVELS[this.props.levelIndex]
+    } else {
+      let puzzleCreator : PuzzleCreator = new PuzzleCreator();
+      levelDefn = puzzleCreator.createLevelDefn();
+    }
+
+    for (let i = 0; i < levelDefn.soln.length; i++) {
+      let solnIndex : number = levelDefn.soln[i];
       if (i <= this.state.revealIndex) {
         retval.push(<li key={i} className="solnIndex">{solnIndex+1}</li>);
       } else {

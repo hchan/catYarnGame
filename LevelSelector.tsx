@@ -12,7 +12,8 @@ import stylePropType from 'react-style-proptype';
 
 export class LevelSelector extends React.Component<GameProps, {}> {
   static DAILY_RANDOM : number = -1;
-
+  static DAILY_RANDOM_TEXT : string = "Daily Random";
+  
   constructor(props) {
     super(props);
     this.changeLevel = this.changeLevel.bind(this);
@@ -49,7 +50,7 @@ export class LevelSelector extends React.Component<GameProps, {}> {
       for (let i = 0; i < GameLevel.LEVELS.length; i++) {
         retval.push(<option value={i} key={i}>Level {i+1}</option>);
       }
-      retval.push(<option value={GameLevel.DAILY_RANDOM} key={GameLevel.DAILY_RANDOM}>Daily Random</option>);
+      retval.push(<option value={GameLevel.DAILY_RANDOM} key={GameLevel.DAILY_RANDOM}>{LevelSelector.DAILY_RANDOM_TEXT}</option>);
       return retval;
   }
   render() {
