@@ -351,6 +351,7 @@ var Game = (function () {
     Game.beginPlay = function () {
         window.location.hash = "#play";
         $("body").html("");
+        Game.instance.settings.gameLevelIndex = 0;
         var gameComponent = React.createElement(GameComponent_1.GameComponent, { levelIndex: 0 });
         ReactDOM.render(gameComponent, document.body);
         Game.instance.canvasBoard = new CanvasBoard_1.CanvasBoard();

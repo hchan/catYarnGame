@@ -229,6 +229,7 @@ export class Game {
     static beginPlay() {
       window.location.hash = "#play";
       $("body").html("");
+      Game.instance.settings.gameLevelIndex = 0;
       let gameComponent : JSX.Element = <GameComponent levelIndex={0}/>;
       ReactDOM.render(gameComponent, document.body);
 
