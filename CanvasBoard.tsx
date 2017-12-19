@@ -9,6 +9,7 @@ import {YouWin} from './YouWin';
 import {MoveCount} from './MoveCount';
 import * as React from "react"
 import * as ReactDOM from 'react-dom';
+import {Actions} from "./Actions";
 
 export class CanvasBoard {
     jQuerySelector: JQuery;
@@ -49,6 +50,7 @@ export class CanvasBoard {
       let x: number = Math.floor((e.clientX - xOffset)/ CanvasBoard.instance.cellLength);
       let y: number = Math.floor((e.clientY - yOffset)/ CanvasBoard.instance.cellLength);
       Game.SOUND_DICT[SoundHelper.DIR + "/" + "meow.mp3"].play();
+
       //new Audio(SoundHelper.DIR + "/" + "meow.mp3").play();
       CanvasBoard.instance.doModify(x, y);
     }
@@ -133,7 +135,12 @@ export class CanvasBoard {
       moveCount++;
       Game.instance.renderControlPanel({body:<YouWin levelIndex={Game.instance.settings.gameLevelIndex} moves={moveCount}/>});
       */
-      alert("todo - You Win")
+    //  alert("todo - You Win")
+      //$(window).trigger(Actions.SHOW_YOUWIN);
+      $("#youWinModal").modal("show");
+      Game.SOUND_DICT[SoundHelper.DIR + "/" + "youWin.mp3"].play();
+      //Game.SOUND_DICT[SoundHelper.DIR + "/" + "meow.mp3"].play();
+
     }
 
     draw() {

@@ -5,6 +5,7 @@ export class SoundHelper {
 
   populate() {
       Game.SOUND_LOCATIONS.push(SoundHelper.DIR + "/" + "meow.mp3");
+      Game.SOUND_LOCATIONS.push(SoundHelper.DIR + "/" + "youWin.mp3");
   }
 
 

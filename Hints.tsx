@@ -103,7 +103,7 @@ export class Hints extends React.Component<Props, Props> {
               </div>
               <div className="modal-body">
                 <p id="hintsBody">These hints are only applicable when the board has been set to its inital state</p>
-                <p><span className="levelDisplay">{this.getLevelDisplay()}</span>, can be solved in
+                <p><span className="levelDisplay">{this.getLevelDisplay()}</span>, can be solved in&nbsp;
                   <span className="solvableMoves">{this.getSolvableMoves()}</span> moves
                 </p>
                 <ol>

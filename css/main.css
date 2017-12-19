@@ -156,7 +156,18 @@ body.modal-open {
 }
 
 
-
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
 .modal-dialog {
 	margin :0 !important;
 }
@@ -170,6 +181,20 @@ body.modal-open {
 	margin-bottom: 2vh;
 	margin-left: 2vw;
 	margin-right: 2vw;
+}
+
+
+.modal-content-small  {
+  height: auto;
+	text-align: center;
+  border-radius: 2vh;
+	border: 0 !important;
+	margin-top: 2vh;
+	margin-bottom: 2vh;
+	margin-left: 2vw;
+	margin-right: 2vw;
+	margin : 0 auto;
+	width: 96vw;
 }
 
 #game-header {

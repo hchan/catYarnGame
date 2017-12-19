@@ -7,6 +7,7 @@ import {LevelSelector} from './LevelSelector';
 import {MoveCount} from './MoveCount';
 import {GameLevel} from './GameLevel';
 import {Hints} from './Hints';
+import {YouWin} from './YouWin';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
@@ -51,7 +52,10 @@ export class GameFooter extends React.Component<GameProps, {}> {
         <input type="image" src="img/hints.png" id="info" onClick={this.doHints}/>
         <Hints {...this.props}/>
       </div>
+      <YouWin/>
     </div>;
   }
+
+
 
 }

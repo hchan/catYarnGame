@@ -8,11 +8,11 @@ import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
 export interface Props {
-  levelIndex?: number;
+
 }
 
 
-export class YouWin extends MoveCount {
+export class YouWin extends React.Component<Props, {}> {
   constructor(props) {
     super(props);
   }
@@ -20,25 +20,33 @@ export class YouWin extends MoveCount {
   // need this like to help with transpile
   refs : {}
 
-
-  changeLevel(gameLevelIndex : number) {
-    Game.instance.settings.gameLevelIndex = gameLevelIndex;
-    let state : Props = this.state;
-    state.moves = 0;
-    state.levelIndex = gameLevelIndex;
-    this.setState(state);
-    Game.instance.canvasBoard.loadBoardAndDraw();
+  close() {
+    console.log("CLOSE");
+    $("#youWinModal").modal("hide");
   }
 
   render() {
-    return  <span className="content">
-      <span className="title">You Win!</span>
-      <br/><br/>
-      Number of moves : <span id="moveCount">{this.state.moves}</span>
-      <br/><br/>
-      <LevelSelector changeLevel={this.changeLevel} levelIndex={this.state.levelIndex}/>
-      <input type="button" value="Instructions" onClick={this.instructions} className="bottomLeft"/>
-    </span>;
+    console.log("IN RENDER")
+    var imgStyle = {
+      height:200
+    };
+    return <div className="modal fade game-modal" id="youWinModal"  role="dialog" aria-labelledby="myModalLabel" >
+      <div className="vertical-alignment-helper">
+        <div className="modal-dialog vertical-align-center" role="document">
+          <div className="modal-content-small">
+                <div className="modal-body">
+                  <p id="youWin" style={imgStyle}>
+                    <input type="image" style={imgStyle} src="img/goodJob.png" id="info" onClick={this.close}/>
+                  </p>
+                </div>
+         </div>
+       </div>
+      </div>
+    </div>;
+  }
+
+  componentDidMount ()  {
+    console.log("did mount")
   }
 
 }
