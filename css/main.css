@@ -261,3 +261,11 @@ body.modal-open {
 .welcomeImg:hover {
 	cursor: pointer;
 }
+
+img, input {
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

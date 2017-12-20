@@ -144,6 +144,7 @@ export class CanvasBoard {
     }
 
     draw() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
             for (var x = 0; x < CanvasBoard.COLS; x++) {
                 this.drawCellImage(x, y);

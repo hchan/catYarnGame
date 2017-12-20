@@ -21,12 +21,10 @@ export class YouWin extends React.Component<Props, {}> {
   refs : {}
 
   close() {
-    console.log("CLOSE");
     $("#youWinModal").modal("hide");
   }
 
   render() {
-    console.log("IN RENDER")
     var imgStyle = {
       height:200
     };

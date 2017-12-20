@@ -146,6 +146,7 @@ var CanvasBoard = (function () {
         Game_1.Game.SOUND_DICT[SoundHelper_1.SoundHelper.DIR + "/" + "youWin.mp3"].play();
     };
     CanvasBoard.prototype.draw = function () {
+        this.ctx.clearRect(0, 0, this.width, this.height);
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
             for (var x = 0; x < CanvasBoard.COLS; x++) {
                 this.drawCellImage(x, y);
@@ -1110,11 +1111,9 @@ var YouWin = (function (_super) {
         return _super.call(this, props) || this;
     }
     YouWin.prototype.close = function () {
-        console.log("CLOSE");
         $("#youWinModal").modal("hide");
     };
     YouWin.prototype.render = function () {
-        console.log("IN RENDER");
         var imgStyle = {
             height: 200
         };
