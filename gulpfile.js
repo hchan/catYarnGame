@@ -24,7 +24,7 @@ var files = [];
 files = files.concat(glob.sync('*.ts'));
 
 var outputFile = 'bundle.js';
-var outputPath = "js";
+var outputPath = "www/js";
 var webserver = require('gulp-webserver');
 var exec = require('child_process').exec;
 
@@ -66,6 +66,14 @@ gulp.task('webserver', function() {
 
 gulp.task('deploy', function (cb) {
   exec("echo Y | deployGloud.bat", function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+})
+
+gulp.task('build', function(cb) {
+    exec("phonegap build android", function (err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
     cb(err);
