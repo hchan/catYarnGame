@@ -36,7 +36,12 @@ handlers:
    static_files: www/node_modules/bootstrap/dist/css/\1
    upload: www/node_modules/bootstrap/dist/css/(.*)   
 
+# files to skip when uploading
+# note if we have too many files to upload, we might get an error
+# note if we have too many versions (>=15), u can remove them at
+# https://console.cloud.google.com/appengine/versions
 skip_files:
  - node_modules/
-
+ - plugins/
+ - platforms/
  
