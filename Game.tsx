@@ -36,6 +36,7 @@ export class Game {
     static SETTINGS : Settings;
     static FONT_SIZE : number = 4; // 4vh == 4 % of vertical height
     static HEIGHT_TO_WIDTH : number = 4/3;
+    static MOBILE : boolean = false;
     width: number;
     height: number;
     widthBeforeRatioAdjust: number;
@@ -55,6 +56,7 @@ export class Game {
     }
 
     init() {
+      Game.MOBILE = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
        $("body").css({"display": "inline"})
        this.orientation = Orientation.PORTRAIT;
         this.initLoading();
@@ -306,5 +308,5 @@ export class Game {
         }
     }
 
-  
+
 }

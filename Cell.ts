@@ -6,6 +6,7 @@ export class Cell {
     state: CellState
     col: number;
     row: number;
+
     constructor(col: number, row: number) {
         this.col = col;
         this.row = row;
@@ -16,7 +17,7 @@ export class Cell {
     }
 
     getImageName(): string {
-        return ImageHelper.DIR + "/" + Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
+        return ImageHelper.getImageDir() + "/" + Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
     }
 
     nextState() {

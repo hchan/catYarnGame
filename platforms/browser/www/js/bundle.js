@@ -147,6 +147,9 @@ var CanvasBoard = (function () {
     };
     CanvasBoard.prototype.draw = function () {
         this.ctx.clearRect(0, 0, this.width, this.height);
+        this.drawCellState();
+    };
+    CanvasBoard.prototype.drawCellState = function () {
         for (var y = 0; y < CanvasBoard.ROWS; y++) {
             for (var x = 0; x < CanvasBoard.COLS; x++) {
                 this.drawCellImage(x, y);
@@ -192,7 +195,7 @@ var Cell = (function () {
         return this.col + "," + this.row;
     };
     Cell.prototype.getImageName = function () {
-        return ImageHelper_1.ImageHelper.DIR + "/" + Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
+        return ImageHelper_1.ImageHelper.getImageDir() + "/" + Cell.IMAGENAME_PREFIX + this.state + Cell.IMAGENAME_SUFFIX;
     };
     Cell.prototype.nextState = function () {
         this.state++;
@@ -238,6 +241,7 @@ var Game = (function () {
         this.init();
     };
     Game.prototype.init = function () {
+        Game.MOBILE = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
         $("body").css({ "display": "inline" });
         this.orientation = Orientation.PORTRAIT;
         this.initLoading();
@@ -428,6 +432,7 @@ Game.IMAGE_DICT = {};
 Game.SOUND_DICT = {};
 Game.FONT_SIZE = 4;
 Game.HEIGHT_TO_WIDTH = 4 / 3;
+Game.MOBILE = false;
 exports.Game = Game;
 
 },{"./CanvasBoard":3,"./GameComponent":6,"./ImageHelper":11,"./PaddingDirection":16,"./PleaseWait":17,"./Settings":19,"./SoundHelper":20,"./Welcome":21,"react":241,"react-dom":89}],6:[function(require,module,exports){
@@ -755,13 +760,22 @@ var ImageHelper = (function () {
     function ImageHelper() {
     }
     ImageHelper.prototype.populate = function () {
-        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat0" + Cell_1.Cell.IMAGENAME_SUFFIX);
-        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat1" + Cell_1.Cell.IMAGENAME_SUFFIX);
-        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.DIR + "/" + "cat2" + Cell_1.Cell.IMAGENAME_SUFFIX);
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.getImageDir() + "/" + "cat0" + Cell_1.Cell.IMAGENAME_SUFFIX);
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.getImageDir() + "/" + "cat1" + Cell_1.Cell.IMAGENAME_SUFFIX);
+        Game_1.Game.IMAGE_LOCATIONS.push(ImageHelper.getImageDir() + "/" + "cat2" + Cell_1.Cell.IMAGENAME_SUFFIX);
+    };
+    ImageHelper.getImageDir = function () {
+        if (Game_1.Game.MOBILE) {
+            return ImageHelper.MOBILE_DIR;
+        }
+        else {
+            return ImageHelper.LARGE_DIR;
+        }
     };
     return ImageHelper;
 }());
-ImageHelper.DIR = "img";
+ImageHelper.MOBILE_DIR = "img";
+ImageHelper.LARGE_DIR = "imgLarge";
 exports.ImageHelper = ImageHelper;
 
 },{"./Cell":4,"./Game":5}],12:[function(require,module,exports){
@@ -1126,7 +1140,6 @@ var YouWin = (function (_super) {
                                 React.createElement("input", { type: "image", style: imgStyle, src: "img/goodJob.png", id: "info", onClick: this.close })))))));
     };
     YouWin.prototype.componentDidMount = function () {
-        console.log("did mount");
     };
     return YouWin;
 }(React.Component));

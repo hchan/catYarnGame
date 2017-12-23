@@ -44,7 +44,7 @@ export class YouWin extends React.Component<Props, {}> {
   }
 
   componentDidMount ()  {
-    console.log("did mount")
+   //  console.log("did mount")
   }
 
 }
