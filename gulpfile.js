@@ -72,6 +72,9 @@ gulp.task('deploy', function (cb) {
   });
 })
 
+/*
+append --release for release
+*/
 gulp.task('build', function(cb) {
     exec("phonegap build android", function (err, stdout, stderr) {
     console.log(stdout);

@@ -24,6 +24,10 @@ handlers:
    static_files: www/img/\1
    upload: www/img/(.*)
 
+- url: /imgLarge/(.*)
+   static_files: www/imgLarge/\1
+   upload: www/imgLarge/(.*)
+
  - url: /snd/(.*)
    static_files: www/snd/\1
    upload: www/snd/(.*)
