@@ -6,6 +6,7 @@ import {GameProps} from './GameProps';
 import {LevelSelector} from './LevelSelector';
 import {MoveCount} from './MoveCount';
 import {GameLevel} from './GameLevel';
+import {ImageHelper} from './ImageHelper';
 import {Hints} from './Hints';
 import {YouWin} from './YouWin';
 import * as React from "react"
@@ -40,7 +41,7 @@ export class GameFooter extends React.Component<GameProps, {}> {
   render() {
     return <div className="game-row">
       <div className="game-table-cell left">
-        <input type="image" src="img/reset.png" id="info" onClick={this.doReset}/>
+        <input type="image" src={ImageHelper.getImageDir() + "/reset.png"}  id="info" onClick={this.doReset}/>
       </div>
       <div className="game-table-cell center">
         <span id="movesContainer">
@@ -49,7 +50,7 @@ export class GameFooter extends React.Component<GameProps, {}> {
         </span>
       </div>
       <div className="game-table-cell right">
-        <input type="image" src="img/hints.png" id="info" onClick={this.doHints}/>
+        <input type="image" src={ImageHelper.getImageDir() + "/hints.png"} id="info" onClick={this.doHints}/>
         <Hints {...this.props}/>
       </div>
       <YouWin/>

@@ -500,6 +500,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 var Game_1 = require("./Game");
+var ImageHelper_1 = require("./ImageHelper");
 var Hints_1 = require("./Hints");
 var YouWin_1 = require("./YouWin");
 var React = require("react");
@@ -522,13 +523,13 @@ var GameFooter = (function (_super) {
     GameFooter.prototype.render = function () {
         return React.createElement("div", { className: "game-row" },
             React.createElement("div", { className: "game-table-cell left" },
-                React.createElement("input", { type: "image", src: "img/reset.png", id: "info", onClick: this.doReset })),
+                React.createElement("input", { type: "image", src: ImageHelper_1.ImageHelper.getImageDir() + "/reset.png", id: "info", onClick: this.doReset })),
             React.createElement("div", { className: "game-table-cell center" },
                 React.createElement("span", { id: "movesContainer" },
                     React.createElement("span", null, "Moves:   "),
                     React.createElement("span", { id: "movesCount" }, "0"))),
             React.createElement("div", { className: "game-table-cell right" },
-                React.createElement("input", { type: "image", src: "img/hints.png", id: "info", onClick: this.doHints }),
+                React.createElement("input", { type: "image", src: ImageHelper_1.ImageHelper.getImageDir() + "/hints.png", id: "info", onClick: this.doHints }),
                 React.createElement(Hints_1.Hints, __assign({}, this.props))),
             React.createElement(YouWin_1.YouWin, null));
     };
@@ -536,7 +537,7 @@ var GameFooter = (function (_super) {
 }(React.Component));
 exports.GameFooter = GameFooter;
 
-},{"./Game":5,"./Hints":10,"./YouWin":22,"react":241}],8:[function(require,module,exports){
+},{"./Game":5,"./Hints":10,"./ImageHelper":11,"./YouWin":22,"react":241}],8:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -554,6 +555,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 var Game_1 = require("./Game");
 var Instructions_1 = require("./Instructions");
 var LevelSelector_1 = require("./LevelSelector");
+var ImageHelper_1 = require("./ImageHelper");
 var React = require("react");
 var GameHeader = (function (_super) {
     __extends(GameHeader, _super);
@@ -576,18 +578,18 @@ var GameHeader = (function (_super) {
     GameHeader.prototype.render = function () {
         return React.createElement("div", { className: "game-row" },
             React.createElement("div", { className: "game-table-cell left" },
-                React.createElement("input", { type: "image", src: "img/home.png", id: "info", onClick: this.doHome })),
+                React.createElement("input", { type: "image", src: ImageHelper_1.ImageHelper.getImageDir() + "/home.png", id: "info", onClick: this.doHome })),
             React.createElement("div", { className: "game-table-cell center" },
                 React.createElement(LevelSelector_1.LevelSelector, __assign({}, this.props))),
             React.createElement("div", { className: "game-table-cell right" },
-                React.createElement("input", { type: "image", src: "img/info.png", id: "info", onClick: this.doInstructions }),
+                React.createElement("input", { type: "image", src: ImageHelper_1.ImageHelper.getImageDir() + "/info.png", id: "info", onClick: this.doInstructions }),
                 React.createElement(Instructions_1.Instructions, __assign({}, this.props))));
     };
     return GameHeader;
 }(React.Component));
 exports.GameHeader = GameHeader;
 
-},{"./Game":5,"./Instructions":12,"./LevelSelector":14,"react":241}],9:[function(require,module,exports){
+},{"./Game":5,"./ImageHelper":11,"./Instructions":12,"./LevelSelector":14,"react":241}],9:[function(require,module,exports){
 "use strict";
 var PuzzleCreator_1 = require("./PuzzleCreator");
 var LevelDefnComponent_1 = require("./LevelDefnComponent");

@@ -5,6 +5,7 @@ import {Game} from './Game';
 import {GameProps} from './GameProps';
 import {Instructions} from './Instructions';
 import {LevelSelector} from './LevelSelector';
+import {ImageHelper} from './ImageHelper';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
@@ -42,13 +43,13 @@ export class GameHeader extends React.Component<GameProps, GameProps> {
   render() {
     return <div className="game-row">
       <div className="game-table-cell left">
-        <input type="image" src="img/home.png" id="info" onClick={this.doHome}/>
+        <input type="image" src={ImageHelper.getImageDir() + "/home.png"} id="info" onClick={this.doHome}/>
       </div>
       <div className="game-table-cell center">
         <LevelSelector {...this.props}/>
       </div>
       <div className="game-table-cell right">
-        <input type="image" src="img/info.png" id="info" onClick={this.doInstructions}/>
+        <input type="image" src={ImageHelper.getImageDir() + "/info.png"} id="info" onClick={this.doInstructions}/>
         <Instructions {...this.props}/>
       </div>
     </div>;
