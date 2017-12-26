@@ -777,7 +777,7 @@ var ImageHelper = (function () {
     return ImageHelper;
 }());
 ImageHelper.MOBILE_DIR = "img";
-ImageHelper.LARGE_DIR = "imgLarge";
+ImageHelper.LARGE_DIR = "../imgLarge";
 exports.ImageHelper = ImageHelper;
 
 },{"./Cell":4,"./Game":5}],12:[function(require,module,exports){
