@@ -241,7 +241,8 @@ var Game = (function () {
         this.init();
     };
     Game.prototype.init = function () {
-        Game.MOBILE = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+        Game.MOBILE = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()))
+            || window.location.href.indexOf("3000") != -1;
         $("body").css({ "display": "inline" });
         this.orientation = Orientation.PORTRAIT;
         this.initLoading();

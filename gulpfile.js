@@ -1,5 +1,8 @@
 /**
   To add more typings use package.json
+  To test locally : file:///C:/catYarnGame/www/index.html
+  To test from appspot : http://catyarngame.appspot.com/secretLocation
+
 */
 var gulp = require("gulp");
 var browserify = require("browserify");
