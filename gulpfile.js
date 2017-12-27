@@ -10,6 +10,7 @@ var source = require('vinyl-source-stream');
 var tsify = require("tsify");
 var glob = require('glob');
 const b = require('gulp-browserify-typescript');
+var runSequence = require('run-sequence');
 var files = [];
 /*
  To add jquery,
@@ -75,13 +76,33 @@ gulp.task('deploy', function (cb) {
   });
 })
 
-/*
-append --release for release
-*/
 gulp.task('build', function(cb) {
     exec("phonegap build android", function (err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
     cb(err);
   });
+})
+
+gulp.task('makeRelease', function(cb) {
+    exec("phonegap build android --release", function (err, stdout, stderr) {
+	console.log(stdout);
+	console.log(stderr);
+	cb(err);
+    });
+})
+
+gulp.task('signAPK', function(cb) {
+    exec("signAPK.bat", function (err, stdout, stderr) {
+	console.log(stdout);
+	console.log(stderr);
+	cb(err);
+    });
+})
+
+gulp.task('package', function(cb) {
+    runSequence('makeRelease',
+		'signAPK',
+		cb);
+
 })

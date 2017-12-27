@@ -4,10 +4,10 @@
     "flow": "flow"
   },
   "devDependencies": {
+    "@types/bootstrap": "^3.3.5",
     "@types/jquery": "^2.0.34",
     "@types/node": "^6.0.52",
     "@types/react": "^0.14.55",
-    "@types/bootstrap": "^3.3.5",
     "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",
     "flow-bin": "^0.37.0",
@@ -23,6 +23,7 @@
     "react-dom": "^15.4.1",
     "react-element-to-jsx-string": "^5.0.4",
     "react-style-proptype": "^1.4.0",
+    "run-sequence": "^2.2.0",
     "tsd": "^0.6.5",
     "tsify": "^2.0.3",
     "typescript": "^2.1.4",
