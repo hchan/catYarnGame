@@ -7,6 +7,10 @@ handlers:
    static_files: welcome.html
    upload : welcome.html
 
+ - url: /privacy.html
+   static_files: privacy.html
+   upload : privacy.html
+
  - url: /secretLocation
    static_files: www/index.html
    upload : www/index.html
