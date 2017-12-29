@@ -8,6 +8,7 @@
       Henry Chan
     </author>
     <content src="index.html" />
+    <gap:plugin name="org.apache.cordova.media" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
