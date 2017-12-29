@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.suitecompiletech.yarntail" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget android-versionCode="20171228" id="com.suitecompiletech.yarntail" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Yarn Tails</name>
     <description>
        Yarn Tails
@@ -7,7 +7,7 @@
     <author email="hchan@apache.org" href="http://people.apache.org/~hchan/">
       Henry Chan
     </author>
-    <content src="secretGameLocation.html" />
+    <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="orientation" value="portrait" />
