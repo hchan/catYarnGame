@@ -7,14 +7,14 @@ import {LevelSelector} from './LevelSelector';
 import * as React from "react"
 import * as DOM from 'react-dom';
 import stylePropType from 'react-style-proptype';
-export interface Props {
+export interface MoveGCountProps {
   levelIndex?: number;
   moves? : number;
 }
 
 
-export class MoveCount extends React.Component<Props, {}> {
-  state : Props;
+export class MoveCount extends React.Component<MoveGCountProps, {}> {
+  state : MoveGCountProps;
   constructor(props) {
     super(props);
     this.change = this.change.bind(this);
@@ -29,13 +29,13 @@ export class MoveCount extends React.Component<Props, {}> {
   refs : {}
 
   change(e) {
-    let state : Props = this.state;
+    let state : MoveGCountProps = this.state;
     state.moves++;
     this.setState(state);
   }
 
   reset(e) {
-    let state : Props = this.state;
+    let state : MoveGCountProps = this.state;
     state.moves = 0;
     this.setState(state);
     Game.instance.canvasBoard.loadBoardAndDraw();
@@ -43,7 +43,7 @@ export class MoveCount extends React.Component<Props, {}> {
 
   changeLevel(gameLevelIndex : number) {
     Game.instance.settings.gameLevelIndex = gameLevelIndex;
-    let state : Props = this.state;
+    let state : MoveGCountProps = this.state;
     state.moves = 0;
     state.levelIndex = gameLevelIndex;
     this.setState(state);

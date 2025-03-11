@@ -2,7 +2,7 @@
 /// <reference path="typings/modules/react/index.d.ts"/>
 /// <reference path="typings/modules/react-dom/index.d.ts"/>
 import {Game} from './Game';
-import {MoveCount, Props} from './MoveCount';
+import {MoveCount, MoveGCountProps} from './MoveCount';
 import {LevelSelector} from './LevelSelector';
 import * as React from "react"
 import * as DOM from 'react-dom';
@@ -12,7 +12,7 @@ export interface Props {
 }
 
 
-export class YouWin extends React.Component<Props, {}> {
+export class YouWin extends React.Component<MoveGCountProps, {}> {
   constructor(props) {
     super(props);
   }
