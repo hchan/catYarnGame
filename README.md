@@ -12,8 +12,10 @@ A board game about cats and yarn
 
 ## Prerequisites
 ```
+node -v
+v10.16.0
 npm -v
-6.7.0
+6.9.0
 gulp -v
 [18:00:09] CLI version 3.9.1
 [18:00:09] Local version 3.9.1
