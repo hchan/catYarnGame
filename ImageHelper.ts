@@ -14,8 +14,8 @@ export class ImageHelper {
     var url = window.location.href;
     if (url.indexOf("file://") != -1) {
       ImageHelper.BASE_PATH = "";
-      this.MOBILE_DIR = ImageHelper.BASE_PATH + "img";
-      this.LARGE_DIR = ImageHelper.BASE_PATH + "imgLarge";
+      ImageHelper.MOBILE_DIR = ImageHelper.BASE_PATH + "img";
+      ImageHelper.LARGE_DIR = ImageHelper.BASE_PATH + "imgLarge";
     }
     if (Game.MOBILE) {
       return ImageHelper.MOBILE_DIR;
