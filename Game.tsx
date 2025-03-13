@@ -243,8 +243,13 @@ export class Game {
 
     resizeGameHeaderAndFooter() {
       alert("Game.instance.height = " + Game.instance.height);
+      alert("Game.instance.width = " + Game.instance.width);
       alert("gameBody.height = " + $("#game-body").height());
-      let gameHeaderHeight : number = (Game.instance.height - $("#game-body").height())/2;
+      let gameBodyHeight : number = $("#game-body").height();
+      if (gameBodyHeight == 0) {
+        gameBodyHeight = Game.instance.width;
+      }
+      let gameHeaderHeight : number = (Game.instance.height - gameBodyHeight)/2;
       let gameHeaderWidth : number = Game.instance.width;
       let gameFooterHeight : number = gameHeaderHeight;
       let gameFooterWidth : number = Game.instance.width;
