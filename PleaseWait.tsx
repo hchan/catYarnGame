@@ -26,16 +26,6 @@ export class PleaseWait extends React.Component<{}, {}> {
   refs : {}
 
   animateLoading() {
-
-      window.addEventListener("error", handleError, true);
-
-      function handleError(evt) {
-          if (evt.message) { // Chrome sometimes provides this
-            alert("error: "+evt.message +" at linenumber: "+evt.lineno+" of file: "+evt.filename);
-          } else {
-            alert("error: "+evt.type+" from element: "+(evt.srcElement || evt.target));
-          }
-      }
       PleaseWait.ANIMATELOADINGINTERVALID = self.setInterval(function() {
           var indexOfAnimation: number = PleaseWait.ANIMATELOADINGLOOPCOUNT % PleaseWait.PLEASEWAITTEXT.length;
           var preText: string = PleaseWait.PLEASEWAITTEXT.substring(0, indexOfAnimation);

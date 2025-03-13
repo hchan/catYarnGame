@@ -165,10 +165,13 @@ export class Game {
 
 
     preloadImagesAndSounds() {
+        alert("HERE1");
         let imageHelper = new ImageHelper();
         imageHelper.populate();
+        alert("HERE2");
         let soundHelper = new SoundHelper();
         soundHelper.populate();
+        alert("HERE3");
         this.storeImageAndLoadNext(0);
 
     }
