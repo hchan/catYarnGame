@@ -23,8 +23,8 @@ export class Instructions extends React.Component<GameProps, {}> {
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 className="modal-title">Instructions</h4>
+                  <button id="closeInstructions" type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="closeInstructionsHeader" className="modal-title">Instructions</h4>
                 </div>
                 <div className="modal-body">
                   <p id="instructionsBody">
