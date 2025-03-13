@@ -274,7 +274,7 @@ export class Game {
     }
 
     storeSoundAndLoadNext(soundLocationIndex : number) {
-
+      alert("storeSoundAndLoadNext" + soundLocationIndex)
       let soundObj: HTMLAudioElement = new Audio();
       let soundLocation = Game.SOUND_LOCATIONS[soundLocationIndex];
       soundObj.src = soundLocation;
