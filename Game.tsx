@@ -181,7 +181,6 @@ export class Game {
     }
 
     doAfterPreloadImagesAndSounds() {
-      alert("doAfterPreloadImagesAndSounds")
       self.clearInterval(PleaseWait.ANIMATELOADINGINTERVALID);
       this.settings = new Settings();
       this.assignWidthAndHeight();
@@ -274,17 +273,13 @@ export class Game {
     }
 
     storeSoundAndLoadNext(soundLocationIndex : number) {
-      alert("storeSoundAndLoadNext" + soundLocationIndex)
       let soundObj: HTMLAudioElement = new Audio();
       let soundLocation = Game.SOUND_LOCATIONS[soundLocationIndex];
       soundObj.src = soundLocation;
-      alert("preloading sound " + soundLocation);
-      alert("preloading sound src " + soundObj.src);
       soundObj.preload = "auto";
       soundObj.load();
       let me = this;
       soundObj.onloadeddata = function() {
-          alert("GAME_SOUNDS" + Game.SOUND_LOCATIONS.length);
           Game.SOUND_DICT[soundLocation] = soundObj;
           let nextIndex = soundLocationIndex + 1;
           if (nextIndex < Game.SOUND_LOCATIONS.length) {
@@ -292,7 +287,6 @@ export class Game {
           } else {
               me.doAfterPreloadImagesAndSounds();
           }
-          alert("loaded sound " + soundLocation);
       }
     }
 
