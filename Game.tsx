@@ -241,6 +241,7 @@ export class Game {
 
     resizeGameHeaderAndFooter() {
       let gameHeaderHeight : number = (Game.instance.height - $("#game-body").height())/2;
+      alert("game-body.height(): " + $("#game-body").height());
       alert("Game.instance.height: " + Game.instance.height);
       alert("gameHeaderHeight: " + gameHeaderHeight);
       alert("window.innerHeight: " + window.innerHeight);
