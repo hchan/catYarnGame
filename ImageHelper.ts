@@ -17,7 +17,6 @@ export class ImageHelper {
       this.MOBILE_DIR = ImageHelper.BASE_PATH + "img";
       this.LARGE_DIR = ImageHelper.BASE_PATH + "imgLarge";
     }
-    console.log(ImageHelper.LARGE_DIR);
     if (Game.MOBILE) {
       return ImageHelper.MOBILE_DIR;
     } else {
