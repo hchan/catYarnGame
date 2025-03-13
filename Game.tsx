@@ -242,9 +242,6 @@ export class Game {
     }
 
     resizeGameHeaderAndFooter() {
-      alert("Game.instance.height = " + Game.instance.height);
-      alert("Game.instance.width = " + Game.instance.width);
-      alert("gameBody.height = " + $("#game-body").height());
       let gameBodyHeight : number = $("#game-body").height();
       if (gameBodyHeight == 0) {
         gameBodyHeight = Game.instance.width;
