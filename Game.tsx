@@ -281,6 +281,7 @@ export class Game {
       soundObj.preload = "auto";
       let me = this;
       soundObj.onloadeddata = function() {
+          alert("GAME_SOUNDS" + Game.SOUND_LOCATIONS.length);
           Game.SOUND_DICT[soundLocation] = soundObj;
           let nextIndex = soundLocationIndex + 1;
           if (nextIndex < Game.SOUND_LOCATIONS.length) {
@@ -288,6 +289,7 @@ export class Game {
           } else {
               me.doAfterPreloadImagesAndSounds();
           }
+          alert("loaded sound " + soundLocation);
       }
     }
 
