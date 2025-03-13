@@ -278,6 +278,8 @@ export class Game {
       let soundObj: HTMLAudioElement = new Audio();
       let soundLocation = Game.SOUND_LOCATIONS[soundLocationIndex];
       soundObj.src = soundLocation;
+      alert("preloading sound " + soundLocation);
+      alert("preloading sound src " + soundObj.src);
       soundObj.preload = "auto";
       let me = this;
       soundObj.onloadeddata = function() {
