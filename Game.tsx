@@ -60,8 +60,9 @@ export class Game {
         || window.location.href.indexOf("3000") != -1;
        $("body").css({"display": "inline"})
        this.orientation = Orientation.PORTRAIT;
-        this.initLoading();
-
+       alert("HERE0");
+       this.initLoading();
+       alert("HERE0.1"); 
         /*
         if (this.width > this.height) {
           alert("LANDSCAPE orientation is not supported!!")
@@ -72,6 +73,7 @@ export class Game {
           $("body").css({"display": "inline"})
         }
         */
+        alert("HERE0.2");
         this.preloadImagesAndSounds();
     }
 
