@@ -77,7 +77,11 @@ export class Game {
     assignWidthAndHeight() {
        // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
 
-       if (typeof window.innerWidth != 'undefined')
+       if (typeof window.screen.availHeight != 'undefined') {
+            this.width = window.screen.availWidth,
+            this.height = window.screen.availHeight
+       }
+       else if (typeof window.innerWidth != 'undefined')
        {
             this.width = window.innerWidth,
             this.height = window.innerHeight
