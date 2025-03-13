@@ -181,6 +181,7 @@ export class Game {
     }
 
     doAfterPreloadImagesAndSounds() {
+      alert("doAfterPreloadImagesAndSounds")
       self.clearInterval(PleaseWait.ANIMATELOADINGINTERVALID);
       this.settings = new Settings();
       this.assignWidthAndHeight();
@@ -292,7 +293,6 @@ export class Game {
 
 
     storeImageAndLoadNext(imageLocationIndex : number) {
-        alert("storeImageAndLoadNext " + imageLocationIndex);
         var imageObj: HTMLImageElement = new Image();
         var imageLocation = Game.IMAGE_LOCATIONS[imageLocationIndex];
         imageObj.src = imageLocation;
