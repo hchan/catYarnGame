@@ -77,11 +77,7 @@ export class Game {
     assignWidthAndHeight() {
        // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
 
-       if (typeof window.screen != 'undefined') {
-            this.width = window.screen.width,
-            this.height = window.screen.height
-       }
-       else if (typeof window.innerWidth != 'undefined')
+       if (typeof window.innerWidth != 'undefined')
        {
             this.width = window.innerWidth,
             this.height = window.innerHeight
@@ -245,7 +241,7 @@ export class Game {
 
     resizeGameHeaderAndFooter() {
       let gameHeaderHeight : number = (Game.instance.height - $("#game-body").height())/2;
-      alert("height: " + Game.instance.height);
+      alert("Game.instance.height: " + Game.instance.height);
       alert("gameHeaderHeight: " + gameHeaderHeight);
       alert("window.innerHeight: " + window.innerHeight);
       alert("window.screen.availHeight: " + window.screen.availHeight);
