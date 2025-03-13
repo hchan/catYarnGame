@@ -281,6 +281,7 @@ export class Game {
       alert("preloading sound " + soundLocation);
       alert("preloading sound src " + soundObj.src);
       soundObj.preload = "auto";
+      soundObj.load();
       let me = this;
       soundObj.onloadeddata = function() {
           alert("GAME_SOUNDS" + Game.SOUND_LOCATIONS.length);
