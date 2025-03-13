@@ -106,7 +106,7 @@ export class Hints extends React.Component<Props, Props> {
                 <p><span className="levelDisplay">{this.getLevelDisplay()}</span>, can be solved in&nbsp;
                   <span className="solvableMoves">{this.getSolvableMoves()}</span> moves
                 </p>
-                <ol>
+                <ol style={{"marginLeft":"20px"}}>
                   {this.getMoves()}
                 </ol>
               </div>
