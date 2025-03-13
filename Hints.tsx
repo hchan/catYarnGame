@@ -98,8 +98,8 @@ export class Hints extends React.Component<Props, Props> {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 className="modal-title">Hints - {this.getLevelDisplay()}</h4>
+                <button id="hintsCloseButton" type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 id="hintsCloseHeader" className="modal-title">Hints - {this.getLevelDisplay()}</h4>
               </div>
               <div className="modal-body">
                 <p id="hintsBody">These hints are only applicable when the board has been set to its inital state</p>

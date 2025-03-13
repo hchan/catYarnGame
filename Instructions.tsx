@@ -19,12 +19,12 @@ export class Instructions extends React.Component<GameProps, {}> {
 
 
   render() {
-    return <div className="modal fade game-modal" id="instructionsModal"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display:'none'}}>
+    return <div className="modal fade game-modal" id="instructionsModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{display:'none'}}>
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <button id="closeInstructions" type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 id="closeInstructionsHeader" className="modal-title">Instructions</h4>
+                  <button id="instructionsCloseButton" type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="instructionsCloseHeader" className="modal-title">Instructions</h4>
                 </div>
                 <div className="modal-body">
                   <p id="instructionsBody">

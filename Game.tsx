@@ -129,8 +129,12 @@ export class Game {
       $("#movesContainer").css("font-size", fontSizePixels);
       $(".form-control").css("font-size", fontSizePixels);
       $("#instructionsModal").css("font-size", fontSizePixels);
-      $("#closeInstructions").css("font-size", fontSizePixels * 2);
-      $("#closeInstructionsHeader").css("font-size", fontSizePixels * 2);
+      $("#instructionsCloseButton").css("font-size", fontSizePixels * 2);
+      $("#instructionsCloseHeader").css("font-size", fontSizePixels * 2);
+
+      $("#hintsModal").css("font-size", fontSizePixels);
+      $("#hintsCloseButton").css("font-size", fontSizePixels * 2);
+      $("#hintsCloseHeader").css("font-size", fontSizePixels * 2);
     }
 
     addResizeHandler() {
