@@ -126,6 +126,7 @@ export class Game {
       if (fontSizePixels < 14) {
         fontSizePixels  = 14;
       }
+      alert("fontSizePixels: " + fontSizePixels);
       $("#movesContainer").css("font-size", fontSizePixels);
       $(".form-control").css("font-size", fontSizePixels);
     }
@@ -240,6 +241,10 @@ export class Game {
 
     resizeGameHeaderAndFooter() {
       let gameHeaderHeight : number = (Game.instance.height - $("#game-body").height())/2;
+      alert("height: " + Game.instance.height);
+      alert("gameHeaderHeight: " + gameHeaderHeight);
+      alert("window.innerHeight: " + window.innerHeight);
+      alert("window.screen.availHeight: " + window.screen.availHeight);
       let gameHeaderWidth : number = Game.instance.width;
       let gameFooterHeight : number = gameHeaderHeight;
       let gameFooterWidth : number = Game.instance.width;
